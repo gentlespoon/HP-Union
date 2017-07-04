@@ -12,9 +12,10 @@
   <table>
   {% for row in data %}
     <tr>
-    {% for i in row %}
-      <td>{{ i }}</td>
-    {% endfor %}
+    <!-- {% for i in row %}
+      <td>{{ row[i] }}</td>
+    {% endfor %} -->
+      <td>{{ row }}</td>
     </tr>
   {% endfor %}
   </table>
