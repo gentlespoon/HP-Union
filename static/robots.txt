@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /api/
+Disallow: /config/
+Disallow: /core/
+Disallow: /data/
+Disallow: /static/
+Disallow: /templates/
+Disallow: /

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block body %}
+  {{ bodytext }}
+  <div style="margin: 1em 0">
+  Users:
+  </div>
+  <table>
+  {% for row in data %}
+    <tr>
+    {% for i in row %}
+      <td>{{ i }}</td>
+    {% endfor %}
+    </tr>
+  {% endfor %}
+  </table>
+{% endblock %}
