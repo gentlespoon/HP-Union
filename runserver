@@ -2,5 +2,5 @@
 killall flask
 
 export FLASK_DEBUG=true
-export FLASK_APP=/overlay/svr/hp-union_com/hpunion.py
+export FLASK_APP=/overlay/svr/hp-union.com/hpunion.py
 flask run --host=0.0.0.0 --port=80 &
