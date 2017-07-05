@@ -11,7 +11,6 @@ app.config.from_envvar("HPUNION_SETTINGS", silent=True)
 
 import os
 from pprint import pprint
-# import pymysql
 import sys
 import datetime
 
@@ -22,7 +21,6 @@ except ImportError:
 
 
 # HP-Union imports
-from config import *
 from func import *
 from lang import lang
 
@@ -37,9 +35,9 @@ print("\n==== Server Started ====\n")
 
 
 # at the end of each request
-@app.teardown_appcontext
-def teardown(error):
-    dbclose(g)
+# @app.teardown_appcontext
+# def teardown(error):
+#     dbclose(g)
 
 
 
@@ -55,10 +53,10 @@ def teardown(error):
 
 # route
 
-@app.route('/version')
-def showversion():
-    mtime = os.path.getmtime(__name__+".py")
-    return timetostr(mtime, config.dtfmt['iso'])
+# @app.route('/version')
+# def showversion():
+#     mtime = os.path.getmtime(__name__+".py")
+#     return timetostr(mtime, config.dtfmt['iso'])
 
 
 
