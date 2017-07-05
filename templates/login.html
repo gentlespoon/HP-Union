@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block body %}
+  {{ body }}
+  <form method="POST">
+  用户名
+  <input name="username" value="">
+  密码
+  <input name="password" value="">
+  <input type="submit" value="注册">
+  </form>
+
+
+{% endblock %}

@@ -102,46 +102,55 @@ def member():
 
 @app.route('/member/login', methods=['GET','POST'])
 def login():
-    if (session.get('uid')):
-        abort(401) # do not allow re-auth
-
     body = ""
-    data = {}
-    if (request.values.get('username') and request.values.get('password')):
-        db = dbconn(g)
-        db.execute("SELECT uid, username, password, salt FROM usertable WHERE username=%s", (request.values.get('username')))
-        data = db.fetchone()
+    data = ""
 
-        print(data)
-        body = str(data)
-    else:
-        # if Username or Password empty
-        body = lang['developing']
-        return render_template('error.html',
-            title = lang['site']['name'],
-            body = body,
-            lang = lang,
-            )
+    if (session.get('uid')):
+        abort(401) # do not allow re-login
 
-    # return render_template('member.html',
-    #     title = lang['site']['name'],
-    #     body = body,
-    #     data = data,
-    #     lang = lang,
-    #     )
+    if (request.method=="GET"):
+        # display the login window
+        pass
+
+    if (request.method=="POST"):
+        if (request.values.get('username') and request.values.get('password')):
+            db = dbconn(g)
+            db.execute("SELECT uid, username FROM usertable WHERE username=%s", (request.values.get('username')))
+            data = db.fetchone()
+            print(data)
+            body = str(data)
+        else:
+            # if Username or Password empty
+            body = lang['developing']
+            return render_template('error.html',
+                title = lang['site']['name'],
+                body = body,
+                lang = lang,
+                )
+
+    return render_template('login.html',
+        title = lang['site']['name'],
+        body = body,
+        lang = lang,
+        )
+
+
 
 @app.route('/member/register', methods=['GET','POST'])
 def register():
+    data = ""
+    body = ""
+
     if (session.get('uid')):
         abort(401) # do not allow re-register
 
     if (request.method=="GET"):
         # display the register window
         pass
-    data = ""
-    body = ""
+
 
     if (request.method=="POST"):
+
         # register a new user
         submittedUsername = request.values.get('username')
         submittedPassword = request.values.get('password')
