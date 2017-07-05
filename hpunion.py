@@ -11,7 +11,7 @@ app.config.from_envvar("HPUNION_SETTINGS", silent=True)
 
 import os
 from pprint import pprint
-import pymysql
+# import pymysql
 import sys
 import datetime
 
@@ -29,36 +29,17 @@ from lang import lang
 
 
 
+""" ====================================================== """
 
 
 print("\n\n==== Python Version ====\n" + sys.version)
 print("\n==== Server Started ====\n")
 
-# URL related functions
-def geturl():
-    return urlparse(request.url)
-
-# Database related functions
-def dbconn():
-    g.conn = pymysql.connect(
-        host=dbconf['host'],
-        port=dbconf['port'],
-        user=dbconf['user'],
-        passwd=dbconf['pass'],
-        db=dbconf['dtbs'],
-        charset=dbconf['char'],
-        )
-    print("MySQL Connected")
-    return g.conn.cursor(pymysql.cursors.DictCursor)
-
 
 # at the end of each request
 @app.teardown_appcontext
 def teardown(error):
-    # Close database connection
-    if hasattr(g, 'conn'):
-        g.conn.close()
-        print("MySQL Closed")
+    dbclose(g)
 
 
 
@@ -84,11 +65,16 @@ def showversion():
 @app.route('/')
 def index():
     # Establish database connection
-    cur = dbconn()
+    time = now()
+    print(time)
+
+    cur = dbconn(g)
     cur.execute("SELECT uid, username, regdate FROM pre_common_member ORDER BY uid ASC")
+    # cur.execute("update pre_ucenter_members set regdate=regdate+28800")
     data = cur.fetchall()
     print(data)
     for row in data:
+        # pass
         row['regdate'] = timetostr(row['regdate'], dtfmt['iso'])
     return render_template('forum.html',
         title = lang['sitename'],
