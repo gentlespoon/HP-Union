@@ -57,8 +57,7 @@ def teardown(error):
 
 @app.route('/version')
 def showversion():
-    path = os.path.abspath(os.path.realpath(__file__))
-    print(path)
+    path = os.path.abspath(__file__)
     mtime = os.path.getmtime(path)
     return timetostr(utz(mtime+dtfmt['svroffset']*-(3600)), dtfmt['iso'])
 
