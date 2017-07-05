@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block body %}
+  {{ body }}
+  <div>
+    <a href="javascript:history.back()">{{ lang['interface']['hist-back'] }}</a>
+  </div>
+
+{% endblock %}

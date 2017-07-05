@@ -1,6 +1,7 @@
-import datetime
-import pymysql
 from config import *
+import datetime
+import hashlib
+import pymysql
 
 # class Time:
 #     def __init__()
@@ -39,3 +40,12 @@ def dbclose(g):
     if hasattr(g, 'conn'):
         g.conn.close()
         print("MySQL Closed")
+
+
+# Hash functions
+def md5encode(str):
+    return hashlib.md5(str.encode()).hexdigest()
+
+# Member functions
+def pwdgen(pwd, salt):
+    return md5encode(md5encode(pwd)+salt)
