@@ -9,7 +9,7 @@
 
 
 <body>
-  <img src="{{ url_for('static', filename='images/banner.png') }}">
+  <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='images/banner.png') }}"></a>
   <div>
   {% block body %}{% endblock %}
   </div>

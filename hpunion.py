@@ -68,13 +68,14 @@ def home():
     # time = now()
 
     db = dbconn(g)
-    db.execute("SELECT uid, username, regdate FROM pre_common_member ORDER BY uid ASC")
+    db.execute("SELECT uid, username, regdate FROM usertable ORDER BY uid ASC")
     # cur.execute("update pre_ucenter_members set regdate=regdate+28800")
     data = db.fetchall()
     # print(data)
     for row in data:
         # pass
-        row['regdate'] = timetostr(row['regdate'], dtfmt['iso'])
+        if (row['regdate'] != None):
+            row['regdate'] = timetostr(row['regdate'], dtfmt['iso'])
     return render_template('home.html',
         title = lang['site']['name'],
         body = "Discuz! X3.3 UTF-8去死吧。",
@@ -91,10 +92,9 @@ def home():
 @app.route('/member')
 def member():
     if (not session.get('uid')):
-        return render_template('forum.html',
+        return render_template('member.html',
             title = lang['site']['name'],
             body = lang['member']['not-logged-in'],
-            data = data,
             lang = lang,
             )
 
@@ -114,9 +114,13 @@ def login():
         print(data)
         body = str(data)
     else:
-        body = "nocred"
-
-    return render_template('dev.html', body=body)
+        # if Username or Password empty
+        body = lang['developing']
+        return render_template('error.html',
+            title = lang['site']['name'],
+            body = body,
+            lang = lang,
+            )
 
     # return render_template('member.html',
     #     title = lang['site']['name'],
@@ -150,6 +154,7 @@ def register():
                 # Username already registered
                 body = lang['member']['dup-username']
                 return render_template('error.html',
+                    title = lang['site']['name'],
                     body = body,
                     lang = lang,
                     )
@@ -167,8 +172,9 @@ def register():
             # if Username or Password empty
             body = lang['member']['empty-field']
             return render_template('error.html',
+                title = lang['site']['name'],
                 body = body,
                 lang = lang,
                 )
 
-    return render_template('dev.html', body=body)
+    return render_template('register.html', body=body)

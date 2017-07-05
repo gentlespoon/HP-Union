@@ -7,8 +7,9 @@ lang = {
     },
     "member" : {
         "dup-username" : "用户名已被注册",
-        "empty-field" : "请填写完整注册信息",
+        "empty-field" : "请填写完整用户信息",
         "logged-out" : "已登出",
         "not-logged-in" : "未登录",
-    }
+    },
+    "developing" : "【正在做】",
 }

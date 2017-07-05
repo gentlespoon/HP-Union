@@ -6,4 +6,8 @@
 
 {% block body %}
   {{ body }}
+  {% if not session['uid'] %}
+  <div><a href="{{ url_for('login') }}">登录</a></div>
+  <div><a href="{{ url_for('register') }}">注册</a></div>
+  {% endif %}
 {% endblock %}
