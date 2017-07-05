@@ -8,9 +8,12 @@ import pymysql
 #
 #
 
+# User Time Zone
+def utz(timestamp):
+    return timestamp+dtfmt['offset']*3600
 
 def timetostr(timestamp, dtformat):
-    return datetime.datetime.fromtimestamp(timestamp+dtfmt['offset']*3600).strftime(dtformat)
+    return datetime.datetime.fromtimestamp(timestamp).strftime(dtformat)
 
 def now():
     return (datetime.datetime.utcnow()-datetime.datetime(1970,1,1)).total_seconds()

@@ -57,8 +57,10 @@ def teardown(error):
 
 @app.route('/version')
 def showversion():
-    mtime = os.path.getmtime(__name__+".py")
-    return timetostr(mtime, config.dtfmt['iso'])
+    path = os.path.abspath(os.path.realpath(__file__))
+    print(path)
+    mtime = os.path.getmtime(path)
+    return timetostr(utz(mtime+dtfmt['svroffset']*-(3600)), dtfmt['iso'])
 
 
 
@@ -75,10 +77,10 @@ def home():
     for row in data:
         # pass
         if (row['regdate'] != None):
-            row['regdate'] = timetostr(row['regdate'], dtfmt['iso'])
+            row['regdate'] = timetostr(utz(row['regdate']), dtfmt['iso'])
     return render_template('home.html',
         title = lang['site']['name'],
-        body = "Discuz! X3.3 UTF-8去死吧。",
+        body = "",
         data = data,
         lang = lang,
         )
