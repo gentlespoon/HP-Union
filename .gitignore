@@ -1,4 +1,1 @@
-/config.py
-*.pyc
-__pycache__
-otherproject.py
+/config/config.php
