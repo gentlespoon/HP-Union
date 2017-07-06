@@ -2,6 +2,9 @@ from config import *
 import datetime
 import hashlib
 import pymysql
+import pytz
+import re
+import time
 
 # class Time:
 #     def __init__()
@@ -9,21 +12,26 @@ import pymysql
 #
 
 # User Time Zone
-def utz(timestamp):
-    return timestamp+dtfmt['offset']*3600
 
-def timetostr(timestamp, dtformat):
-    return datetime.datetime.fromtimestamp(timestamp).strftime(dtformat)
+def timetostr(timestamp, fmt):
+    # Return human-readable time in user timezone (defined in config.py)
+    return datetime.datetime.fromtimestamp(timestamp, pytz.timezone(dtfmt['usrtz'])).strftime(fmt)
+
 
 def now():
-    return (datetime.datetime.utcnow()-datetime.datetime(1970,1,1)).total_seconds()
+    # Return unix time stamp (UTC)
+    return int(datetime.datetime.strptime(str(datetime.datetime.now()), "%Y-%m-%d %H:%M:%S.%f").timestamp())
 
 
 
 
-# URL functions
-def geturl():
+
+
+# Request functions
+def geturl(request):
     return urlparse(request.url)
+
+
 
 # Database functions
 def dbconn(g):
@@ -52,3 +60,7 @@ def md5encode(str):
 # Member functions
 def pwdgen(pwd, salt):
     return md5encode(md5encode(pwd)+salt)
+
+def checkUsername(username):
+    match = re.search('\s\!' , username)
+    return match

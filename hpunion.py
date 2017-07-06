@@ -2,14 +2,13 @@
 
 # Flask Framework
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
-app = Flask(__name__) # create the application instance
-app.config.from_object(__name__) # load config from this file
+app = Flask(__name__)                       # create the application instance
+app.config.from_object(__name__)            # load config from this file
 # load default config and override config from an environment variable
 app.config.update(dict(SECRET_KEY="wow_this_is_so_damn_hard_to_guess"))
-app.config.from_envvar("HPUNION_SETTINGS", silent=True)
 
 
-import datetime
+
 import os
 from pprint import pprint
 import random
@@ -59,7 +58,7 @@ def teardown(error):
 def showversion():
     path = os.path.abspath(__file__)
     mtime = os.path.getmtime(path)
-    return timetostr(utz(mtime+dtfmt['svroffset']*-(3600)), dtfmt['iso'])
+    return timetostr(mtime, dtfmt['iso'])
 
 
 
@@ -69,14 +68,14 @@ def home():
     # time = now()
 
     db = dbconn(g)
-    db.execute("SELECT uid, username, regdate FROM usertable ORDER BY uid ASC")
+    db.execute("SELECT uid, username, regdate FROM common_member ORDER BY uid ASC")
     # cur.execute("update pre_ucenter_members set regdate=regdate+28800")
     data = db.fetchall()
     # print(data)
     for row in data:
         # pass
         if (row['regdate'] != None):
-            row['regdate'] = timetostr(utz(row['regdate']), dtfmt['iso'])
+            row['regdate'] = timetostr(row['regdate'], dtfmt['iso'])
     return render_template('home.html',
         title = lang['site']['name'],
         body = "",
@@ -113,9 +112,10 @@ def login():
         pass
 
     if (request.method=="POST"):
+
         if (request.values.get('username') and request.values.get('password')):
             db = dbconn(g)
-            db.execute("SELECT uid, username FROM usertable WHERE username=%s", (request.values.get('username')))
+            db.execute("SELECT uid, username FROM common_member WHERE username=%s", (request.values.get('username')))
             data = db.fetchone()
             print(data)
             body = str(data)
@@ -141,6 +141,8 @@ def register():
     data = ""
     body = ""
 
+
+
     if (session.get('uid')):
         abort(401) # do not allow re-register
 
@@ -151,15 +153,23 @@ def register():
 
     if (request.method=="POST"):
 
+        print(request.values.get('username'))
         # register a new user
         submittedUsername = request.values.get('username')
         submittedPassword = request.values.get('password')
+
+        # match = checkUsername(submittedUsername)
+        # if (match != None):
+        #     return str(lang['member']['res-username-1']+str(match.group(0))+lang['member']['res-username-2'])
+        # else:
+        #     return redirect(url_for('register'))
+
 
         if (submittedUsername and submittedPassword):
             # if Username and Password not empty
             db = dbconn(g)
             # Check if username is registered
-            db.execute("SELECT uid FROM usertable WHERE username=%s", (request.form.get('username')))
+            db.execute("SELECT uid FROM common_member WHERE username=%s", (submittedUsername))
             if (db.fetchone() != None):
                 # Username already registered
                 body = lang['member']['dup-username']
@@ -171,11 +181,16 @@ def register():
             else:
                 # Username available
                 # generate random salt
-                salt = ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
+                try:
+                    #   >=3.6
+                    salt = ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
+                except:
+                    #   <3.6
+                    salt = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(6))
                 # encrypt password
                 encryptedPassword = pwdgen(submittedPassword, salt)
                 # insert new user into database
-                db.execute("INSERT INTO usertable (username, password, salt) VALUES (%s, %s, %s)", (submittedUsername, encryptedPassword, salt))
+                db.execute("INSERT INTO common_member (username, password, salt, regdate) VALUES (%s, %s, %s, %s)", (submittedUsername, encryptedPassword, salt, now() ))
                 return redirect(url_for('register'))
 
         else:
