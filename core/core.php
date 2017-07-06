@@ -1,9 +1,14 @@
 <?php
 
 error_reporting(E_ALL);
+
+if (!defined("ROOT")) {
+  define("ROOT", $_SERVER['DOCUMENT_ROOT']."/");
+}
 include_once(ROOT."config/config.php");
 include_once("time.php");
 include_once("func.php");
+include_once(ROOT."lang.php");
 
 //  $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 
@@ -29,5 +34,10 @@ function dbquery($sql, $param) {
 
 
 function template($file) {
-  include_once(ROOT."templates/".$file.".html");
+  global $title;
+  include_once(ROOT."templates/common_header_html.htm");
+  include_once(ROOT."templates/common_header_visual.htm");
+  include_once(ROOT."templates/".$file.".htm");
+  include_once(ROOT."templates/common_footer_visual.htm");
+  include_once(ROOT."templates/common_footer_html.htm");
 }
