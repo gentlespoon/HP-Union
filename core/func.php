@@ -70,12 +70,8 @@ function template($file) {
 
 
 
-// # Member functions
-function pwdgen($pwd, $salt) {
-  return md5(md5($pwd)+$salt);
-}
 
-function random_str($length) {
+function randomStr($length) {
     $keyspace = '0123456789abcdefghijklmnopqrstuvwxyz';
     $str = '';
     $max = strlen($keyspace) - 1;
@@ -83,4 +79,13 @@ function random_str($length) {
         $str .= $keyspace[random_int(0, $max)];
     }
     return $str;
+}
+
+function usernameMarkCensor($string, $sensorlist) {
+  foreach ($sensorlist as $k => $v) {
+    if (strpos($string, $v) !== false) {
+      return $v;
+    }
+  }
+  return false;
 }

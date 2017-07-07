@@ -10,6 +10,36 @@ switch ($_GET['act']) {
     if (array_key_exists("username", $_POST)) {
       if (array_key_exists("password", $_POST)) {
         if ($_SESSION['uid'] < 1) {
+          // begin registration
+
+          // check for marks in username
+          $list = "!@#$%^&*{[(<>)]};'\" `~?/\\|=+";
+          $list = str_split($list);
+          $unamecheck = usernameMarkCensor($_POST['username'], $list);
+          if ($unamecheck) {
+            // Invalid username with marks
+            $body['text'] = $lang['member']['invalid-username-1'].$unamecheck.$lang['member']['invalid-username-3'];
+            $body['redirect'] = $lang['interface']['hist-back'];
+            $redirect = "javascript:history.back()";
+            template("common_bang");
+          }
+
+          // check for restricted usernames
+          $r = DB("SELECT word FROM member_restrictname");
+          $list = [];
+          foreach ($r as $k => $v) {
+            array_push($list, $v['word']);
+          }
+          $unamecheck = usernameMarkCensor($_POST['username'], $list);
+          if ($unamecheck) {
+            // Invalid username with marks
+            $body['text'] = $lang['member']['invalid-username-2'].$unamecheck.$lang['member']['invalid-username-3'];
+            $body['redirect'] = $lang['interface']['hist-back'];
+            $redirect = "javascript:history.back()";
+            template("common_bang");
+          }
+
+          // check for duplicate usernames
           $r = DB("SELECT uid FROM member WHERE username= :username", [":username" => $_POST['username']]);
           if (!empty($r)) {
             // Username already registered
@@ -18,10 +48,11 @@ switch ($_GET['act']) {
             $redirect = "javascript:history.back()";
             template("common_bang");
           }
+
           // register this new user
-          $salt = random_str(6);
+          $salt = randomStr(6);
           $encryptedPassword = md5($_POST['password'].$salt);
-          DB("INSERT INTO member (username, password, salt, regdate) VALUES ( :username , :password , :salt , :regdate)", [":username" => $_POST['username'], ":password" => $encryptedPassword, ":salt" => $salt, ":regdate" => time()]);
+          DB("INSERT INTO member (username, password, salt, regdate, qq) VALUES ( :username , :password , :salt , :regdate, :qq)", [":username" => $_POST['username'], ":password" => $encryptedPassword, ":salt" => $salt, ":regdate" => time(), ":qq" => $_POST['qq']]);
           $r = DB("SELECT uid FROM member WHERE username= :username", [":username" => $_POST['username']]);
           $uid = $r[0]['uid'];
           // log this new user in
