@@ -17,9 +17,26 @@
   </div>
 <?php endif ?>
 
+<?php if ($_GET['act']=="modpwd") : ?>
+  <div>
+    <form method="POST" action="member.php?act=modpwd" id="modpwdform">
+      <?=$lang['member']['currpwd']?>
+      <input type="password" name="currpwd" value="" id="modpwdform_currpwd">
+      <?=$lang['member']['password']?>
+      <input type="password" name="password" value="" id="modpwdform_password">
+      <?=$lang['member']['password2']?>
+      <input type="password" value="" id="modpwdform_password2">
+      <input type="submit" value="<?=$lang['member']['modpwd']?>">
+    </form>
+  </div>
+<?php endif ?>
+
 
 <?php if ($_SESSION['uid'] > 0) : ?>
   <div>
     <?=$lang['member']['logged-in']?>
+  </div>
+  <div>
+    <a href="member.php?act=modpwd"><?=$lang['member']['modpwd']?></a>
   </div>
 <?php endif ?>

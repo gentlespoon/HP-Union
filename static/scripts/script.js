@@ -14,5 +14,14 @@ $(document).ready(function() {
 
 
 
+  $("#modpwdform").submit(function() {
+    if ($("#modpwdform_password").val() != $("#modpwdform_password2").val()) {
+      alert("两次输入的新密码不同");
+      return false;
+    }
+    $("#modpwdform_currpwd").val($.md5($("#modpwdform_currpwd").val()));
+    $("#modpwdform_password").val($.md5($("#modpwdform_password").val()));
+  });
+
 
 });

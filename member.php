@@ -6,6 +6,13 @@ include_once(ROOT."core/core.php");
 // $body['text'] = printv($_POST, true);
 
 switch ($_GET['act']) {
+
+
+
+
+
+
+
   case "register":
     if (array_key_exists("username", $_POST)) {
       if (array_key_exists("password", $_POST)) {
@@ -79,6 +86,13 @@ switch ($_GET['act']) {
     }
     $title = $lang['member']['register'];
     break;
+
+
+
+
+
+
+
   case "login":
     if (array_key_exists("username", $_POST)) {
       if (array_key_exists("password", $_POST)) {
@@ -166,6 +180,55 @@ switch ($_GET['act']) {
       }
     }
     break;
+
+
+
+
+
+
+
+
+  case "modpwd":
+    if (array_key_exists("currpwd", $_POST)) {
+      if (array_key_exists("password", $_POST)) {
+        if ($_SESSION['uid'] > 0) {
+          // check old password
+          $r = DB("SELECT password, salt FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
+          $encryptedPassword = md5($_POST['currpwd'].$r[0]['salt']);
+          if ($encryptedPassword == $r[0]['password']) {
+            // Authenticated
+            $encryptedPassword = md5($_POST['password'].$r[0]['salt']);
+            DB("UPDATE member SET password=:password WHERE uid=:uid", [":password" => $encryptedPassword, ":uid" => $_SESSION['uid']]);
+            // Modified password
+            $body['text'] = $lang['member']['modpwd'].$lang['interface']['success'];
+            $body['redirect'] = $lang['interface']['hist-back'];
+            $redirect = "member.php";
+            template("common_bang");
+          } else {
+            // Incorrect password
+            $body['text'] = $lang['member']['modpwd'].$lang['interface']['fail']."：".$lang['member']['invalid-cred'];
+            $body['redirect'] = $lang['interface']['hist-back'];
+            $redirect = "javascript: history.back()";
+            template("common_bang");
+          }
+        }
+      } else {
+        // Some fields do not exist
+        $body['text'] = $lang['member']['empty-field'];
+        $body['redirect'] = $lang['interface']['hist-back'];
+        $redirect = "javascript:history.back()";
+        template("common_bang");
+      }
+    }
+    break;
+
+
+
+
+
+
+
+
   case "logout":
     $_SESSION['username'] = "";
     $_SESSION['uid'] = 0;

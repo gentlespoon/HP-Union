@@ -6,8 +6,11 @@ $lang = [
    ],
    "interface" => [
        "hist-back" => "返回上一页",
+       "success" => "成功",
+       "fail" => "失败",
    ],
    "member" => [
+       "currpwd" => "当前密码",
        "empty-field" => "请填写完整用户信息",
        "fail-penalty1" => "密码错误次数过多，请 ",
        "fail-penalty2" => " 秒后重试",
@@ -18,6 +21,7 @@ $lang = [
        "logged-in" => "已登入",
        "login" => "登入",
        "logout" => "登出",
+       "modpwd" => "修改密码",
        "not-logged-in" => "未登入",
        "password" => "密码",
        "password2" => "重复密码",
