@@ -4,15 +4,15 @@
 <?php if ($_GET['act']=="register") : ?>
   <div>
     <form method="POST" action="member.php?act=register" id="regform">
-      <?=$lang['member']['username']?>
+      <?=$lang['username']?>
       <input type="text" name="username" value="" id="regform_username">
-      <?=$lang['member']['password']?>
+      <?=$lang['password']?>
       <input type="password" name="password" value="" id="regform_password">
-      <?=$lang['member']['password2']?>
+      <?=$lang['password2']?>
       <input type="password" value="" id="regform_password2">
       QQ
       <input type="text" name="qq" value="" id="regform_qq">
-      <input type="submit" value="<?=$lang['member']['register']?>">
+      <input type="submit" value="<?=$lang['register']?>">
     </form>
   </div>
 <?php endif ?>
@@ -20,13 +20,13 @@
 <?php if ($_GET['act']=="modpwd") : ?>
   <div>
     <form method="POST" action="member.php?act=modpwd" id="modpwdform">
-      <?=$lang['member']['currpwd']?>
+      <?=$lang['currpwd']?>
       <input type="password" name="currpwd" value="" id="modpwdform_currpwd">
-      <?=$lang['member']['password']?>
+      <?=$lang['interface']['new']?><?=$lang['password']?>
       <input type="password" name="password" value="" id="modpwdform_password">
-      <?=$lang['member']['password2']?>
+      <?=$lang['password2']?>
       <input type="password" value="" id="modpwdform_password2">
-      <input type="submit" value="<?=$lang['member']['modpwd']?>">
+      <input type="submit" value="<?=$lang['modpwd']?>">
     </form>
   </div>
 <?php endif ?>
@@ -34,9 +34,9 @@
 
 <?php if ($_SESSION['uid'] > 0) : ?>
   <div>
-    <?=$lang['member']['logged-in']?>
+    <?=$lang['logged-in']?>
   </div>
   <div>
-    <a href="member.php?act=modpwd"><?=$lang['member']['modpwd']?></a>
+    <a href="member.php?act=modpwd"><?=$lang['modpwd']?></a>
   </div>
 <?php endif ?>

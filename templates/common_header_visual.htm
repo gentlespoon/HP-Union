@@ -4,20 +4,20 @@
   <?php if ($_SESSION['uid'] == 0) : ?>
   <div title="loginform">
     <form id="loginform" method="POST" action="member.php?act=login">
-      <?=$lang['member']['username']?>
+      <?=$lang['username']?>
       <input type="text" name="username" value="" id="loginform_username">
-      <?=$lang['member']['password']?>
+      <?=$lang['password']?>
       <input type="password" name="password" value="" id="loginform_password">
-      <input type="submit" value="<?=$lang['member']['login']?>">
-      <a href="member.php?act=register"><?=$lang['member']['register']?></a>
+      <input type="submit" value="<?=$lang['login']?>">
+      <a href="member.php?act=register"><?=$lang['register']?></a>
     </form>
   </div>
   <?php endif ?>
 
   <?php if ($_SESSION['uid'] > 0) : ?>
   <div>
-    <?=$_SESSION['username']?>
-    <a href="member.php?act=logout"><?=$lang['member']['logout']?></a>
+    <a href="member.php"><?=$_SESSION['username']?></a>
+    <a href="member.php?act=logout"><?=$lang['logout']?></a>
   </div>
   <?php endif ?>
 </div>
