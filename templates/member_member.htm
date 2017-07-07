@@ -1,0 +1,21 @@
+  <?=$body['text']?>
+
+
+<?php if ($_GET['act']=="register") : ?>
+  <div>
+    <form method="POST" action="member.php?act=register" class="userform">
+      <?=$lang['member']['username']?>
+      <input name="username" value="" id="regform_username">
+      <?=$lang['member']['password']?>
+      <input name="password" value="" id="regform_password">
+      <input type="submit" value="<?=$lang['member']['register']?>">
+    </form>
+  </div>
+<?php endif ?>
+
+
+<?php if ($_SESSION['uid'] > 0) : ?>
+  <div>
+    <?=$lang['member']['logged-in']?>
+  </div>
+<?php endif ?>

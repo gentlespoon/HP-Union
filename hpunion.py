@@ -35,55 +35,7 @@ print("\n\n==== Python Version ====\n" + sys.version)
 print("\n==== Server Started ====\n")
 
 
-# at the end of each request
-@app.teardown_appcontext
-def teardown(error):
-    dbclose(g)
-
-
-
-
-
-
-
-
-
-
-
-
-
 # route
-
-@app.route('/version')
-def showversion():
-    path = os.path.abspath(__file__)
-    mtime = os.path.getmtime(path)
-    return timetostr(mtime, dtfmt['iso'])
-
-
-
-@app.route('/')
-def home():
-    # Establish database connection
-    # time = now()
-
-    db = dbconn(g)
-    db.execute("SELECT uid, username, regdate FROM common_member ORDER BY uid ASC")
-    # cur.execute("update pre_ucenter_members set regdate=regdate+28800")
-    data = db.fetchall()
-    # print(data)
-    for row in data:
-        # pass
-        if (row['regdate'] != None):
-            row['regdate'] = timetostr(row['regdate'], dtfmt['iso'])
-    return render_template('home.html',
-        title = lang['site']['name'],
-        body = "",
-        data = data,
-        lang = lang,
-        )
-
-
 
 
 

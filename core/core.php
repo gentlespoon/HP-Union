@@ -1,6 +1,7 @@
 <?php
 
 error_reporting(E_ALL);
+session_start();
 
 if (!defined("ROOT")) {
   define("ROOT", $_SERVER['DOCUMENT_ROOT']."/");
@@ -12,32 +13,33 @@ include_once(ROOT."lang.php");
 
 //  $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 
+
+// Connect to database
 $dsn = "mysql:host=".$config['db']['host'].";dbname=".$config['db']['dtbs'].";charset=".$config['db']['char'];
 $username = $config['db']['user'];
 $password = $config['db']['pass'];
 
 $db = new PDO($dsn, $username, $password);
 
-function dbquery($sql, $param) {
-  global $db;
-  if ($sth = $db->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY])) {
-    $sth->execute($param);
-    $rs = $sth->fetchAll();
-    return $rs;
-  } else {
-    echo $db->error;
-  }
+// Initialize output
+$body = [
+  "text" => "",
+];
+
+// Process submitted info
+foreach ($_GET as $k => $v) {
+  $v = trim($v);
+}
+foreach ($_GET as $k => $v) {
+  $v = trim($v);
 }
 
-// $rs = dbquery("SELECT * FROM common_member WHERE username= :username OR uid= :uid", [":username" => "尖头勺子", ":uid" => 2]);
-// print_r($rs);
+if (!array_key_exists("act", $_GET)) {
+  $_GET['act'] = "";
+}
 
-
-function template($file) {
-  global $title;
-  include_once(ROOT."templates/common_header_html.htm");
-  include_once(ROOT."templates/common_header_visual.htm");
-  include_once(ROOT."templates/".$file.".htm");
-  include_once(ROOT."templates/common_footer_visual.htm");
-  include_once(ROOT."templates/common_footer_html.htm");
+// Initialize user session
+if (!array_key_exists("uid", $_SESSION)) {
+  $_SESSION['uid'] = 0;
+  $_SESSION['username'] = 0;
 }
