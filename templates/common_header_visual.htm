@@ -10,6 +10,14 @@
     </form>
   </div>
 <?php endif ?>
+
+<?php if ($_SESSION['uid'] > 0) : ?>
+  <div>
+    <?=$_SESSION['username']?>
+    <a href="member.php?act=logout"><?=$lang['member']['logout']?></a>
+  </div>
+<?php endif ?>
+
 <div>
-  <!-- <a href="/"><img src="static/images/banner.png"></a> -->
+  <a href="/"><img src="static/images/banner.png"></a>
 </div>

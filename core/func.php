@@ -54,6 +54,7 @@ function template($file) {
   global $body;
   global $lang;
   global $_GET;
+  global $redirect;
   include_once(ROOT."templates/common_header_html.htm");
   include_once(ROOT."templates/common_header_visual.htm");
   include_once(ROOT."templates/".$file.".htm");

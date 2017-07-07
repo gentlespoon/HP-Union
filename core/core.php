@@ -7,9 +7,9 @@ if (!defined("ROOT")) {
   define("ROOT", $_SERVER['DOCUMENT_ROOT']."/");
 }
 include_once(ROOT."config/config.php");
-include_once("time.php");
-include_once("func.php");
-include_once(ROOT."lang.php");
+include_once(ROOT."core/time.php");
+include_once(ROOT."core/func.php");
+include_once(ROOT."language.php");
 
 //  $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 
