@@ -2,8 +2,10 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title><?=$title?></title>
+  <title><?php if ($title) : echo $title." - "; endif ?><?=$lang['site']['name']?></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link rel="shortcut icon" href="<?=$favicon?>">
+  <link rel="shortcut icon" href="static/images/union_flat.png">
+  <link rel="stylesheet" type="text/css" href="templates/css/common.css">
+  <link rel="stylesheet" type="text/css" href="templates/css/member.css">
 </head>
 <body>

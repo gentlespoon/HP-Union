@@ -3,11 +3,13 @@
 
 <?php if ($_GET['act']=="register") : ?>
   <div>
-    <form method="POST" action="member.php?act=register" class="userform">
+    <form method="POST" action="member.php?act=register" id="regform">
       <?=$lang['member']['username']?>
-      <input name="username" value="" id="regform_username">
+      <input type="text" name="username" value="" id="regform_username">
       <?=$lang['member']['password']?>
-      <input name="password" value="" id="regform_password">
+      <input type="password" name="password" value="" id="regform_password">
+      <?=$lang['member']['password2']?>
+      <input type="password" value="" id="regform_password2">
       <input type="submit" value="<?=$lang['member']['register']?>">
     </form>
   </div>

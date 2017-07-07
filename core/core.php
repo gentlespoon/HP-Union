@@ -6,6 +6,9 @@ session_start();
 if (!defined("ROOT")) {
   define("ROOT", $_SERVER['DOCUMENT_ROOT']."/");
 }
+
+$_starttime = microtime();
+
 include_once(ROOT."config/config.php");
 include_once(ROOT."core/time.php");
 include_once(ROOT."core/func.php");

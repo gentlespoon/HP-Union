@@ -1,10 +1,11 @@
+<div title="common_header_visual">
 <?php if ($_SESSION['uid'] == 0) : ?>
-  <div>
-    <form id="loginform" class="userform" method="POST" action="member.php?act=login">
+  <div title="loginform">
+    <form id="loginform" method="POST" action="member.php?act=login">
       <?=$lang['member']['username']?>
-      <input name="username" value="" id="loginform_username">
+      <input type="text" name="username" value="" id="loginform_username">
       <?=$lang['member']['password']?>
-      <input name="password" value="" id="loginform_password">
+      <input type="password" name="password" value="" id="loginform_password">
       <input type="submit" value="<?=$lang['member']['login']?>">
       <a href="member.php?act=register"><?=$lang['member']['register']?></a>
     </form>
@@ -20,4 +21,5 @@
 
 <div>
   <a href="/"><img src="static/images/banner.png"></a>
+</div>
 </div>

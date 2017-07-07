@@ -55,11 +55,15 @@ function template($file) {
   global $lang;
   global $_GET;
   global $redirect;
+  global $_starttime;
+  $_endtime = microtime();
+  $_runtime = $_endtime - $_starttime;
   include_once(ROOT."templates/common_header_html.htm");
   include_once(ROOT."templates/common_header_visual.htm");
   include_once(ROOT."templates/".$file.".htm");
   include_once(ROOT."templates/common_footer_visual.htm");
   include_once(ROOT."templates/common_footer_html.htm");
+
   exit();
 }
 
