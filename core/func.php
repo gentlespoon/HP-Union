@@ -52,6 +52,7 @@ function template($file, ...$extrafiles) {
   // this function will terminate the php execution
   global $title;
   global $body;
+  global $user;
   global $lang;
   global $_GET;
   global $redirect;
@@ -62,7 +63,7 @@ function template($file, ...$extrafiles) {
   include_once(ROOT."templates/common_header_visual.htm");
   include_once(ROOT."templates/".$file.".htm");
   foreach ($extrafiles as $k => $v) {
-    include_once(ROOT."templates/".$v.".htm");  
+    include_once(ROOT."templates/".$v.".htm");
   }
   include_once(ROOT."templates/common_footer_visual.htm");
   include_once(ROOT."templates/common_footer_html.htm");

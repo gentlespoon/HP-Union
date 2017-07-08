@@ -68,7 +68,6 @@ switch ($_GET['act']) {
           // clear loginfail count
           DB("UPDATE member SET lastlogin= :lastlogin, failcount=0 WHERE uid= :uid", [":lastlogin" => time(), ":uid" => $r[0]['uid']]);
           $_SESSION['uid'] = $uid;
-          $_SESSION['username'] = $_POST['username'];
         } else {
           // Already logged in, do not allow re-register
           $body['text'] = $lang['logged-in'];
@@ -141,7 +140,6 @@ switch ($_GET['act']) {
             // credentials correct
             // log this new user in
             $_SESSION['uid'] = $r[0]['uid'];
-            $_SESSION['username'] = $_POST['username'];
 
             // insert login history
             DB("INSERT INTO member_loginhistory (uid, logindate, success, ip) VALUES ( :uid, :logindate, :success, :ip)", [":uid" => $r[0]['uid'], ":logindate" => time(), ":success" => 1, ":ip" => $_SERVER['REMOTE_ADDR']]);

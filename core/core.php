@@ -13,6 +13,7 @@ include_once(ROOT."config/config.php");
 include_once(ROOT."core/time.php");
 include_once(ROOT."core/func.php");
 include_once(ROOT."language.php");
+include_once(ROOT."develop.php");
 
 //  $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 
@@ -44,5 +45,13 @@ if (!array_key_exists("act", $_GET)) {
 // Initialize user session
 if (!array_key_exists("uid", $_SESSION)) {
   $_SESSION['uid'] = 0;
-  $_SESSION['username'] = 0;
+}
+
+
+// Retrieve current user information
+if ($_SESSION['uid'] > 0) {
+  $user = DB("SELECT username, qq FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
+  $user = $user[0];
+} else {
+  $user = ["username" => $lang['not-logged-in'], "qq" => 0];
 }

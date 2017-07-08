@@ -24,4 +24,12 @@ $(document).ready(function() {
   });
 
 
+  $.ajax({
+    url: "http://localhost/api/avatar.php?qq="+$("#user_qq").text(),
+  }).done(function(done) {
+    var avatar = done.replace(/\\/g, "");
+    $("#nav_avatar").attr('src', avatar);
+    // alert(avatar);
+  });
+
 });
