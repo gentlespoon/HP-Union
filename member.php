@@ -148,8 +148,10 @@ switch ($_GET['act']) {
             // clear loginfail count
             DB("UPDATE member SET lastlogin= :lastlogin, failcount=0 WHERE uid= :uid", [":lastlogin" => time(), ":uid" => $r[0]['uid']]);
             // clear ipfail count
-            DB("INSERT INTO member_failedip (ip, lasttrial, count) VALUES ( :ip, :lasttrial, 0) ON DUPLICATE KEY UPDATE count=0, lasttrial= :lasttrial", [":ip" => $_SERVER['REMOTE_ADDR'], ":lasttrial" => time()]);
-
+            $t = DB("SELECT ip, lasttrial, count, attempted FROM member_failedip WHERE ip=:ip", [":ip" => $_SERVER['REMOTE_ADDR']]);
+            if (empty($t)) {
+              DB("INSERT INTO member_failedip (ip, lasttrial, count) VALUES ( :ip, :lasttrial, 0) ON DUPLICATE KEY UPDATE count=0, lasttrial= :lasttrial", [":ip" => $_SERVER['REMOTE_ADDR'], ":lasttrial" => time()]);
+            }
           } else {
             // Incorrect credentials
             // insert login history
@@ -157,8 +159,17 @@ switch ($_GET['act']) {
             // increase loginfail count
             DB("UPDATE member SET failcount=failcount+1 WHERE uid= :uid", [":uid" => $r[0]['uid']]);
             // increase ipfail count
-            DB("INSERT INTO member_failedip (ip, lasttrial) VALUES ( :ip, :lasttrial) ON DUPLICATE KEY UPDATE count=count+1, lasttrial= :lasttrial", [":ip" => $_SERVER['REMOTE_ADDR'], ":lasttrial" => time()]);
-
+            $t = DB("SELECT ip, lasttrial, count, attempted FROM member_failedip WHERE ip=:ip", [":ip" => $_SERVER['REMOTE_ADDR']]);
+            if (empty($t)) {
+              DB("INSERT INTO member_failedip (ip, lasttrial, count) VALUES ( :ip, :lasttrial, 0) ON DUPLICATE KEY UPDATE count=0, lasttrial= :lasttrial", [":ip" => $_SERVER['REMOTE_ADDR'], ":lasttrial" => time()]);
+            } else {
+              $attempted = $t[0]['attempted'];
+              if (strlen($attempted)!=0) {
+                $attempted .= ", ";
+              }
+              $attempted .= $_POST['username'];
+              DB("UPDATE member_failedip SET lasttrial=:lasttrial, count=count+1, attempted=:attempted WHERE ip=:ip", [":ip" => $_SERVER['REMOTE_ADDR'], ":lasttrial" => time(), ":attempted" => $attempted]);
+            }
             $body['text'] = $lang['invalid-cred'];
             $body['redirect'] = $lang['hist-back'];
             $redirect = "javascript:history.back()";
