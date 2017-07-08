@@ -3,16 +3,26 @@
 
 <?php if ($_GET['act']=="register") : ?>
   <div>
-    <form method="POST" action="member.php?act=register" id="regform">
-      <?=$lang['username']?>
-      <input type="text" name="username" value="" id="regform_username">
-      <?=$lang['password']?>
-      <input type="password" name="password" value="" id="regform_password">
-      <?=$lang['password2']?>
-      <input type="password" value="" id="regform_password2">
-      QQ
-      <input type="text" name="qq" value="" id="regform_qq">
-      <input type="submit" value="<?=$lang['register']?>">
+    <form method="POST" action="member.php?act=register" id="regform" class="form">
+      <div class="form-group">
+        <label for="regform_username" class=""><?=$lang['username']?></label>
+        <input type="text" name="username" value="" id="regform_username">
+      </div>
+      <div class="form-group">
+        <label for="regform_password" class=""><?=$lang['password']?></label>
+        <input type="password" name="password" value="" id="regform_password">
+      </div>
+      <div class="form-group">
+        <label for="regform_password2" class=""><?=$lang['password2']?></label>
+        <input type="password" value="" id="regform_password2">
+      </div>
+      <div class="form-group">
+        <label for="regform_qq" class="">QQ</label>
+        <input type="text" name="qq" value="" id="regform_qq">
+      </div>
+      <div class="form-group">
+        <input type="submit" class="btn btn-default btn-primary" value="<?=$lang['register']?>">
+      </div>
     </form>
   </div>
 <?php endif ?>
