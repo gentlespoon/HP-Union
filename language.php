@@ -19,6 +19,7 @@ $lang = [
   "login" => "登入",
   "logout" => "登出",
   "modpwd" => "修改密码",
+  "new" => "新",
   "not-logged-in" => "未登入",
   "password" => "密码",
   "password2" => "重复密码",

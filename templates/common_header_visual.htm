@@ -1,29 +1,72 @@
-<div title="common_header_visual">
+  <div title="#common_header_visual">
 
-<div class="sessioncontrol">
-  <?php if ($_SESSION['uid'] == 0) : ?>
-  <div title="loginform">
-    <form id="loginform" method="POST" action="member.php?act=login">
-      <?=$lang['username']?>
-      <input type="text" name="username" value="" id="loginform_username">
-      <?=$lang['password']?>
-      <input type="password" name="password" value="" id="loginform_password">
-      <input type="submit" value="<?=$lang['login']?>">
-      <a href="member.php?act=register"><?=$lang['register']?></a>
-    </form>
+
+
+    <div class="container">
+      <a href="/"><img src="static/images/banner.png"></a>
+    </div>
+
+    <div class="container">
+      <nav class="navbar navbar-inverse">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><?=$lang['sitename']?></a>
+          </div>
+          <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+              <?php if ($_SESSION['uid'] == 0) : ?>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$lang['login']?> <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <!-- <div title="loginform"> -->
+                      <form id="loginform" method="POST" action="member.php?act=login" class="form">
+                        <div class="form-group">
+                          <label for="loginform_username" class=""><?=$lang['username']?></label>
+                          <input type="text" name="username" value="" id="loginform_username" class="login_input form-control">
+                        </div>
+                        <div class="form-group">
+                          <label for="loginform_password" class=""><?=$lang['password']?></label>
+                          <input type="password" name="password" value="" id="loginform_password" class="login_input form-control">
+                        </div>
+                        <div class="form-group">
+                          <button type="submit" class="btn btn-default btn-primary"><?=$lang['login']?></button>
+                          <a href="member.php?act=register" class="btn btn-default btn-success"><?=$lang['register']?></a>
+                        </div>
+                      </form>
+                      <!-- </div> -->
+                    </li>
+                  </ul>
+                </li>
+              <?php endif ?>
+              <?php if ($_SESSION['uid'] > 0) : ?>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$_SESSION['username']?> <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href="member.php?act=modpwd"><?=$lang['modpwd']?></a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                      <a href="member.php?act=logout"><?=$lang['logout']?></a>
+                    </li>
+                  </ul>
+                </li>
+              <?php endif ?>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
   </div>
-  <?php endif ?>
 
-  <?php if ($_SESSION['uid'] > 0) : ?>
-  <div>
-    <a href="member.php"><?=$_SESSION['username']?></a>
-    <a href="member.php?act=logout"><?=$lang['logout']?></a>
-  </div>
-  <?php endif ?>
-</div>
 
-<div>
-  <a href="/"><img src="static/images/banner.png"></a>
-</div>
 
-</div>
+  <div class="container" id="canvas" title="#canvas">

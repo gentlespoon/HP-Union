@@ -19,14 +19,22 @@
 
 <?php if ($_GET['act']=="modpwd") : ?>
   <div>
-    <form method="POST" action="member.php?act=modpwd" id="modpwdform">
-      <?=$lang['currpwd']?>
-      <input type="password" name="currpwd" value="" id="modpwdform_currpwd">
-      <?=$lang['new']?><?=$lang['password']?>
-      <input type="password" name="password" value="" id="modpwdform_password">
-      <?=$lang['password2']?>
-      <input type="password" value="" id="modpwdform_password2">
-      <input type="submit" value="<?=$lang['modpwd']?>">
+    <form method="POST" action="member.php?act=modpwd" id="modpwdform" class="form">
+      <div class="form-group">
+        <label for="modpwdform_currpwd" class=""><?=$lang['currpwd']?></label>
+        <input type="password" name="currpwd" value="" id="modpwdform_currpwd">
+      </div>
+      <div class="form-group">
+        <label for="modpwdform_password" class=""><?=$lang['new']?><?=$lang['password']?></label>
+        <input type="password" name="password" value="" id="modpwdform_password">
+      </div>
+      <div class="form-group">
+        <label for="modpwdform_password2" class=""><?=$lang['password2']?></label>
+        <input type="password" value="" id="modpwdform_password2">
+      </div>
+      <div class="form-group">
+        <input type="submit" class="btn btn-default btn-primary" value="<?=$lang['modpwd']?>">
+      </div>
     </form>
   </div>
 <?php endif ?>
@@ -35,8 +43,5 @@
 <?php if ($_SESSION['uid'] > 0) : ?>
   <div>
     <?=$lang['logged-in']?>
-  </div>
-  <div>
-    <a href="member.php?act=modpwd"><?=$lang['modpwd']?></a>
   </div>
 <?php endif ?>

@@ -1,4 +1,25 @@
 body {
-  margin: 0;
-  padding: 0;
+  /*padding-top: 70px;*/
+  /* bootstrap navbar height is 50px, +20px for whitespace */
+  /*padding-bottom: 30px;*/
+  padding-top: 10px;
+  padding-bottom: 50px;
+}
+
+.navbar {
+  /*color: #cacaca;*/
+  /*line-height: 40px;*/
+}
+
+#loginform {
+  padding: 1em;
+  /*margin: 5px;*/
+  /*line-height: 20px;*/
+}
+
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
