@@ -12,5 +12,4 @@ foreach ($r as $v) {
   $body['text'] .= printv($v, true);
 }
 
-$title = $lang['site']['name'];
 template("index");
