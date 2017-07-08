@@ -2,7 +2,7 @@
 
 $config = [
   "db" => [
-    "host" => "localhost",
+    "host" => "hp-union.com",
     "port" => 3306,
     "user" => "",
     "pass" => "",
