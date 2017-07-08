@@ -47,7 +47,7 @@ function printv($arr, $ret=false) {
   }
 }
 
-function template($file) {
+function template($file, ...$extrafiles) {
   // render the html template
   // this function will terminate the php execution
   global $title;
@@ -61,6 +61,9 @@ function template($file) {
   include_once(ROOT."templates/common_header_html.htm");
   include_once(ROOT."templates/common_header_visual.htm");
   include_once(ROOT."templates/".$file.".htm");
+  foreach ($extrafiles as $k => $v) {
+    include_once(ROOT."templates/".$v.".htm");  
+  }
   include_once(ROOT."templates/common_footer_visual.htm");
   include_once(ROOT."templates/common_footer_html.htm");
 

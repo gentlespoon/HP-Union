@@ -25,8 +25,8 @@ switch ($_GET['act']) {
           $unamecheck = usernameMarkCensor($_POST['username'], $list);
           if ($unamecheck) {
             // Invalid username with marks
-            $body['text'] = $lang['member']['invalid-username-1'].$unamecheck.$lang['member']['invalid-username-3'];
-            $body['redirect'] = $lang['interface']['hist-back'];
+            $body['text'] = $lang['invalid-username-1'].$unamecheck.$lang['invalid-username-3'];
+            $body['redirect'] = $lang['hist-back'];
             $redirect = "javascript:history.back()";
             template("common_bang");
           }
@@ -40,8 +40,8 @@ switch ($_GET['act']) {
           $unamecheck = usernameMarkCensor($_POST['username'], $list);
           if ($unamecheck) {
             // Invalid username with marks
-            $body['text'] = $lang['member']['invalid-username-2'].$unamecheck.$lang['member']['invalid-username-3'];
-            $body['redirect'] = $lang['interface']['hist-back'];
+            $body['text'] = $lang['invalid-username-2'].$unamecheck.$lang['invalid-username-3'];
+            $body['redirect'] = $lang['hist-back'];
             $redirect = "javascript:history.back()";
             template("common_bang");
           }
@@ -50,8 +50,8 @@ switch ($_GET['act']) {
           $r = DB("SELECT uid FROM member WHERE username= :username", [":username" => $_POST['username']]);
           if (!empty($r)) {
             // Username already registered
-            $body['text'] = $lang['member']['username-dup'];
-            $body['redirect'] = $lang['interface']['hist-back'];
+            $body['text'] = $lang['username-dup'];
+            $body['redirect'] = $lang['hist-back'];
             $redirect = "javascript:history.back()";
             template("common_bang");
           }
@@ -71,20 +71,20 @@ switch ($_GET['act']) {
           $_SESSION['username'] = $_POST['username'];
         } else {
           // Already logged in, do not allow re-register
-          $body['text'] = $lang['member']['logged-in'];
-          $body['redirect'] = $lang['interface']['hist-back'];
+          $body['text'] = $lang['logged-in'];
+          $body['redirect'] = $lang['hist-back'];
           $redirect = "member.php";
           template("common_bang");
         }
       } else {
         // Some fields do not exist
-        $body['text'] = $lang['member']['empty-field'];
-        $body['redirect'] = $lang['interface']['hist-back'];
+        $body['text'] = $lang['empty-field'];
+        $body['redirect'] = $lang['hist-back'];
         $redirect = "javascript:history.back()";
         template("common_bang");
       }
     }
-    $title = $lang['member']['register'];
+    $title = $lang['register'];
     break;
 
 
@@ -103,8 +103,8 @@ switch ($_GET['act']) {
             if ($r[0]['count']>10) {
               if (($r[0]['lasttrial']+3600*24) > time()) {
                 // if temp ip ban still enforce
-                $body['text'] = $lang['member']['ip-ban-temp1'].(int)( (($r[0]['lasttrial']+3600*24) - time())/3600 ).$lang['member']['ip-ban-temp2'];
-                $body['redirect'] = $lang['interface']['hist-back'];
+                $body['text'] = $lang['ip-ban-temp1'].(int)( (($r[0]['lasttrial']+3600*24) - time())/3600 ).$lang['ip-ban-temp2'];
+                $body['redirect'] = $lang['hist-back'];
                 $redirect = "javascript:history.back()";
                 template("common_bang");
               }
@@ -114,8 +114,8 @@ switch ($_GET['act']) {
           $r = DB("SELECT uid, password, salt, failcount FROM member WHERE username= :username", [":username" => $_POST['username']]);
           if (empty($r)) {
             // User does not exist
-            $body['text'] = $lang['member']['username-dne'];
-            $body['redirect'] = $lang['interface']['hist-back'];
+            $body['text'] = $lang['username-dne'];
+            $body['redirect'] = $lang['hist-back'];
             $redirect = "javascript:history.back()";
             template("common_bang");
           }
@@ -128,8 +128,8 @@ switch ($_GET['act']) {
           if (!empty($s)) {
             if (($s[0]['logindate']+$bantime)>time()) {
               // login failed penalty
-              $body['text'] = $lang['member']['fail-penalty1'].($s[0]['logindate']+$bantime-time())." (/".$bantime.")".$lang['member']['fail-penalty2'];
-              $body['redirect'] = $lang['interface']['hist-back'];
+              $body['text'] = $lang['fail-penalty1'].($s[0]['logindate']+$bantime-time())." (/".$bantime.")".$lang['fail-penalty2'];
+              $body['redirect'] = $lang['hist-back'];
               $redirect = "javascript:history.back()";
               template("common_bang");
             }
@@ -159,22 +159,22 @@ switch ($_GET['act']) {
             // increase ipfail count
             DB("INSERT INTO member_failedip (ip, lasttrial) VALUES ( :ip, :lasttrial) ON DUPLICATE KEY UPDATE count=count+1, lasttrial= :lasttrial", [":ip" => $_SERVER['REMOTE_ADDR'], ":lasttrial" => time()]);
 
-            $body['text'] = $lang['member']['invalid-cred'];
-            $body['redirect'] = $lang['interface']['hist-back'];
+            $body['text'] = $lang['invalid-cred'];
+            $body['redirect'] = $lang['hist-back'];
             $redirect = "javascript:history.back()";
             template("common_bang");
           }
         } else {
           // Already logged in, do not allow re-register
-          $body['text'] = $lang['member']['logged-in'];
-          $body['redirect'] = $lang['interface']['hist-back'];
+          $body['text'] = $lang['logged-in'];
+          $body['redirect'] = $lang['hist-back'];
           $redirect = "member.php";
           template("common_bang");
         }
       } else {
         // Some fields do not exist
-        $body['text'] = $lang['member']['empty-field'];
-        $body['redirect'] = $lang['interface']['hist-back'];
+        $body['text'] = $lang['empty-field'];
+        $body['redirect'] = $lang['hist-back'];
         $redirect = "javascript:history.back()";
         template("common_bang");
       }
@@ -200,22 +200,22 @@ switch ($_GET['act']) {
             $encryptedPassword = md5($_POST['password'].$r[0]['salt']);
             DB("UPDATE member SET password=:password WHERE uid=:uid", [":password" => $encryptedPassword, ":uid" => $_SESSION['uid']]);
             // Modified password
-            $body['text'] = $lang['member']['modpwd'].$lang['interface']['success'];
-            $body['redirect'] = $lang['interface']['hist-back'];
+            $body['text'] = $lang['modpwd'].$lang['success'];
+            $body['redirect'] = $lang['hist-back'];
             $redirect = "member.php";
             template("common_bang");
           } else {
             // Incorrect password
-            $body['text'] = $lang['member']['modpwd'].$lang['interface']['fail']."：".$lang['member']['invalid-cred'];
-            $body['redirect'] = $lang['interface']['hist-back'];
+            $body['text'] = $lang['modpwd'].$lang['fail']."：".$lang['invalid-cred'];
+            $body['redirect'] = $lang['hist-back'];
             $redirect = "javascript: history.back()";
             template("common_bang");
           }
         }
       } else {
         // Some fields do not exist
-        $body['text'] = $lang['member']['empty-field'];
-        $body['redirect'] = $lang['interface']['hist-back'];
+        $body['text'] = $lang['empty-field'];
+        $body['redirect'] = $lang['hist-back'];
         $redirect = "javascript:history.back()";
         template("common_bang");
       }
