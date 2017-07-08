@@ -1,23 +1,26 @@
   <?=$body['text']?>
 
 
+
+
+
 <?php if ($_GET['act']=="register") : ?>
   <div>
     <form method="POST" action="member.php?act=register" id="regform" class="form">
       <div class="form-group">
-        <label for="regform_username" class=""><?=$lang['username']?></label>
+        <label for="regform_username" class=""><?=$lang['username']?></label><br>
         <input type="text" name="username" value="" id="regform_username">
       </div>
       <div class="form-group">
-        <label for="regform_password" class=""><?=$lang['password']?></label>
+        <label for="regform_password" class=""><?=$lang['password']?></label><br>
         <input type="password" name="password" value="" id="regform_password">
       </div>
       <div class="form-group">
-        <label for="regform_password2" class=""><?=$lang['password2']?></label>
+        <label for="regform_password2" class=""><?=$lang['password2']?></label><br>
         <input type="password" value="" id="regform_password2">
       </div>
       <div class="form-group">
-        <label for="regform_qq" class="">QQ</label>
+        <label for="regform_qq" class="">QQ</label><br>
         <input type="text" name="qq" value="" id="regform_qq">
       </div>
       <div class="form-group">
@@ -27,19 +30,25 @@
   </div>
 <?php endif ?>
 
+
+
+
+
+
+
 <?php if ($_GET['act']=="modpwd") : ?>
   <div>
     <form method="POST" action="member.php?act=modpwd" id="modpwdform" class="form">
       <div class="form-group">
-        <label for="modpwdform_currpwd" class=""><?=$lang['currpwd']?></label>
+        <label for="modpwdform_currpwd" class=""><?=$lang['currpwd']?></label><br>
         <input type="password" name="currpwd" value="" id="modpwdform_currpwd">
       </div>
       <div class="form-group">
-        <label for="modpwdform_password" class=""><?=$lang['new']?><?=$lang['password']?></label>
+        <label for="modpwdform_password" class=""><?=$lang['new']?><?=$lang['password']?></label><br>
         <input type="password" name="password" value="" id="modpwdform_password">
       </div>
       <div class="form-group">
-        <label for="modpwdform_password2" class=""><?=$lang['password2']?></label>
+        <label for="modpwdform_password2" class=""><?=$lang['password2']?></label><br>
         <input type="password" value="" id="modpwdform_password2">
       </div>
       <div class="form-group">
@@ -48,6 +57,33 @@
     </form>
   </div>
 <?php endif ?>
+
+
+
+
+
+
+
+<?php if ($_GET['act']=="modprofile") : ?>
+  <div>
+    <form method="POST" action="member.php?act=modprofile" id="modprofileform" class="form">
+      <?php foreach($user as $k => $v) : ?>
+      <div class="form-group">
+        <label for="modprofileform_<?=$k?>" class=""><?=$lang[$k]?></label><br>
+        <input type="text" name="<?=$k?>" value="<?=$v?>" id="modprofileform_currpwd">
+      </div>
+      <?php endforeach ?>
+      <div class="form-group">
+        <input type="submit" class="btn btn-default btn-primary" value="<?=$lang['submit']?>">
+      </div>
+    </form>
+  </div>
+<?php endif ?>
+
+
+
+
+
 
 
 <?php if ($_SESSION['uid'] > 0) : ?>

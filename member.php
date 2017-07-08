@@ -14,6 +14,7 @@ switch ($_GET['act']) {
 
 
   case "register":
+    $title = $lang['register'];
     if (array_key_exists("username", $_POST)) {
       if (array_key_exists("password", $_POST)) {
         if ($_SESSION['uid'] < 1) {
@@ -83,7 +84,6 @@ switch ($_GET['act']) {
         template("common_bang");
       }
     }
-    $title = $lang['register'];
     break;
 
 
@@ -93,6 +93,7 @@ switch ($_GET['act']) {
 
 
   case "login":
+    $title = $lang['login'];
     if (array_key_exists("username", $_POST)) {
       if (array_key_exists("password", $_POST)) {
         if ($_SESSION['uid'] < 1) {
@@ -198,6 +199,7 @@ switch ($_GET['act']) {
 
 
   case "modpwd":
+    $title = $lang['modpwd'];
     if (array_key_exists("currpwd", $_POST)) {
       if (array_key_exists("password", $_POST)) {
         if ($_SESSION['uid'] > 0) {
@@ -230,6 +232,35 @@ switch ($_GET['act']) {
       }
     }
     break;
+
+
+
+
+
+
+
+
+  case "modprofile":
+    $title = $lang['modprofile'];
+    if (array_key_exists("username", $_POST)) {
+      // fetch table keys
+      $r = DB("SELECT * FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
+      foreach ($_POST as $k => $v) {
+        // verify key existence
+        if(array_key_exists($k, $r[0])) {
+          // it is safe to execute
+          DB("UPDATE member SET ".$k."=:v WHERE uid=:uid", [":v" => $v, ":uid" => $_SESSION['uid']]);
+        } else {
+          exit("??????");
+        }
+      }
+    }
+    if ($_SESSION['uid'] > 0) {
+      $r = DB("SELECT username, qq, email FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
+      $user = $r[0];
+    }
+    break;
+
 
 
 
