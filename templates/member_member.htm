@@ -71,7 +71,7 @@
     <form method="POST" action="member.php?act=modprofile" id="modprofileform" class="form">
       <div class="form-group">
         <label for="modprofileform_avatar" class=""><?=$lang['avatar']?></label><br>
-        <img id="profile_avatar" class="avatar" src="http://localhost/api/avatar.php?qq=<?=$user['qq']?>">
+        <img id="profile_avatar" class="avatar" qq="<?=$user['qq']?>" src="">
         <input type="text" disabled="disabled" value="<?=$lang['use-qq-avatar']?>" id="modprofileform_avatar" class="form-control">
       </div>
       <?php foreach($user as $k => $v) : ?>
