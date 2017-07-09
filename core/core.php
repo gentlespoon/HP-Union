@@ -1,7 +1,9 @@
 <?php
 
 error_reporting(E_ALL);
-session_start();
+if(!isset($_SESSION)) {
+  session_start();
+}
 
 if (!defined("ROOT")) {
   define("ROOT", $_SERVER['DOCUMENT_ROOT']."/");
@@ -21,11 +23,12 @@ include_once(ROOT."develop.php");
 
 
 // Connect to database
-$dsn = "mysql:host=".$config['db']['host'].";dbname=".$config['db']['dtbs'].";charset=".$config['db']['char'];
-$username = $config['db']['user'];
-$password = $config['db']['pass'];
-
-$db = new PDO($dsn, $username, $password);
+if (!isset($db)) {
+  $dsn = "mysql:host=".$config['db']['host'].";dbname=".$config['db']['dtbs'].";charset=".$config['db']['char'];
+  $username = $config['db']['user'];
+  $password = $config['db']['pass'];
+  $db = new PDO($dsn, $username, $password);
+}
 
 // Initialize output
 $body = [
