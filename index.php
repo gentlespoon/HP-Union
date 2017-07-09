@@ -1,6 +1,6 @@
 <?php
 define("ROOT", $_SERVER['DOCUMENT_ROOT']."/");
-include_once(ROOT."core/core.php");
+include(ROOT."core/core.php");
 
 
 

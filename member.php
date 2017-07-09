@@ -1,6 +1,6 @@
 <?php
 define("ROOT", $_SERVER['DOCUMENT_ROOT']."/");
-include_once(ROOT."core/core.php");
+include(ROOT."core/core.php");
 
 
 // $body['text'] = printv($_POST, true);
@@ -69,6 +69,8 @@ switch ($_GET['act']) {
           // clear loginfail count
           DB("UPDATE member SET lastlogin= :lastlogin, failcount=0 WHERE uid= :uid", [":lastlogin" => time(), ":uid" => $r[0]['uid']]);
           $_SESSION['uid'] = $uid;
+          // refresh userinfo
+          include(ROOT."core/core.php");
         } else {
           // Already logged in, do not allow re-register
           $body['text'] = $lang['logged-in'];
