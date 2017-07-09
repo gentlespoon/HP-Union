@@ -7,7 +7,9 @@ if (!defined("ROOT")) {
   define("ROOT", $_SERVER['DOCUMENT_ROOT']."/");
 }
 
-$_starttime = microtime();
+$_starttime = microtime(true);
+// echo "START".$_starttime;
+
 
 include_once(ROOT."config/config.php");
 include_once(ROOT."core/time.php");

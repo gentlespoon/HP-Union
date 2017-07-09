@@ -57,8 +57,10 @@ function template($file, ...$extrafiles) {
   global $_GET;
   global $redirect;
   global $_starttime;
-  $_endtime = microtime();
+  $_endtime = microtime(true);
   $_runtime = $_endtime - $_starttime;
+  // echo "END".$_endtime;
+  // echo "RUN".$_runtime;
   include_once(ROOT."templates/common_header_html.htm");
   include_once(ROOT."templates/common_header_visual.htm");
   include_once(ROOT."templates/".$file.".htm");
