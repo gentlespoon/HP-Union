@@ -16,7 +16,6 @@ $_starttime = microtime(true);
 include_once(ROOT."config/config.php");
 include_once(ROOT."core/time.php");
 include_once(ROOT."core/func.php");
-include_once(ROOT."core/settings.php");
 include_once(ROOT."language.php");
 include_once(ROOT."develop.php");
 
@@ -30,6 +29,8 @@ if (!isset($db)) {
   $password = $config['db']['pass'];
   $db = new PDO($dsn, $username, $password);
 }
+
+include_once(ROOT."core/settings.php");
 
 // Initialize output
 $body = [
