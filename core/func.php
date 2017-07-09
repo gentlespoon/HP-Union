@@ -50,13 +50,14 @@ function printv($arr, $ret=false) {
 function template($file, ...$extrafiles) {
   // render the html template
   // this function will terminate the php execution
-  global $title;
-  global $body;
-  global $user;
-  global $lang;
   global $_GET;
-  global $redirect;
   global $_starttime;
+  global $body;
+  global $lang;
+  global $redirect;
+  global $settings;
+  global $title;
+  global $user;
   $_endtime = microtime(true);
   $_runtime = $_endtime - $_starttime;
   // echo "END".$_endtime;
