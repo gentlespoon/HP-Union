@@ -23,13 +23,17 @@ $(document).ready(function() {
     $("#modpwdform_password").val($.md5($("#modpwdform_password").val()));
   });
 
-
-  $.ajax({
-    url: "http://hp-union.com/api/avatar.php?qq="+$("#user_qq").text(),
-  }).done(function(done) {
-    var avatar = done.replace(/\\/g, "");
-    $("#nav_avatar").attr('src', avatar);
-    // alert(avatar);
-  });
+  // // getUserAvatar( user_qq, dom_obj_id_to_place_avatar );
+  // function getUserAvatar(qq, obj) {
+  //   $.ajax({
+  //     url: "http://localhost/api/avatar.php?qq="+$("#user_qq").text(),
+  //   }).done(function(done) {
+  //     var avatar = done.replace(/\\/g, "");
+  //     $(obj).attr('src', avatar);
+  //     // alert(avatar);
+  //   });
+  // }
+  //
+  // getUserAvatar($("#user_qq").text(), "#nav_avatar");
 
 });

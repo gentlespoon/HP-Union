@@ -44,7 +44,7 @@
                 </li>
               <?php endif ?>
               <?php if ($_SESSION['uid'] > 0) : ?>
-                <li><img id="nav_avatar" src=""></li>
+                <li><img id="nav_avatar" class="avatar" src="http://localhost/api/avatar.php?qq=<?=$user['qq']?>"></li>
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$user['username']?> <span class="caret"></span></a>
                   <ul class="dropdown-menu">

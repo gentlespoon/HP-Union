@@ -3,5 +3,20 @@
   height: 36px;
   width: 36px;
   margin-right: 10px;
+}
+
+.member_list_avatar {
+  height: 36px;
+  width: 36px;
+}
+
+
+.avatar {
   box-shadow: 0 0 2px 2px #cacaca;
+}
+
+#profile_avatar {
+  height: 130px;
+  width: 130px;
+  margin: 10px;
 }

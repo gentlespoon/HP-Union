@@ -1,6 +1,8 @@
 <?php
 
 $lang = [
+  "avatar" => "头像",
+  "use-qq-avatar" => "使用QQ头像",
   "developing" => "【正在做】",
   "currpwd" => "当前密码",
   "email" => "Email",

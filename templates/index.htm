@@ -10,6 +10,7 @@
     <table class="table table-striped">
       <thead>
         <tr>
+          <th><?=$lang['avatar']?></th>
           <?php foreach ($body['registered'][0] as $k => $v) : ?>
           <th><?=$lang[$k]?></th>
           <?php endforeach ?>
@@ -18,6 +19,7 @@
       <tbody>
         <?php foreach ($body['registered'] as $k_ => $v_) : ?>
         <tr>
+          <td><img id="avatar_uid_<?=$v_['uid']?>" class="member_list_avatar avatar" src="http://localhost/api/avatar.php?qq=<?=$v_['qq']?>"></td>
         <?php foreach ($v_ as $k => $v) : ?>
           <td><?=$v?></td>
         <?php endforeach ?>
