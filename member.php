@@ -143,6 +143,8 @@ switch ($_GET['act']) {
             // credentials correct
             // log this new user in
             $_SESSION['uid'] = $r[0]['uid'];
+            // refresh userinfo
+            include(ROOT."core/core.php");
 
             // insert login history
             DB("INSERT INTO member_loginhistory (uid, logindate, success, ip) VALUES ( :uid, :logindate, :success, :ip)", [":uid" => $r[0]['uid'], ":logindate" => time(), ":success" => 1, ":ip" => $_SERVER['REMOTE_ADDR']]);
