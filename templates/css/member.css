@@ -21,3 +21,14 @@
   width: 130px;
   margin: 10px;
 }
+
+.member_stat {
+  line-height: 2em;
+}
+.member_stat_title {
+  font-weight: bold;
+  margin-left: 20px;
+  margin-right: 20px;
+  min-width: 150px;
+  display: inline-block;
+}

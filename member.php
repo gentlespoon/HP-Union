@@ -155,6 +155,10 @@ switch ($_GET['act']) {
             if (empty($t)) {
               DB("INSERT INTO member_failedip (ip, lasttrial, count) VALUES ( :ip, :lasttrial, 0) ON DUPLICATE KEY UPDATE count=0, lasttrial= :lasttrial", [":ip" => $_SERVER['REMOTE_ADDR'], ":lasttrial" => time()]);
             }
+            $body['text'] = $lang['logged-in'];
+            $body['redirect'] = $lang['continue-browsing'];
+            $redirect = "";
+            template("common_bang");
           } else {
             // Incorrect credentials
             // insert login history
@@ -281,6 +285,7 @@ switch ($_GET['act']) {
     break;
   default:
     if ($_SESSION['uid'] > 0) {
+      // Fetch user info
       $member = DB("SELECT * FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
       $member = $member[0];
       unset($member['password']);
@@ -288,7 +293,19 @@ switch ($_GET['act']) {
       $member['usergroup'] = $member['group_id'];
       unset($member['group_id']);
       $member['lastlogin'] = toUserTime($member['lastlogin']);
-      // $member_count = DB("SELEC")
+      $member['regdate'] = toUserTime($member['regdate']);
+      // Fetch member count info
+      $member_count = DB("SELECT * FROM member_count WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
+      if (empty($member_count)) {
+        DB("INSERT INTO member_count (uid) VALUES (:uid)", [":uid" => $_SESSION['uid']]);
+      } else {
+        $member_count = $member_count[0];
+        foreach ($member_count as $k => $v) {
+          $member["count-".$k] = $v;
+        }
+        unset($member['count-uid']);
+      }
+
     }
 
 

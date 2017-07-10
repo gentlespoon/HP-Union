@@ -94,7 +94,8 @@
     <!-- <?php printv($member) ?> -->
     <?php foreach ($member as $k => $v) : ?>
     <div>
-      <h4><?=$lang[$k]?></h4><?=$v?>
+      <span class="member_stat member_stat_title"><?=$lang[$k]?></span>
+      <span class="member_stat"><?=$v?></span>
     </div>
     <?php endforeach ?>
   </div>
