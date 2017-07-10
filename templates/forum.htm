@@ -1,20 +1,10 @@
 <div>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <?php foreach ($body['forumlist'][0] as $k => $v) : ?>
-        <th><?=$k?></th>
-        <?php endforeach ?>
-      </tr>
-    </thead>
-    <tbody>
-      <?php foreach ($body['forumlist'] as $k_ => $forum) : ?>
-      <tr>
-      <?php foreach ($forum as $k => $v) : ?>
-        <td><?=$v?></td>
+  <div id="forumlist">
+    <?php foreach ($body['forumlist'] as $k_ => $forumgroup) : ?>
+    <div class="forumgroup"><?=$forumgroup['name']?></div>
+      <?php foreach ($forumgroup['subforum'] as $k => $forum) : ?>
+        <div class="subforum"><?=$forum['name']?></div>
       <?php endforeach ?>
-      </tr>
     <?php endforeach ?>
-    </tbody>
-  </table>
+  </div>
 </div>

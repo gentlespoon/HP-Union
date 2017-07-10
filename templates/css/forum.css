@@ -1,0 +1,12 @@
+#forumlist {
+  padding: 1em;
+}
+
+.forumgroup {
+  padding: 1em 2em;
+  font-weight: bold;
+}
+
+.subforum {
+  padding: 1em 4em;
+}
