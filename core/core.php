@@ -58,7 +58,11 @@ if (!array_key_exists("uid", $_SESSION)) {
 // Retrieve current user information
 if ($_SESSION['uid'] > 0) {
   $member = DB("SELECT username, qq FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
-  $member = $member[0];
+  if (isset($member[0])) {
+    $member = $member[0];
+  } else {
+   $member = ["username" => $lang['not-logged-in'], "qq" => 0];
+  }
 } else {
   $member = ["username" => $lang['not-logged-in'], "qq" => 0];
 }

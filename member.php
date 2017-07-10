@@ -71,6 +71,11 @@ switch ($_GET['act']) {
           $_SESSION['uid'] = $uid;
           // refresh userinfo
           include(ROOT."core/core.php");
+          $body['text'] = "<p>".$settings['registered-welcome']."</p>";
+          $body['text'] .= "<p>".$settings['login-welcome']."</p>";
+          $body['redirect'] = $lang['continue-browsing'];
+          $redirect = "member.php";
+          template("common_bang");
         } else {
           // Already logged in, do not allow re-register
           $body['text'] = $lang['logged-in'];
@@ -157,7 +162,7 @@ switch ($_GET['act']) {
             }
             $body['text'] = $lang['logged-in'];
             $body['redirect'] = $lang['continue-browsing'];
-            $redirect = "";
+            $redirect = "member.php";
             template("common_bang");
           } else {
             // Incorrect credentials

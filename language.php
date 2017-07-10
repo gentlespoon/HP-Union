@@ -36,6 +36,7 @@ $lang = [
   "qq" => "QQ",
   "regdate" => "注册时间",
   "register" => "注册",
+  "registered" => "已注册",
   "sitename" => "Un!on-囯阮麿砝帅朕舍仝",
   "status" => "状态",
   "submit" => "提交",

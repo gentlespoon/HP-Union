@@ -89,7 +89,7 @@
   <div>
     <?=$lang['not-logged-in']?>
   </div>
-<?php else : ?>
+<?php elseif (!isset($_GET['act']) || ($_GET['act'] == "")) : ?>
   <div>
     <!-- <?php printv($member) ?> -->
     <?php foreach ($member as $k => $v) : ?>
