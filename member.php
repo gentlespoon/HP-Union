@@ -3,8 +3,6 @@ define("ROOT", $_SERVER['DOCUMENT_ROOT']."/");
 include(ROOT."core/core.php");
 
 
-// $body['text'] = printv($_POST, true);
-
 switch ($_GET['act']) {
 
 
