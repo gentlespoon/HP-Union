@@ -44,10 +44,13 @@
                 </li>
               <?php endif ?>
               <?php if ($_SESSION['uid'] > 0) : ?>
-                <li><img id="nav_avatar" class="avatar" src="http://hp-union.com/static/images/default_avatar.jpg" qq="<?=$user['qq']?>" ></li>
+                <li><img id="nav_avatar" class="avatar" src="http://hp-union.com/static/images/default_avatar.jpg" qq="<?=$member['qq']?>" ></li>
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$user['username']?> <span class="caret"></span></a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$member['username']?> <span class="caret"></span></a>
                   <ul class="dropdown-menu">
+                    <li>
+                      <a href="member.php"><?=$lang['member-stat']?></a>
+                    </li>
                     <li>
                       <a href="member.php?act=modprofile"><?=$lang['modprofile']?></a>
                     </li>

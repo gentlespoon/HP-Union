@@ -25,9 +25,6 @@ function DB($sql, $param=[]) {
   }
 }
 
-// $rs = DB("SELECT * FROM common_member WHERE username= :username OR uid= :uid", [":username" => "尖头勺子", ":uid" => 2]);
-// print_r($rs);
-
 
 // Output wrapper
 
@@ -57,7 +54,7 @@ function template($file, ...$extrafiles) {
   global $redirect;
   global $settings;
   global $title;
-  global $user;
+  global $member;
   $_endtime = microtime(true);
   $_runtime = $_endtime - $_starttime;
   // echo "END".$_endtime;

@@ -255,13 +255,14 @@ switch ($_GET['act']) {
           // it is safe to execute
           DB("UPDATE member SET ".$k."=:v WHERE uid=:uid", [":v" => $v, ":uid" => $_SESSION['uid']]);
         } else {
+          // $_POST contains illegal keys
           exit("??????");
         }
       }
     }
     if ($_SESSION['uid'] > 0) {
       $r = DB("SELECT username, qq, email FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
-      $user = $r[0];
+      $member = $r[0];
     }
     break;
 
@@ -279,6 +280,16 @@ switch ($_GET['act']) {
 
     break;
   default:
+    if ($_SESSION['uid'] > 0) {
+      $member = DB("SELECT * FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
+      $member = $member[0];
+      unset($member['password']);
+      unset($member['salt']);
+      $member['usergroup'] = $member['group_id'];
+      unset($member['group_id']);
+      $member['lastlogin'] = toUserTime($member['lastlogin']);
+      // $member_count = DB("SELEC")
+    }
 
 
 }
