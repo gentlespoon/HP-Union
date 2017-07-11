@@ -24,10 +24,8 @@ switch ($_GET['act']) {
           $unamecheck = usernameMarkCensor($_POST['username'], $list);
           if ($unamecheck) {
             // Invalid username with marks
-            $body['text'] = $lang['invalid-username-1'].$unamecheck.$lang['invalid-username-3'];
-            $body['redirect'] = $lang['hist-back'];
-            $redirect = "javascript:history.back()";
-            template("common_bang");
+            $body['alerttype'] = "alert-danger";
+            $body['alert'] = $lang['invalid-username-1'].$unamecheck.$lang['invalid-username-3'];
           }
 
           // check for restricted usernames
@@ -39,20 +37,16 @@ switch ($_GET['act']) {
           $unamecheck = usernameMarkCensor($_POST['username'], $list);
           if ($unamecheck) {
             // Invalid username with marks
-            $body['text'] = $lang['invalid-username-2'].$unamecheck.$lang['invalid-username-3'];
-            $body['redirect'] = $lang['hist-back'];
-            $redirect = "javascript:history.back()";
-            template("common_bang");
+            $body['alerttype'] = "alert-danger";
+            $body['alert'] = $lang['invalid-username-2'].$unamecheck.$lang['invalid-username-3'];
           }
 
           // check for duplicate usernames
           $r = DB("SELECT uid FROM member WHERE username= :username", [":username" => $_POST['username']]);
           if (!empty($r)) {
             // Username already registered
-            $body['text'] = $lang['username-dup'];
-            $body['redirect'] = $lang['hist-back'];
-            $redirect = "javascript:history.back()";
-            template("common_bang");
+            $body['alerttype'] = "alert-danger";
+            $body['alert'] = $lang['username-dup'];
           }
 
           // register this new user
@@ -76,17 +70,16 @@ switch ($_GET['act']) {
           template("common_bang");
         } else {
           // Already logged in, do not allow re-register
-          $body['text'] = $lang['logged-in'];
+          $body['alerttype'] = "alert-success";
+          $body['alert'] = $lang['logged-in'];
           $body['redirect'] = $lang['hist-back'];
           $redirect = "member.php";
           template("common_bang");
         }
       } else {
         // Some fields do not exist
-        $body['text'] = $lang['empty-field'];
-        $body['redirect'] = $lang['hist-back'];
-        $redirect = "javascript:history.back()";
-        template("common_bang");
+        $body['alerttype'] = "alert-danger";
+        $body['alert'] = $lang['empty-field'];
       }
     }
     break;
@@ -108,10 +101,8 @@ switch ($_GET['act']) {
             if ($r[0]['count']>10) {
               if (($r[0]['lasttrial']+3600*24) > time()) {
                 // if temp ip ban still enforce
-                $body['text'] = $lang['ip-ban-temp1'].(int)( (($r[0]['lasttrial']+3600*24) - time())/3600 ).$lang['ip-ban-temp2'];
-                $body['redirect'] = $lang['hist-back'];
-                $redirect = "javascript:history.back()";
-                template("common_bang");
+                $body['alerttype'] = "alert-danger";
+                $body['alert'] = $lang['ip-ban-temp1'].(int)( (($r[0]['lasttrial']+3600*24) - time())/3600 ).$lang['ip-ban-temp2'];
               }
             }
           }
@@ -119,10 +110,8 @@ switch ($_GET['act']) {
           $r = DB("SELECT uid, password, salt, failcount FROM member WHERE username= :username", [":username" => $_POST['username']]);
           if (empty($r)) {
             // User does not exist
-            $body['text'] = $lang['username-dne'];
-            $body['redirect'] = $lang['hist-back'];
-            $redirect = "javascript:history.back()";
-            template("common_bang");
+            $body['alerttype'] = "alert-danger";
+            $body['alert'] = $lang['username-dne'];
           }
 
           // calculate fail login penalty time
@@ -133,10 +122,8 @@ switch ($_GET['act']) {
           if (!empty($s)) {
             if (($s[0]['logindate']+$bantime)>time()) {
               // login failed penalty
-              $body['text'] = $lang['fail-penalty1'].($s[0]['logindate']+$bantime-time())." (/".$bantime.")".$lang['fail-penalty2'];
-              $body['redirect'] = $lang['hist-back'];
-              $redirect = "javascript:history.back()";
-              template("common_bang");
+              $body['alerttype'] = "alert-danger";
+              $body['alert'] = $lang['fail-penalty1'].($s[0]['logindate']+$bantime-time())." (/".$bantime.")".$lang['fail-penalty2'];
             }
           }
 
@@ -158,10 +145,8 @@ switch ($_GET['act']) {
             if (empty($t)) {
               DB("INSERT INTO member_failedip (ip, lasttrial, count) VALUES ( :ip, :lasttrial, 0) ON DUPLICATE KEY UPDATE count=0, lasttrial= :lasttrial", [":ip" => $_SERVER['REMOTE_ADDR'], ":lasttrial" => time()]);
             }
-            $body['text'] = $lang['logged-in'];
-            $body['redirect'] = $lang['continue-browsing'];
-            $redirect = "member.php";
-            template("common_bang");
+            $body['alerttype'] = "alert-success";
+            $body['alert'] = $lang['logged-in'];
           } else {
             // Incorrect credentials
             // insert login history
@@ -180,24 +165,18 @@ switch ($_GET['act']) {
               $attempted .= $_POST['username'];
               DB("UPDATE member_failedip SET lasttrial=:lasttrial, count=count+1, attempted=:attempted WHERE ip=:ip", [":ip" => $_SERVER['REMOTE_ADDR'], ":lasttrial" => time(), ":attempted" => $attempted]);
             }
-            $body['text'] = $lang['invalid-cred'];
-            $body['redirect'] = $lang['hist-back'];
-            $redirect = "javascript:history.back()";
-            template("common_bang");
+            $body['alerttype'] = "alert-danger";
+            $body['alert'] = $lang['invalid-cred'];
           }
         } else {
           // Already logged in, do not allow re-register
-          $body['text'] = $lang['logged-in'];
-          $body['redirect'] = $lang['hist-back'];
-          $redirect = "member.php";
-          template("common_bang");
+          $body['alerttype'] = "alert-success";
+          $body['alert'] = $lang['logged-in'];
         }
       } else {
         // Some fields do not exist
-        $body['text'] = $lang['empty-field'];
-        $body['redirect'] = $lang['hist-back'];
-        $redirect = "javascript:history.back()";
-        template("common_bang");
+        $body['alerttype'] = "alert-danger";
+        $body['alert'] = $lang['empty-field'];
       }
     }
     break;
@@ -222,21 +201,18 @@ switch ($_GET['act']) {
             $encryptedPassword = md5($_POST['password'].$r[0]['salt']);
             DB("UPDATE member SET password=:password WHERE uid=:uid", [":password" => $encryptedPassword, ":uid" => $_SESSION['uid']]);
             // Modified password
-            $body['text'] = $lang['modpwd'].$lang['success'];
-            $body['redirect'] = $lang['hist-back'];
-            $redirect = "member.php";
-            template("common_bang");
+            $body['alerttype'] = "alert-success";
+            $body['alert'] = $lang['modpwd'].$lang['success'];
           } else {
             // Incorrect password
-            $body['text'] = $lang['modpwd'].$lang['fail']."：".$lang['invalid-cred'];
-            $body['redirect'] = $lang['hist-back'];
-            $redirect = "javascript: history.back()";
-            template("common_bang");
+            $body['alerttype'] = "alert-danger";
+            $body['alert'] = $lang['modpwd'].$lang['fail']."：".$lang['invalid-cred'];
           }
         }
       } else {
         // Some fields do not exist
-        $body['text'] = $lang['empty-field'];
+        $body['alerttype'] = "alert-danger";
+        $body['alert'] = $lang['empty-field'];
         $body['redirect'] = $lang['hist-back'];
         $redirect = "javascript:history.back()";
         template("common_bang");
@@ -265,12 +241,13 @@ switch ($_GET['act']) {
           // $_POST contains illegal keys
           exit("??????");
         }
+        $body['alerttype'] = "alert-success";
+        $body['alert'] = $lang['modprofile'].$lang['success'];
       }
     }
-    if ($_SESSION['uid'] > 0) {
-      $r = DB("SELECT username, qq, email FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
-      $member = $r[0];
-    }
+    // select columns which users are allowed to modify
+    $member = DB("SELECT username, qq, email FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
+    $member = $member[0];
     break;
 
 
@@ -284,8 +261,17 @@ switch ($_GET['act']) {
   case "logout":
     $_SESSION['username'] = "";
     $_SESSION['uid'] = 0;
-
+    $body['alerttype'] = "alert-success";
+    $body['alert'] = $lang['logged-out'];
+    $body['redirect'] = $lang['continue-browsing'];
+    $redirect = "index.php";
+    template("common_bang");
     break;
+
+
+
+
+
   default:
     if ($_SESSION['uid'] > 0) {
       // Fetch user info
@@ -310,9 +296,7 @@ switch ($_GET['act']) {
       }
 
     }
-
-
 }
 
 
-template("member_member");
+template("member");

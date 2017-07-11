@@ -9,8 +9,9 @@ if (!defined("ROOT")) {
   define("ROOT", $_SERVER['DOCUMENT_ROOT']."/");
 }
 
-$_starttime = microtime(true);
-// echo "START".$_starttime;
+if (!isset($_starttime)) {
+  $_starttime = microtime(true);
+}
 
 
 include_once(ROOT."config/config.php");
@@ -33,9 +34,11 @@ if (!isset($db)) {
 include_once(ROOT."core/settings.php");
 
 // Initialize output
-$body = [
-  "text" => "",
-];
+if (!isset($body)) {
+  $body = [
+    "text" => "",
+  ];
+}
 
 // Process submitted info
 foreach ($_GET as $k => $v) {
