@@ -28,7 +28,11 @@ if (!isset($db)) {
   $dsn = "mysql:host=".$config['db']['host'].";dbname=".$config['db']['dtbs'].";charset=".$config['db']['char'];
   $username = $config['db']['user'];
   $password = $config['db']['pass'];
-  $db = new PDO($dsn, $username, $password);
+  try {
+    $db = new PDO($dsn, $username, $password);
+  } catch (Exception $error) {
+    die("Cannot connect to database.");
+  }
 }
 
 include_once(ROOT."core/settings.php");
