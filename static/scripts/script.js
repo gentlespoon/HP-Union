@@ -4,6 +4,7 @@ $(document).ready(function() {
       alert("用户名不能为空");
       return false;
     }
+    return false;
     if ($("#loginform_password").val() == "") {
       alert("密码不能为空");
       return false;
@@ -16,6 +17,10 @@ $(document).ready(function() {
     if ($("#regform_username").val() == "") {
       alert("用户名不能为空");
       return false;
+    }
+    if ($("#regform_username").val().length > 12) {
+      alert("用户名不能超过12个字");
+      false
     }
     if ($("#regform_password").val() == "") {
       alert("密码不能为空");
