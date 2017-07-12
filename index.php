@@ -10,7 +10,29 @@ foreach ($r as $k => $v) {
   $r[$k]['lastlogin'] = toUserTime($r[$k]['lastlogin']);
 }
 
-$body['text'] = "<br>".$lang['register'].$lang['user'].": ";
+
+$forum_hierarchy = [];
+$forumlist = DB("SELECT * FROM forum_forum WHERE visible>0");
+
+// construct top level forum hierarchy
+foreach ($forumlist as $k => $forum) {
+  if ($forum['parent_fid'] == 0) {
+    $forum_hierarchy[$forum['fid']] = $forum;
+    $forum_hierarchy[$forum['fid']]['subforum'] = [];
+  }
+}
+
+// construct second level forum hierarchy
+foreach ($forumlist as $k => $forum) {
+  if ($forum['parent_fid'] > 0) {
+    $forum_hierarchy[$forum['parent_fid']]['subforum'][$forum['fid']] = $forum;
+  }
+}
+
+
 $body['registered'] = $r;
+
+$body['forumlist'] = $forum_hierarchy;
+
 
 template("index");

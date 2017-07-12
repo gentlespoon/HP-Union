@@ -9,8 +9,9 @@ if (!defined("ROOT")) {
   define("ROOT", $_SERVER['DOCUMENT_ROOT']."/");
 }
 
-$_starttime = microtime(true);
-// echo "START".$_starttime;
+if (!isset($_starttime)) {
+  $_starttime = microtime(true);
+}
 
 
 include_once(ROOT."config/config.php");
@@ -37,9 +38,11 @@ if (!isset($db)) {
 include_once(ROOT."core/settings.php");
 
 // Initialize output
-$body = [
-  "text" => "",
-];
+if (!isset($body)) {
+  $body = [
+    "text" => "",
+  ];
+}
 
 // Process submitted info
 foreach ($_GET as $k => $v) {
@@ -61,8 +64,12 @@ if (!array_key_exists("uid", $_SESSION)) {
 
 // Retrieve current user information
 if ($_SESSION['uid'] > 0) {
-  $user = DB("SELECT username, qq FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
-  $user = $user[0];
+  $member = DB("SELECT username, qq FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
+  if (isset($member[0])) {
+    $member = $member[0];
+  } else {
+   $member = ["username" => $lang['not-logged-in'], "qq" => 0];
+  }
 } else {
-  $user = ["username" => $lang['not-logged-in'], "qq" => 0];
+  $member = ["username" => $lang['not-logged-in'], "qq" => 0];
 }
