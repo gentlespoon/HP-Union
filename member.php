@@ -18,6 +18,14 @@ switch ($_GET['act']) {
         if ($_SESSION['uid'] < 1) {
           // begin registration
 
+          // if empty username
+          if ($_POST['username'] == "") {
+            // Invalid username with marks
+            $body['alerttype'] = "alert-danger";
+            $body['alert'] = $lang['blank-username'];
+            break;
+          }
+
           // check for marks in username
           $list = "!@#$%^&*{[(<>)]};'\" `~?/\\|=+";
           $list = str_split($list);
@@ -26,6 +34,7 @@ switch ($_GET['act']) {
             // Invalid username with marks
             $body['alerttype'] = "alert-danger";
             $body['alert'] = $lang['invalid-username-1'].$unamecheck.$lang['invalid-username-3'];
+            break;
           }
 
           // check for restricted usernames
@@ -39,6 +48,7 @@ switch ($_GET['act']) {
             // Invalid username with marks
             $body['alerttype'] = "alert-danger";
             $body['alert'] = $lang['invalid-username-2'].$unamecheck.$lang['invalid-username-3'];
+            break;
           }
 
           // check for duplicate usernames
@@ -47,6 +57,7 @@ switch ($_GET['act']) {
             // Username already registered
             $body['alerttype'] = "alert-danger";
             $body['alert'] = $lang['username-dup'];
+            break;
           }
 
           // register this new user
@@ -68,6 +79,7 @@ switch ($_GET['act']) {
           $body['redirect'] = $lang['continue-browsing'];
           $redirect = "member.php";
           template("common_bang");
+          break;
         } else {
           // Already logged in, do not allow re-register
           $body['alerttype'] = "alert-success";
@@ -75,11 +87,13 @@ switch ($_GET['act']) {
           $body['redirect'] = $lang['hist-back'];
           $redirect = "member.php";
           template("common_bang");
+          break;
         }
       } else {
         // Some fields do not exist
         $body['alerttype'] = "alert-danger";
         $body['alert'] = $lang['empty-field'];
+        break;
       }
     }
     break;
@@ -103,6 +117,7 @@ switch ($_GET['act']) {
                 // if temp ip ban still enforce
                 $body['alerttype'] = "alert-danger";
                 $body['alert'] = $lang['ip-ban-temp1'].(int)( (($r[0]['lasttrial']+3600*24) - time())/3600 ).$lang['ip-ban-temp2'];
+                break;
               }
             }
           }
@@ -112,6 +127,7 @@ switch ($_GET['act']) {
             // User does not exist
             $body['alerttype'] = "alert-danger";
             $body['alert'] = $lang['username-dne'];
+            break;
           }
 
           // calculate fail login penalty time
@@ -124,6 +140,7 @@ switch ($_GET['act']) {
               // login failed penalty
               $body['alerttype'] = "alert-danger";
               $body['alert'] = $lang['fail-penalty1'].($s[0]['logindate']+$bantime-time())." (/".$bantime.")".$lang['fail-penalty2'];
+              break;
             }
           }
 
@@ -147,6 +164,7 @@ switch ($_GET['act']) {
             }
             $body['alerttype'] = "alert-success";
             $body['alert'] = $lang['logged-in'];
+            break;
           } else {
             // Incorrect credentials
             // insert login history
@@ -167,16 +185,19 @@ switch ($_GET['act']) {
             }
             $body['alerttype'] = "alert-danger";
             $body['alert'] = $lang['invalid-cred'];
+            break;
           }
         } else {
           // Already logged in, do not allow re-register
           $body['alerttype'] = "alert-success";
           $body['alert'] = $lang['logged-in'];
+          break;
         }
       } else {
         // Some fields do not exist
         $body['alerttype'] = "alert-danger";
         $body['alert'] = $lang['empty-field'];
+        break;
       }
     }
     break;
@@ -203,19 +224,19 @@ switch ($_GET['act']) {
             // Modified password
             $body['alerttype'] = "alert-success";
             $body['alert'] = $lang['modpwd'].$lang['success'];
+            break;
           } else {
             // Incorrect password
             $body['alerttype'] = "alert-danger";
             $body['alert'] = $lang['modpwd'].$lang['fail']."：".$lang['invalid-cred'];
+            break;
           }
         }
       } else {
         // Some fields do not exist
         $body['alerttype'] = "alert-danger";
         $body['alert'] = $lang['empty-field'];
-        $body['redirect'] = $lang['hist-back'];
-        $redirect = "javascript:history.back()";
-        template("common_bang");
+        break;
       }
     }
     break;
@@ -243,6 +264,7 @@ switch ($_GET['act']) {
         }
         $body['alerttype'] = "alert-success";
         $body['alert'] = $lang['modprofile'].$lang['success'];
+        break;
       }
     }
     // select columns which users are allowed to modify
@@ -263,9 +285,6 @@ switch ($_GET['act']) {
     $_SESSION['uid'] = 0;
     $body['alerttype'] = "alert-success";
     $body['alert'] = $lang['logged-out'];
-    $body['redirect'] = $lang['continue-browsing'];
-    $redirect = "index.php";
-    template("common_bang");
     break;
 
 

@@ -2,6 +2,7 @@
 
 $lang = [
   "avatar" => "头像",
+  "blank-username" => "用户名不能为空",
   "use-qq-avatar" => "使用QQ头像",
   "developing" => "【正在做】",
   "continue-browsing" => "继续浏览",
