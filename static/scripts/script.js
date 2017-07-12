@@ -1,10 +1,26 @@
 $(document).ready(function() {
   $("#loginform").submit(function() {
+    if ($("#loginform_username").val() == "") {
+      alert("用户名不能为空");
+      return false;
+    }
+    if ($("#loginform_password").val() == "") {
+      alert("密码不能为空");
+      return false;
+    }
     $("#loginform_password").val($.md5($("#loginform_password").val()));
   });
 
 
   $("#regform").submit(function() {
+    if ($("#regform_username").val() == "") {
+      alert("用户名不能为空");
+      return false;
+    }
+    if ($("#regform_password").val() == "") {
+      alert("密码不能为空");
+      return false;
+    }
     if ($("#regform_password").val() != $("#regform_password2").val()) {
       alert("两次输入的密码不同");
       return false;
@@ -15,8 +31,12 @@ $(document).ready(function() {
 
 
   $("#modpwdform").submit(function() {
+    if ($("#modpwdform_password").val() == "") {
+      alert("密码不能为空");
+      return false;
+    }
     if ($("#modpwdform_password").val() != $("#modpwdform_password2").val()) {
-      alert("两次输入的新密码不同");
+      alert("两次输入的密码不同");
       return false;
     }
     $("#modpwdform_currpwd").val($.md5($("#modpwdform_currpwd").val()));
