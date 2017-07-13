@@ -59,14 +59,14 @@ function template($file, ...$extrafiles) {
   $_runtime = $_endtime - $_starttime;
   // echo "END".$_endtime;
   // echo "RUN".$_runtime;
-  include_once(ROOT."templates/common_header_html.htm");
-  include_once(ROOT."templates/common_header_visual.htm");
-  include_once(ROOT."templates/".$file.".htm");
+  include_once(ROOT."templates/".$settings['template']."/common_header_html.htm");
+  include_once(ROOT."templates/".$settings['template']."/common_header_visual.htm");
+  include_once(ROOT."templates/".$settings['template']."/".$file.".htm");
   foreach ($extrafiles as $k => $v) {
-    include_once(ROOT."templates/".$v.".htm");
+    include_once(ROOT."templates/".$settings['template']."/".$v.".htm");
   }
-  include_once(ROOT."templates/common_footer_visual.htm");
-  include_once(ROOT."templates/common_footer_html.htm");
+  include_once(ROOT."templates/".$settings['template']."/common_footer_visual.htm");
+  include_once(ROOT."templates/".$settings['template']."/common_footer_html.htm");
 
   exit();
 }
