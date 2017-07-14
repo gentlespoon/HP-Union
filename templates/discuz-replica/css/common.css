@@ -1,20 +1,8 @@
 body {
-  /*padding-top: 70px;*/
-  /* bootstrap navbar height is 50px, +20px for whitespace */
-  /*padding-bottom: 30px;*/
-  padding-top: 10px;
-  padding-bottom: 50px;
-}
-
-.navbar {
-  /*color: #cacaca;*/
-  /*line-height: 40px;*/
-}
-
-#loginform {
-  padding: 1em;
-  /*margin: 5px;*/
-  /*line-height: 20px;*/
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif, Helvetica, Arial, 微软正黑, 微软雅黑;
+  font-size: 14px;
 }
 
 
@@ -23,4 +11,80 @@ body {
   position: fixed;
   bottom: 0;
   width: 100%;
+}
+
+.wrapper {
+  width: 960px;
+  margin: 0 auto;
+}
+
+#nav_top {
+  width: 100%;
+  background-color: #F2F2F2;
+  height: 29px;
+  line-height: 29px;
+  border-bottom: 1px solid #CDCDCD;
+}
+
+#nav_top_left {
+  float: left;
+}
+
+#nav_top_right {
+  float: right;
+}
+
+a {
+  text-decoration: none;
+  color: initial;
+}
+
+button {
+  cursor: pointer;
+}
+
+#bannerbar {
+  display: block;
+}
+
+.banner {
+  display: inline-block;
+}
+
+.userpanel {
+  padding: 1em 1em;
+  float: right;
+  display: inline-block;
+  text-align: right;
+  vertical-align: top;
+}
+
+#loginform {
+  float: right;
+}
+
+#nav_main {
+  height: 33px;
+  background: -webkit-linear-gradient(#2D7ECF,#2267B5); /* Safari 5.1-6.0 */
+  background: -o-linear-gradient(#2D7ECF,#2267B5); /* Opera 11.1-12.0 */
+  background: -moz-linear-gradient(#2D7ECF,#2267B5); /* Firefox 3.6-15 */
+  background: linear-gradient(#2D7ECF,#2267B5); /* Standard syntax */
+}
+
+.nav_main_item {
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+  float: left;
+  display: block;
+  padding: 0 1em;
+  line-height: 33px;
+  border-right: 1px solid #5D9EEF;
+}
+
+.nav_main_active {
+  background: -webkit-linear-gradient(#0B59AD,#223E96); /* Safari 5.1-6.0 */
+  background: -o-linear-gradient(#0B59AD,#223E96); /* Opera 11.1-12.0 */
+  background: -moz-linear-gradient(#0B59AD,#223E96); /* Firefox 3.6-15 */
+  background: linear-gradient(#0B59AD,#223E96); /* Standard syntax */
 }
