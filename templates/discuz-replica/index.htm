@@ -1,0 +1,70 @@
+<div>
+  <p>网站预计上线时间——2020年7月1日</p>
+  <p>_(:з」∠)_忘记密码怎么办？——开发者也没办法，好好回忆吧。</p>
+  <p>←_←注册的时候记得填QQ号码←_←我们用的是QQ头像。</p>
+  <p>
+    下一步做的功能是- - 可能是发帖吧，我也不知道。<br>
+    问产品策划 G-Wind (100665179)。
+  </p>
+  <p>
+    你们注册名字写那么长是想干什么？？<br>
+    已经修复了！以后最多12个字。
+  </p>
+</div>
+
+<?php if (isset($body['alert']) and ($body['alert']!="")) : ?>
+<div class="alert <?=$body['alerttype']?>"><?=$body['alert']?></div>
+<?php endif ?>
+
+<?=$body['text']?>
+
+<div>
+  <?php foreach ($body['forumlist'] as $k_ => $forumgroup) : ?>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><?=$forumgroup['name']?></h3>
+      </div>
+      <div class="panel-body">
+        <?php foreach ($forumgroup['subforum'] as $k => $forum) : ?>
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h4 class="panel-title"><?=$forum['name']?></h4>
+            </div>
+            <div class="panel-body">
+              <?=$forum['description']?>
+            </div>
+          </div>
+        <?php endforeach ?>
+      </div>
+    </div>
+  <?php endforeach ?>
+</div>
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title"><?=$lang['registered'].$lang['user']?></h3>
+  </div>
+  <div class="panel-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><?=$lang['avatar']?></th>
+          <?php foreach ($body['registered'][0] as $k => $v) : ?>
+          <th><?=$lang[$k]?></th>
+          <?php endforeach ?>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($body['registered'] as $k_ => $v_) : ?>
+        <tr>
+          <td><img id="avatar_uid_<?=$v_['uid']?>" class="member_list_avatar avatar" src="http://hp-union.com/static/images/default_avatar.jpg" qq="<?=$v_['qq']?>"></td>
+        <?php foreach ($v_ as $k => $v) : ?>
+          <td><?=$v?></td>
+        <?php endforeach ?>
+        </tr>
+      <?php endforeach ?>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -47,6 +47,7 @@ function printv($arr, $ret=false) {
 function template($file, ...$extrafiles) {
   // render the html template
   // this function will terminate the php execution
+  global $_SESSION;
   global $_GET;
   global $_starttime;
   global $body;

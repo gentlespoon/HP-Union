@@ -24,14 +24,3 @@ body {
   bottom: 0;
   width: 100%;
 }
-
-.wrapper {
-  width: 960px;
-  margin: 0 auto;
-}
-
-#nav_top {
-  width: 100%;
-  background-color: grey;
-  height: 20px;
-}

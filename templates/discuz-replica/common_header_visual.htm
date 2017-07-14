@@ -1,9 +1,51 @@
 <div title="#common_header_visual">
   <div id="nav_top">
-    <div class="wrapper">12345</div>
+    <div class="wrapper">
+      <div id="nav_top_left">Left Top Nav Items</div>
+      <div id="nav_top_right">Right Top Nav Items</div>
+    </div>
   </div>
+
+
+
+  <div class="wrapper" id="bannerbar">
+    <div class="banner">
+      <a href="./" title="<?=$settings['sitename']?>"><img src="static/images/banner.png" alt="<?=$settings['sitename']?>"></a>
+    </div>
+    <div class="userpanel">
+      <?php if ( $_SESSION['uid'] == 0 ) : ?>
+        <form method="post" autocomplete="off" id="loginform" action="member.php?act=login">
+          <table celloginformpacing="0" cellpadding="0">
+            <tbody>
+              <tr>
+                <td align="left"><label for="loginform_username">用户名</label></td>
+                <td align="center"><input type="text" name="username" id="loginform_username" autocomplete="off" tabindex="901"></td>
+                <td align="center"><a href="member.php?act=register">注册</a></td>
+              </tr>
+              <tr>
+                <td align="left"><label for="loginform_password" class="z psw_w">密码</label></td>
+                <td align="center"><input type="password" name="password" id="loginform_password" autocomplete="off" tabindex="902"></td>
+                <td align="center"><button type="submit" class="pn vm" tabindex="903">登录</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+      <?php endif ?>
+      <?php if ( $_SESSION['uid'] > 0 ) : ?>
+        <a href="member.php"><img id="nav_avatar" class="avatar" src="http://hp-union.com/static/images/default_avatar.jpg" qq="<?=$member['qq']?>" ><?=$member['username']?></a>
+        <a href="member.php?act=modprofile"><?=$lang['modprofile']?></a>
+        <a href="member.php?act=modpwd"><?=$lang['modpwd']?></a>
+        <a href="member.php?act=logout"><?=$lang['logout']?></a>
+      <?php endif ?>
+    </div>
+  </div>
+
+
+  <div id="nav_main" class="wrapper">
+    <div class="nav_main_item nav_main_active">This is the main navigation bar</div>
+    <div class="nav_main_item">The 2nd nav item</div>
+  </div>
+
 </div>
-
-
 
 <div class="wrapper" id="canvas" title="#canvas">
