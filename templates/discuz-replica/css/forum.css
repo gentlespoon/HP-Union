@@ -13,12 +13,21 @@
   border-bottom: 1px solid #C2D5E3;
 }
 .forumgroup-body {
+<<<<<<< HEAD
   padding: 1em;
+=======
+  padding: 0 10px;
+>>>>>>> 855f82de6e68a06d30e3eb5cf0337128dc3bbc0f
 }
 
 .forum {
   border-bottom: 1px dashed #C2D5E3;
+<<<<<<< HEAD
   padding: 1em;
+=======
+  margin: 1em 1em;
+  padding-bottom: 1em;
+>>>>>>> 855f82de6e68a06d30e3eb5cf0337128dc3bbc0f
 }
 .forum-heading {
   font-weight: bold;
