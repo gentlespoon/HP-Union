@@ -8,8 +8,7 @@ body {
 
 #footer {
   font-size: 0.8em;
-  position: fixed;
-  bottom: 0;
+  margin-bottom: 5em;
   width: 100%;
 }
 
@@ -26,12 +25,14 @@ body {
   border-bottom: 1px solid #CDCDCD;
 }
 
-#nav_top_left {
+.left {
   float: left;
+  text-align: left;
 }
 
-#nav_top_right {
+.right {
   float: right;
+  text-align: right;
 }
 
 a {
@@ -94,7 +95,7 @@ button {
 
 
 #canvas {
-  margin-bottom: 50px;
+  margin-bottom: 2em;
 }
 
 
