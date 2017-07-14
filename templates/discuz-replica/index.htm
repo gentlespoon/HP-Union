@@ -20,17 +20,17 @@
 
 <div>
   <?php foreach ($body['forumlist'] as $k_ => $forumgroup) : ?>
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title"><?=$forumgroup['name']?></h3>
+    <div class="forumgroup">
+      <div class="forumgroup-heading">
+        <a href="forum.php?act=forum&fid=<?=$forumgroup['fid']?>"><?=$forumgroup['name']?></a>
       </div>
-      <div class="panel-body">
+      <div class="forumgroup-body">
         <?php foreach ($forumgroup['subforum'] as $k => $forum) : ?>
-          <div class="panel panel-info">
-            <div class="panel-heading">
-              <h4 class="panel-title"><?=$forum['name']?></h4>
+          <div class="forum">
+            <div class="forum-heading">
+              <a href="forum.php?act=forum&fid=<?=$forum['fid']?>"><?=$forum['name']?></a>
             </div>
-            <div class="panel-body">
+            <div class="forum-body">
               <?=$forum['description']?>
             </div>
           </div>
@@ -41,12 +41,12 @@
 </div>
 
 
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h3 class="panel-title"><?=$lang['registered'].$lang['user']?></h3>
+<div class="forumgroup">
+  <div class="forumgroup-heading">
+    <?=$lang['registered'].$lang['user']?>
   </div>
-  <div class="panel-body">
-    <table class="table table-striped">
+  <div class="forumgroup-body">
+    <table class="col-12 table-striped">
       <thead>
         <tr>
           <th><?=$lang['avatar']?></th>

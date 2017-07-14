@@ -1,0 +1,66 @@
+<?php if (isset($body['alert']) and ($body['alert'] != "")) : ?>
+<div class="alert <?=$body['alerttype']?>"><?= $body['alert'] ?></div>
+<?php endif ?>
+
+<?php if ($_GET['act'] == "forum") : ?>
+<div>
+  <?php foreach ($body['forum'] as $fk => $forumgroup) : ?>
+    <div class="forumgroup">
+      <div class="forumgroup-heading">
+        <a href="forum.php?act=forum&fid=<?=$forumgroup['fid']?>"><?=$forumgroup['name']?></a>
+      </div>
+      <div class="forumgroup-body">
+        <?php if (empty($forumgroup['subforum'])) : ?>
+          <?=$forumgroup['description']?>
+        <?php else : ?>
+          <?php foreach ($forumgroup['subforum'] as $k => $forum) : ?>
+            <div class="forum">
+              <div class="forum-heading">
+                <a href="forum.php?act=forum&fid=<?=$forum['fid']?>"><?=$forum['name']?></a>
+              </div>
+              <div class="forum-body">
+                <?=$forum['description']?>
+              </div>
+            </div>
+          <?php endforeach ?>
+        <?php endif ?>
+      </div>
+    </div>
+  <?php endforeach ?>
+</div>
+
+<div>
+  <table class="col-12 table-hover">
+    <thead>
+      <tr>
+        <th><?= $lang['thread-title'] ?></th>
+        <th><?= $lang['thread-author'] ?></th>
+        <th><?= $lang['thread-sendtime'] ?></th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach ($body['threads'] as $k => $v) : ?>
+      <tr>
+        <th><a href="forum.php?act=thread&tid=<?= $v['tid'] ?>"><?= $v['title'] ?></a></th>
+        <th><?= $v['username'] ?></th>
+        <th><?= $v['sendtime'] ?></th>
+      </tr>
+      <?php endforeach ?>
+    </tbody>
+  </table>
+</div>
+<?php endif ?>
+
+<?php if ($_GET['act'] == "thread") : ?>
+<div>
+  <?php foreach ($body['posts'] as $k => $v) : ?>
+    <div class="panel panel-default">
+      <div class="panel-heading"><?= $v['title'] ?></div>
+      <div class="panel-body">
+        <?= $v['content'] ?>
+      </div>
+      <div class="panel-footer"><?= $lang['post-author'] ?>: <?= $v['username'] ?> <?= $lang['post-sendtime'] ?>: <?= $v['sendtime'] ?></div>
+    </div>
+  <?php endforeach ?>
+</div>
+<?php endif ?>

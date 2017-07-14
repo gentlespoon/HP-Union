@@ -2,7 +2,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: sans-serif, Helvetica, Arial, 微软正黑, 微软雅黑;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 
@@ -37,6 +37,9 @@ body {
 a {
   text-decoration: none;
   color: initial;
+}
+a:hover {
+    text-decoration: underline;
 }
 
 button {
@@ -87,4 +90,55 @@ button {
   background: -o-linear-gradient(#0B59AD,#223E96); /* Opera 11.1-12.0 */
   background: -moz-linear-gradient(#0B59AD,#223E96); /* Firefox 3.6-15 */
   background: linear-gradient(#0B59AD,#223E96); /* Standard syntax */
+}
+
+
+#canvas {
+  margin-bottom: 50px;
+}
+
+
+
+.col-12 {
+  width: 100%;
+}
+.col-11 {
+  width: calc( 100% / 12 * 11 );
+}
+.col-10 {
+  width: calc( 100% / 6 * 5 );
+}
+.col-9 {
+  width: calc( 100% / 4 * 3 );
+}
+.col-8 {
+  width: calc( 100% / 3 * 2 );
+}
+.col-7 {
+  width: calc( 100% / 12 * 7 );
+}
+.col-6 {
+  width: calc( 100% / 2 );
+}
+.col-5 {
+  width: calc( 100% / 12 * 5 );
+}
+.col-4 {
+  width: calc( 100% / 3 );
+}
+.col-3 {
+  width: calc( 100% / 4 );
+}
+.col-2 {
+  width: calc( 100% / 6 );
+}
+.col-1 {
+  width: calc( 100% / 12 );
+}
+
+.table-striped > tbody > tr > td {
+  border-bottom: 1px dotted #ddd;
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
 }
