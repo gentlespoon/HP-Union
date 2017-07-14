@@ -48,4 +48,14 @@ $lang = [
   "username" => "用户名",
   "username-dup" => "用户名已被注册",
   "username-dne" => "用户名不存在",
+  // forum
+  "invalid-forum-id" => "论坛分区不存在",
+  "thread-title" => "标题",
+  "thread-author" => "发贴人",
+  "thread-sendtime" => "发表时间",
+  "unknown-user" => "未知用户",
+  "invalid-thread-id" => "帖子不存在",
+  // post
+  "post-author" => "作者",
+  "post-sendtime" => "发布时间",
 ];

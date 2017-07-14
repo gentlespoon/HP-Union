@@ -22,13 +22,13 @@
     <?php foreach ($body['forumlist'] as $k_ => $forumgroup) : ?>
       <div class="panel panel-primary">
         <div class="panel-heading">
-          <h3 class="panel-title"><?=$forumgroup['name']?></h3>
+          <h3 class="panel-title"><a href="forum.php?act=forum&fid=<?=$forumgroup['fid']?>"><?=$forumgroup['name']?></a></h3>
         </div>
         <div class="panel-body">
           <?php foreach ($forumgroup['subforum'] as $k => $forum) : ?>
             <div class="panel panel-info">
               <div class="panel-heading">
-                <h4 class="panel-title"><?=$forum['name']?></h4>
+                <h4 class="panel-title"><a href="forum.php?act=forum&fid=<?=$forum['fid']?>"><?=$forum['name']?></a></h4>
               </div>
               <div class="panel-body">
                 <?=$forum['description']?>
