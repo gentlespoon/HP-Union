@@ -18,14 +18,14 @@
           <table celloginformpacing="0" cellpadding="0">
             <tbody>
               <tr>
-                <td align="left"><label for="loginform_username">用户名</label></td>
+                <td align="left"><label for="loginform_username"><?=$lang['account']?></label></td>
                 <td align="center"><input type="text" name="username" id="loginform_username" autocomplete="off" tabindex="901"></td>
-                <td align="center"><a href="member.php?act=register">注册</a></td>
+                <td align="center"><a href="member.php?act=register"><?=$lang['register']?></a></td>
               </tr>
               <tr>
-                <td align="left"><label for="loginform_password" class="z psw_w">密码</label></td>
+                <td align="left"><label for="loginform_password"><?=$lang['password']?></label></td>
                 <td align="center"><input type="password" name="password" id="loginform_password" autocomplete="off" tabindex="902"></td>
-                <td align="center"><button type="submit" class="pn vm" tabindex="903">登录</button></td>
+                <td align="center"><button type="submit" tabindex="903"><?=$lang['login']?></button></td>
               </tr>
             </tbody>
           </table>

@@ -1,0 +1,28 @@
+.forumgroup {
+  border: 1px solid #CDCDCD;
+}
+.forumgroup-heading {
+  font-weight: bold;
+  background: -webkit-linear-gradient(#F5F8F9,#D2E6F8); /* Safari 5.1-6.0 */
+  background: -o-linear-gradient(#F5F8F9,#D2E6F8); /* Opera 11.1-12.0 */
+  background: -moz-linear-gradient(#F5F8F9,#D2E6F8); /* Firefox 3.6-15 */
+  background: linear-gradient(#F5F8F9,#D2E6F8); /* Standard syntax */
+  height: 31px;
+  line-height: 31px;
+  padding: 0 1em;
+  border-bottom: 1px solid #C2D5E3;
+}
+.forumgroup-body {
+  padding: 1em;
+}
+
+.forum {
+  border-bottom: 1px dashed #C2D5E3;
+  padding: 1em;
+}
+.forum-heading {
+  font-weight: bold;
+}
+.forum-body {
+  color: #666;
+}

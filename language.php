@@ -1,6 +1,7 @@
 <?php
 
 $lang = [
+  "account" => "账号",
   "avatar" => "头像",
   "blank-username" => "用户名不能为空",
   "use-qq-avatar" => "使用QQ头像",
