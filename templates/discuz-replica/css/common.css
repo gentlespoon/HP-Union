@@ -80,7 +80,7 @@ button {
   font-weight: bold;
   color: white;
   float: left;
-  display: block;
+  display: inline-block;
   padding: 0 1em;
   line-height: 33px;
   border-right: 1px solid #5D9EEF;
