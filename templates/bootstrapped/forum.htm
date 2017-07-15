@@ -28,7 +28,9 @@
       </div>
     <?php endforeach ?>
   </div>
-
+  <div>
+    <a class="btn btn-primary" href="forum.php?act=newthread&fid=<?=$body['forum'][0]['fid']?>"><?=$lang['new-thread']?></a>
+  </div>
   <div>  
     <table class="table table-hover">
       <thead>
@@ -62,5 +64,29 @@
         <div class="panel-footer"><?= $lang['post-author'] ?>: <?= $v['username'] ?> <?= $lang['post-sendtime'] ?>: <?= $v['sendtime'] ?></div>
       </div>
     <?php endforeach ?>
+  </div>
+<?php endif ?>
+
+<?php if ($_GET['act'] == "newthread") : ?>
+  <div>
+    <?php if ($_SESSION['uid'] == 0) : ?>
+      <?=$lang['not-logged-in']?>
+    <?php elseif (isset($_GET['fid'])) : ?>
+      <form method="POST" action="forum.php?act=newthread&fid=<?=$_GET['fid']?>" id="newthreadform" class="form-horizontal">
+        <div class="form-group">
+          <lable for="title" class="col-sm-1 control-label"><?=$lang['new-thread-title']?></lable>
+          <div class="col-sm-11">
+            <input type="text" name="title" class="form-control" id="title" />
+          </div>
+        </div>
+        <div class="form-group">
+          <lable for="content" class="col-sm-1 control-label"><?=$lang['new-thread-content']?></lable>
+          <div class="col-sm-11">
+            <textarea name="content" class="form-control" id="content" rows="10"></textarea>
+          </div>
+        </div>
+        <input type="submit" class="btn btn-primary" value="<?=$lang['new-thread-send']?>" />
+      </form>
+    <?php endif ?>
   </div>
 <?php endif ?>

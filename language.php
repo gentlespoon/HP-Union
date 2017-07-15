@@ -59,4 +59,11 @@ $lang = [
   // post
   "post-author" => "作者",
   "post-sendtime" => "发布时间",
+  "new-thread" => "发贴",
+  "new-thread-title" => "标题",
+  "new-thread-content" => "内容",
+  "new-thread-send" => "发表",
+  "new-thread-fail" => "发表失败",
+  "new-thread-success" => "发表成功",
+  "new-thread-redirect" => "点击跳转至贴子",
 ];
