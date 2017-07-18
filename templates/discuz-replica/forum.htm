@@ -42,7 +42,7 @@
   <a class="btn btn-primary" href="forum.php?act=newthread&fid=<?=$body['forum'][0]['fid']?>"><?=$lang['new-thread']?></a>
 </div>
 <div>
-  <table class="col-sm-12 table-hover">
+  <table class="col-sm-12 table-hover" id="threadlist">
     <thead>
       <tr>
         <th class="col-sm-7"><?= $lang['thread-title'] ?></th>
@@ -76,52 +76,59 @@
 <?php if ($_GET['act'] == "thread") : ?>
 <div class="thread">
   <?php foreach ($body['posts'] as $k => $v) : ?>
-    <div class="t_frame">
-      <div class="t_top">
-        <div class="t_left t_sendtime col-sm-2">
+    <table class="t_frame col-sm-12">
+      <tr class="t_top">
+        <td class="t_left t_sendtime col-sm-2">
           <div class="t_inner">
             <?= $v['sendtime'] ?>
           </div>
-        </div>
-        <div class="t_right t_title col-sm-10">
-          <div class="t_inner">
+        </td>
+        <td class="t_right t_title col-sm-10">
+          <div class="t_inner t_title">
             <?= $v['title'] ?>
           </div>
-        </div>
-      </div>
-      <div class="t_bottom">
-        <div class="t_left t_author col-sm-2">
+        </td>
+      </tr>
+      <tr class="t_bottom">
+        <td class="t_left t_author col-sm-2">
           <div class="t_inner">
             <?= $v['username'] ?><br>
             <img class="post_sidebar_avatar avatar" src="<?=$v['avatar']?>" qq="<?=$v_['qq']?>" uid="<?=$v_['uid']?>">
           </div>
-        </div>
-        <div class="t_right t_content col-sm-10">
+        </td>
+        <td class="t_right t_content col-sm-10">
          <div class="t_inner">
            <?= $v['content'] ?>
          </div>
-        </div>
-      </div>
-    </div>
+       </td>
+      </tr>
+    </table>
   <?php endforeach ?>
 </div>
   <?php if ($_SESSION['uid'] > 0) : ?>
 <div class="thread">
-  <div class="t_frame">
-    <form method="POST" action="forum.php?act=newpost&tid=<?=$body['thread']['tid']?>" id="newpostform" class="form-horizontal">
-      <div class="t_bottom">
-        <div class="t_left t_postcol-sm-2">
+  <form method="POST" action="forum.php?act=newpost&tid=<?=$body['thread']['tid']?>" id="newpostform" class="form-horizontal">
+    <table class="t_frame col-sm-12">
+      <tr class="t_bottom">
+        <td class="t_left t_post col-sm-2">
           <div class="t_inner">
-            <lable for="content" class="col-sm-1 control-label"><?=$lang['new-post-content']?></lable>
           </div>
-        </div>
-        <div class="t_right t_content col-sm-10">
-          <textarea name="content" class="form-control" id="content" rows="10"></textarea>
-        </div>
-      </div>
-      <input type="submit" class="btn btn-primary" value="<?=$lang['new-post-send']?>" />
-    </form>
-  </div>
+        </td>
+        <td class="t_right t_content col-sm-10">
+          <div class="t_inner">
+            <textarea name="content" class="form-control" id="content" rows="10"></textarea>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="t_left ">
+        </td>
+        <td class="t_right ">
+          <input type="submit" class="btn btn-primary" value="<?=$lang['new-post-send']?>" />
+        </td>
+      </tr>
+    </table>
+  </form>
 </div>
   <?php endif ?>
 <?php endif ?>

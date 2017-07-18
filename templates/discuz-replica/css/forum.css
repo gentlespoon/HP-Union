@@ -31,6 +31,11 @@
 
 
 
+#threadlist {
+  margin: 1em 0;
+  border: 1px solid #CDCDCD;
+}
+
 
 .thread {
   margin: 1em 0;
@@ -60,7 +65,7 @@
 .t_title {
   font-weight: bold;
   font-size: 1.1em;
-  height: 45px;
+  line-height: 45px;
 }
 
 .t_top {
@@ -68,27 +73,34 @@
 }
 
 .t_bottom {
-  border-top: 1px dashed #C2D5E3;
   overflow: auto;
 }
 
 .t_inner {
-  font-size: 1.1em;
-  line-height: 45px;
+  line-height: 30px;
   margin: 0 1em;
 }
 
 .t_author {
-  min-height: 200px;
+  border-top: 1px dashed #C2D5E3;
   text-align: center;
+  vertical-align: top;
 }
 
 .t_content {
+  padding: 1em 0;
+  border-top: 1px dashed #C2D5E3;
+  vertical-align: top;
+}
+
+#content {
   height: 100%;
+  width: 100%;
 }
 
 
 
+/*
 .t_top > .col-sm-1,
 .t_top > .col-sm-2,
 .t_top > .col-sm-3,
@@ -116,3 +128,4 @@
   float: left;
   display: block;
 }
+*/
