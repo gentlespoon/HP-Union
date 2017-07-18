@@ -93,12 +93,17 @@
   vertical-align: top;
 }
 
-#content {
+#newpostform_content {
   height: 100%;
   width: 100%;
 }
-
-
+#newthreadform_content {
+  height: 100%;
+  width: 100%;
+}
+#newthreadform_title {
+  width: 100%;
+}
 
 /*
 .t_top > .col-sm-1,

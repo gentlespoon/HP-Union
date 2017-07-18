@@ -52,6 +52,29 @@ $(document).ready(function() {
 
 
 
+
+  $("#newthreadform").submit(function() {
+    if ($("#newthreadform_title").val() == "") {
+      alert("主题帖标题不能为空");
+      return false;
+    }
+    if ($("#newthreadform_content").val().length < 6) {
+      alert("帖子内容不能少于6个字");
+      return false;
+    }
+  });
+
+
+  $("#newpostform").submit(function() {
+    if ($("#newpostform_content").val().length < 6) {
+      alert("帖子内容不能少于6个字");
+      return false;
+    }
+  });
+
+
+
+
   function getUserAvatar(qq, uid, obj) {
     $.ajax({
       url: "http://localhost/api/avatar2.php?qq="+qq+"&uid="+uid,

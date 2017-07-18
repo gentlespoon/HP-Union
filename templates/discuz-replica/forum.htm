@@ -92,7 +92,7 @@
       <tr class="t_bottom">
         <td class="t_left t_author col-sm-2">
           <div class="t_inner">
-            <?= $v['username'] ?><br>
+            <a href="member.php?uid=<?=$v['author_uid']?>"><b><?= $v['username'] ?></b></a><br>
             <img class="post_sidebar_avatar avatar" src="<?=$v['avatar']?>" qq="<?=$v_['qq']?>" uid="<?=$v_['uid']?>">
           </div>
         </td>
@@ -116,7 +116,7 @@
         </td>
         <td class="t_right t_content col-sm-10">
           <div class="t_inner">
-            <textarea name="content" class="form-control" id="content" rows="10"></textarea>
+            <textarea name="content" class="form-control" id="newpostform_content" rows="10"></textarea>
           </div>
         </td>
       </tr>
@@ -148,25 +148,48 @@
 
 
 
+
+
+
 <?php if ($_GET['act'] == "newthread") : ?>
-  <div>
+  <div class="thread">
     <?php if ($_SESSION['uid'] == 0) : ?>
       <?=$lang['not-logged-in']?>
     <?php elseif (isset($_GET['fid'])) : ?>
       <form method="POST" action="forum.php?act=newthread&fid=<?=$_GET['fid']?>" id="newthreadform" class="form-horizontal">
-        <div class="form-group">
-          <lable for="title" class="col-sm-1 control-label"><?=$lang['new-thread-title']?></lable>
-          <div class="col-sm-11">
-            <input type="text" name="title" class="form-control" id="title" />
-          </div>
-        </div>
-        <div class="form-group">
-          <lable for="content" class="col-sm-1 control-label"><?=$lang['new-thread-content']?></lable>
-          <div class="col-sm-11">
-            <textarea name="content" class="form-control" id="content" rows="10"></textarea>
-          </div>
-        </div>
-        <input type="submit" class="btn btn-primary" value="<?=$lang['new-thread-send']?>" />
+        <table class="t_frame col-sm-12">
+          <tr class="t_top">
+            <td class="t_left t_author col-sm-2">
+              <div class="t_inner">
+                <lable for="newthreadform_title" class="col-sm-1 control-label"><?=$lang['new-thread-title']?></lable>
+              </div>
+            </td>
+            <td class="t_right t_title col-sm-10">
+              <div class="t_inner t_title">
+                <input type="text" name="title" class="form-control" id="newthreadform_title" />
+              </div>
+            </td>
+          </tr>
+          <tr class="t_bottom">
+            <td class="t_left t_author col-sm-2">
+              <div class="t_inner">
+                <lable for="newthreadform_content" class="col-sm-1 control-label"><?=$lang['new-thread-content']?></lable>
+              </div>
+            </td>
+            <td class="t_right t_content col-sm-10">
+              <div class="t_inner">
+                <textarea name="content" class="form-control" id="newthreadform_content" rows="10"></textarea>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="t_left ">
+            </td>
+            <td class="t_right ">
+              <input type="submit" class="btn btn-primary" value="<?=$lang['new-thread-send']?>" />
+            </td>
+          </tr>
+        </table>
       </form>
     <?php endif ?>
   </div>
