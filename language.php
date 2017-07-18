@@ -54,6 +54,7 @@ $lang = [
   "thread-title" => "标题",
   "thread-author" => "发贴人",
   "thread-sendtime" => "发表时间",
+  "thread-lasttime" => "最后时间",
   "unknown-user" => "未知用户",
   "invalid-thread-id" => "帖子不存在",
   // post
@@ -66,4 +67,9 @@ $lang = [
   "new-thread-fail" => "发表失败",
   "new-thread-success" => "发表成功",
   "new-thread-redirect" => "点击跳转至贴子",
+  "new-post-title" => "标题",
+  "new-post-content" => "内容",
+  "new-post-send" => "回复",
+  "new-post-fail" => "回复失败",
+  "new-post-success" => "回复成功",
 ];

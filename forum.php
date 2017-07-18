@@ -15,10 +15,11 @@ switch ($_GET['act']) {
     }
     $forum[0]['subforum'] = DB("SELECT * FROM forum_forum WHERE parent_fid = :fid", [":fid" => $_GET["fid"]]);
 
-    $threads = DB("SELECT forum_thread.tid, forum_thread.title, member.uid, member.username, forum_thread.sendtime FROM forum_thread LEFT JOIN member ON forum_thread.author_uid = member.uid WHERE forum_thread.forum_id = :fid", [":fid" => $_GET["fid"]]);
+    $threads = DB("SELECT forum_thread.tid, forum_thread.title, member.uid, member.username, forum_thread.sendtime, forum_thread.lasttime FROM forum_thread LEFT JOIN member ON forum_thread.author_uid = member.uid WHERE forum_thread.forum_id = :fid ORDER BY forum_thread.lasttime DESC", [":fid" => $_GET["fid"]]);
 
     foreach ($threads as $k => $v) {
       $threads[$k]['sendtime'] = toUserTime($v['sendtime']);
+      $threads[$k]['lasttime'] = toUserTime($v['lasttime']);
     }
     
     $body['forum'] = $forum;
@@ -38,7 +39,7 @@ switch ($_GET['act']) {
       $posts[$k]['sendtime'] = toUserTime($v['sendtime']);
     }
 
-    $body['thread'] = $thread;
+    $body['thread'] = $thread[0];
     $body['posts'] = $posts;
     break;
 
@@ -54,7 +55,7 @@ switch ($_GET['act']) {
           $_POST["title"] != "" && $_POST["content"] &&
           !ctype_space($_POST["title"]) && !ctype_space($_POST["content"])) {
         $time = time();
-        DB("INSERT INTO forum_thread (author_uid, sendtime, forum_id, title) VALUES (:uid, :sendtime, :fid, :title)", [":uid" => $_SESSION['uid'], ":sendtime" => $time, ":fid" => $_GET['fid'], ":title" => $_POST["title"]]);
+        DB("INSERT INTO forum_thread (author_uid, sendtime, forum_id, title, lasttime) VALUES (:uid, :sendtime, :fid, :title, :lasttime)", [":uid" => $_SESSION['uid'], ":sendtime" => $time, ":fid" => $_GET['fid'], ":title" => $_POST["title"], ":lasttime" => $time]);
 
         $thread = DB("SELECT tid FROM forum_thread WHERE author_uid = :uid AND sendtime = :sendtime", [":uid" => $_SESSION['uid'], ":sendtime" => $time]);
         if (empty($thread)) {
@@ -65,11 +66,50 @@ switch ($_GET['act']) {
 
         DB("INSERT INTO forum_post (thread_tid, author_uid, sendtime, title, content) VALUES (:tid, :uid, :sendtime, :title, :content)", [":tid" => $thread[0]['tid'], ":uid" => $_SESSION['uid'], ":sendtime" => $time, ":title" => $_POST["title"], ":content" => $_POST["content"]]);
 
-        DB("UPDATE member_count set threads = threads + 1, posts = posts + 1 WHERE uid = :uid", [":uid" => $_SESSION['uid']]);
+        DB("UPDATE member_count SET threads = threads + 1, posts = posts + 1 WHERE uid = :uid", [":uid" => $_SESSION['uid']]);
 
         $body['alerttype'] = "alert-success";
         $body['alert'] = $lang['new-thread-success'];
         $redirect = "forum.php?act=thread&tid=". $thread[0]['tid'];
+        $body['redirect'] = $lang["new-thread-redirect"];
+        template("common_bang");
+      }
+    }
+    break;
+
+  case "newpost":
+    if (empty($_GET['tid'])) {
+      $body['alerttype'] = "alert-danger";
+      $body['alert'] = $lang['invalid-thread-id'];
+      break;
+    }
+    $thread = DB("SELECT * FROM forum_thread WHERE tid = :tid", [":tid" => $_GET["tid"]]);
+    if (empty($thread)) {
+      $body['alerttype'] = "alert-danger";
+      $body['alert'] = $lang['invalid-thread-id'];
+      break;
+    }
+
+    if ($_SESSION['uid'] > 0) {
+      if (array_key_exists("title", $_POST) && array_key_exists("content", $_POST) &&
+          $_POST["title"] != "" && $_POST["content"] &&
+          !ctype_space($_POST["title"]) && !ctype_space($_POST["content"])) {
+        $time = time();
+        DB("INSERT INTO forum_post (thread_tid, author_uid, sendtime, title, content) VALUES (:tid, :uid, :sendtime, :title, :content)", [":tid" => $_GET['tid'], ":uid" => $_SESSION['uid'], ":sendtime" => $time, ":title" => $_POST['title'], ":content" => $_POST['content']]);
+
+        $post = DB("SELECT * FROM forum_post WHERE thread_tid = :tid AND author_uid = :uid AND sendtime = :sendtime", [":tid" => $_GET['tid'], ":uid" => $_SESSION['uid'], ":sendtime" => $time]);
+        if (empty($post)) {
+          $body['alerttype'] = "alert-danger";
+          $body['alert'] = $lang['new-post-fail'];
+          break;
+        }
+
+        DB("UPDATE forum_thread SET lasttime = :lasttime WHERE tid = :tid", [":lasttime" => $time, ":tid" => $_GET["tid"]]);
+        DB("UPDATE member_count SET posts = posts + 1 WHERE uid = :uid", [":uid" => $_SESSION['uid']]);
+
+        $body['alerttype'] = "alert-success";
+        $body['alert'] = $lang['new-post-success'];
+        $redirect = "forum.php?act=thread&tid=". $_GET["tid"];
         $body['redirect'] = $lang["new-thread-redirect"];
         template("common_bang");
       }
