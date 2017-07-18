@@ -47,20 +47,26 @@ $(document).ready(function() {
     $("#modpwdform_password").val($.md5($("#modpwdform_password").val()));
   });
 
-  function getUserAvatar(qq, obj) {
-    // alert(qq+" "+obj);
+
+
+
+
+
+  function getUserAvatar(qq, uid, obj) {
     $.ajax({
-      url: "http://hp-union.com/api/avatar2.php?qq="+qq,
+      url: "http://localhost/api/avatar2.php?qq="+qq+"&uid="+uid,
     }).done(function(done) {
       var avatar = done.replace(/\\/g, "");
       $(obj).attr('src', avatar);
-      // alert(avatar);
     });
   }
 
   $(".avatar").each(function() {
-    getUserAvatar($(this).attr('qq'), "#"+$(this).attr('id'));
+    return false;  // disable this function
+    getUserAvatar($(this).attr('qq'), $(this).attr('uid'), "#"+$(this).attr('id'));
   });
-  // getUserAvatar($("#user_qq").text(), "#nav_avatar");
+
+
+
 
 });

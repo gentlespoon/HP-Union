@@ -14,10 +14,10 @@ if (!isset($_starttime)) {
 }
 
 
+include_once(ROOT."language.php");
 include_once(ROOT."config/config.php");
 include_once(ROOT."core/time.php");
 include_once(ROOT."core/func.php");
-include_once(ROOT."language.php");
 include_once(ROOT."develop.php");
 
 //  $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
@@ -35,7 +35,13 @@ if (!isset($db)) {
   }
 }
 
-include_once(ROOT."core/settings.php");
+// Get site settings
+$r = DB("SELECT * FROM common_settings");
+$settings = [];
+foreach($r as $k => $v) {
+  $settings[$v['key']] = $v['value'];
+}
+
 
 // Initialize output
 if (!isset($body)) {
@@ -63,13 +69,4 @@ if (!array_key_exists("uid", $_SESSION)) {
 
 
 // Retrieve current user information
-if ($_SESSION['uid'] > 0) {
-  $member = DB("SELECT username, qq FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
-  if (isset($member[0])) {
-    $member = $member[0];
-  } else {
-   $member = ["username" => $lang['not-logged-in'], "qq" => 0];
-  }
-} else {
-  $member = ["username" => $lang['not-logged-in'], "qq" => 0];
-}
+$member = getUserInfo();

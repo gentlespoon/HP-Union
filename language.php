@@ -72,4 +72,12 @@ $lang = [
   "new-post-send" => "回复",
   "new-post-fail" => "回复失败",
   "new-post-success" => "回复成功",
+  // usergroup and permission
+  "groupname" => "用户组",
+  "adminfront" => "前台管理",
+  "adminback" => "后台管理",
+  "viewforum" => "浏览版块",
+  "viewthread" => "浏览帖子",
+  "newthread" => "发布新帖",
+  "newpost" => "回复帖子",
 ];

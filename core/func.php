@@ -94,3 +94,40 @@ function usernameMarkCensor($string, $sensorlist) {
   }
   return false;
 }
+
+
+function getAvatarUrl($qq) {
+  // default url
+  $avatar_url = "http://hp-union.com/static/images/default_avatar.jpg";
+  $url = 'http://ptlogin2.qq.com/getface?appid=1006102&uin='.$qq.'&imgtype=4';
+  $avatar_response = file_get_contents($url);
+  $start_avatar = strpos($avatar_response, "http:");
+  if ($start_avatar !== false) {
+    $avatar_url = str_replace("\\", "", substr($avatar_response, $start_avatar, -4));
+  }
+  return $avatar_url;
+}
+
+
+
+function getUserInfo() {
+  global $lang;
+  if ($_SESSION['uid'] > 0) {
+    $member = DB("SELECT username, qq, groupid, avatar FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
+    if (isset($member[0])) {
+      $member = $member[0];
+      $usergroup = DB("SELECT * FROM member_groups WHERE groupid=:groupid", [":groupid" => $member['groupid']]);
+      if (!empty($usergroup)) {
+        foreach ($usergroup[0] as $k => $v) {
+          $member[$k] = $v;
+        }
+      }
+      unset($member['gid']);
+    } else {
+     $member = ["username" => $lang['not-logged-in'], "qq" => 0];
+    }
+  } else {
+    $member = ["username" => $lang['not-logged-in'], "qq" => 0];
+  }
+  return $member;
+}

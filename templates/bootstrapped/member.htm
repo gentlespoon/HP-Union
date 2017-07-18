@@ -103,16 +103,19 @@
 
 
 <?php if ($_SESSION['uid'] == 0) : ?>
-  <div>
+  <div class="alert alert-danger">
     <?=$lang['not-logged-in']?>
   </div>
 <?php elseif (!isset($_GET['act']) || ($_GET['act'] == "")) : ?>
   <div>
-    <!-- <?php printv($member) ?> -->
     <?php foreach ($member as $k => $v) : ?>
     <div>
       <span class="member_stat member_stat_title"><?=$lang[$k]?></span>
-      <span class="member_stat"><?=$v?></span>
+      <?php if ($k == "avatar") : ?>
+        <span class="member_stat"><img id="nav_avatar" class="avatar" src="<?=$v?>" qq="<?=$member['qq']?>" ></span>
+      <?php else : ?>
+        <span class="member_stat"><?=$v?></span>
+      <?php endif ?>
     </div>
     <?php endforeach ?>
   </div>

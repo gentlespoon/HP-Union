@@ -2,6 +2,16 @@
 <div class="alert <?=$body['alerttype']?>"><?= $body['alert'] ?></div>
 <?php endif ?>
 
+
+
+
+
+
+
+
+
+
+
 <?php if ($_GET['act'] == "forum") : ?>
 <div>
   <?php foreach ($body['forum'] as $fk => $forumgroup) : ?>
@@ -32,10 +42,10 @@
   <a class="btn btn-primary" href="forum.php?act=newthread&fid=<?=$body['forum'][0]['fid']?>"><?=$lang['new-thread']?></a>
 </div>
 <div>
-  <table class="col-12 table-hover">
+  <table class="col-sm-12 table-hover">
     <thead>
       <tr>
-        <th><?= $lang['thread-title'] ?></th>
+        <th class="col-sm-7"><?= $lang['thread-title'] ?></th>
         <th><?= $lang['thread-author'] ?></th>
         <th><?= $lang['thread-sendtime'] ?></th>
         <th><?= $lang['thread-lasttime'] ?></th>
@@ -44,10 +54,10 @@
     <tbody>
       <?php foreach ($body['threads'] as $k => $v) : ?>
       <tr>
-        <th><a href="forum.php?act=thread&tid=<?= $v['tid'] ?>"><?= $v['title'] ?></a></th>
-        <th><?= $v['username'] ?></th>
-        <th><?= $v['sendtime'] ?></th>
-        <th><?= $v['lasttime'] ?></th>
+        <td><a href="forum.php?act=thread&tid=<?= $v['tid'] ?>"><?= $v['title'] ?></a></td>
+        <td><?= $v['username'] ?></td>
+        <td><?= $v['sendtime'] ?></td>
+        <td><?= $v['lasttime'] ?></td>
       </tr>
       <?php endforeach ?>
     </tbody>
@@ -55,15 +65,43 @@
 </div>
 <?php endif ?>
 
+
+
+
+
+
+
+
+
 <?php if ($_GET['act'] == "thread") : ?>
-<div>
+<div class="thread">
   <?php foreach ($body['posts'] as $k => $v) : ?>
-    <div class="panel panel-default">
-      <div class="panel-heading"><?= $v['title'] ?></div>
-      <div class="panel-body">
-        <?= $v['content'] ?>
+    <div class="t_frame">
+      <div class="t_top">
+        <div class="t_left t_sendtime col-sm-2">
+          <div class="t_inner">
+            <?= $v['sendtime'] ?>
+          </div>
+        </div>
+        <div class="t_right t_title col-sm-10">
+          <div class="t_inner">
+            <?= $v['title'] ?>
+          </div>
+        </div>
       </div>
-      <div class="panel-footer"><?= $lang['post-author'] ?>: <?= $v['username'] ?> <?= $lang['post-sendtime'] ?>: <?= $v['sendtime'] ?></div>
+      <div class="t_bottom">
+        <div class="t_left t_author col-sm-2">
+          <div class="t_inner">
+            <?= $v['username'] ?><br>
+            <img class="post_sidebar_avatar avatar" src="<?=$v['avatar']?>" qq="<?=$v_['qq']?>" uid="<?=$v_['uid']?>">
+          </div>
+        </div>
+        <div class="t_right t_content col-sm-10">
+         <div class="t_inner">
+           <?= $v['content'] ?>
+         </div>
+        </div>
+      </div>
     </div>
   <?php endforeach ?>
 </div>
@@ -87,6 +125,21 @@
     </div>
   <?php endif ?>
 <?php endif ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <?php if ($_GET['act'] == "newthread") : ?>
   <div>

@@ -7,7 +7,6 @@
   </div>
 
 
-
   <div class="wrapper" id="bannerbar">
     <div class="banner">
       <a href="./" title="<?=$settings['sitename']?>"><img src="static/images/banner.png" alt="<?=$settings['sitename']?>"></a>
@@ -15,7 +14,7 @@
     <div class="userpanel">
       <?php if ( $_SESSION['uid'] == 0 ) : ?>
         <form method="post" autocomplete="off" id="loginform" action="member.php?act=login">
-          <table celloginformpacing="0" cellpadding="0">
+          <table id="loginformtable" celloginformpacing="0" cellpadding="0">
             <tbody>
               <tr>
                 <td align="left"><label for="loginform_username"><?=$lang['account']?></label></td>
@@ -32,7 +31,8 @@
         </form>
       <?php endif ?>
       <?php if ( $_SESSION['uid'] > 0 ) : ?>
-        <a href="member.php"><img id="nav_avatar" class="avatar" src="http://hp-union.com/static/images/default_avatar.jpg" qq="<?=$member['qq']?>" ><?=$member['username']?></a>
+        <a href="member.php"><img id="nav_avatar" class="avatar" src="<?=$member['avatar']?>" qq="<?=$member['qq']?>" ><?=$member['username']?></a>
+        <a href="#">(<?=$member['groupname']?>)</a>
         <a href="member.php?act=modprofile"><?=$lang['modprofile']?></a>
         <a href="member.php?act=modpwd"><?=$lang['modpwd']?></a>
         <a href="member.php?act=logout"><?=$lang['logout']?></a>

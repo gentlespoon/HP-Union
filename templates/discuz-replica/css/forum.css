@@ -1,12 +1,14 @@
 .forumgroup {
   border: 1px solid #CDCDCD;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 .forumgroup-heading {
   font-weight: bold;
-  background: -webkit-linear-gradient(#F5F8F9,#D2E6F8); /* Safari 5.1-6.0 */
-  background: -o-linear-gradient(#F5F8F9,#D2E6F8); /* Opera 11.1-12.0 */
-  background: -moz-linear-gradient(#F5F8F9,#D2E6F8); /* Firefox 3.6-15 */
-  background: linear-gradient(#F5F8F9,#D2E6F8); /* Standard syntax */
+  background: -webkit-linear-gradient(#E6F0F9,#D2E6F8); /* Safari 5.1-6.0 */
+  background: -o-linear-gradient(#E6F0F9,#D2E6F8); /* Opera 11.1-12.0 */
+  background: -moz-linear-gradient(#E6F0F9,#D2E6F8); /* Firefox 3.6-15 */
+  background: linear-gradient(#E6F0F9,#D2E6F8); /* Standard syntax */
   height: 31px;
   line-height: 31px;
   padding: 0 1em;
@@ -25,4 +27,92 @@
 }
 .forum-body {
   color: #666;
+}
+
+
+
+
+.thread {
+  margin: 1em 0;
+  border: 1px solid #C2D5E3;
+}
+
+.t_frame {
+  border-top: 1px solid #C2D5E3;
+  border-bottom: 3px solid #C2D5E3;
+  overflow: auto;
+}
+
+.t_left {
+  background-color: #E5EDF2;
+}
+
+.t_right {
+
+}
+
+.t_sendtime {
+  text-align: center;
+  font-size: 0.9em;
+  height: 45px;
+}
+
+.t_title {
+  font-weight: bold;
+  font-size: 1.1em;
+  height: 45px;
+}
+
+.t_top {
+  overflow: auto;
+}
+
+.t_bottom {
+  border-top: 1px dashed #C2D5E3;
+  overflow: auto;
+}
+
+.t_inner {
+  font-size: 1.1em;
+  line-height: 45px;
+  margin: 0 1em;
+}
+
+.t_author {
+  min-height: 200px;
+  text-align: center;
+}
+
+.t_content {
+  min-height: 200px;
+}
+
+
+
+.t_top > .col-sm-1,
+.t_top > .col-sm-2,
+.t_top > .col-sm-3,
+.t_top > .col-sm-4,
+.t_top > .col-sm-5,
+.t_top > .col-sm-6,
+.t_top > .col-sm-7,
+.t_top > .col-sm-8,
+.t_top > .col-sm-9,
+.t_top > .col-sm-10,
+.t_top > .col-sm-11,
+.t_top > .col-sm-12,
+.t_bottom > .col-sm-1,
+.t_bottom > .col-sm-2,
+.t_bottom > .col-sm-3,
+.t_bottom > .col-sm-4,
+.t_bottom > .col-sm-5,
+.t_bottom > .col-sm-6,
+.t_bottom > .col-sm-7,
+.t_bottom > .col-sm-8,
+.t_bottom > .col-sm-9,
+.t_bottom > .col-sm-10,
+.t_bottom > .col-sm-11,
+.t_bottom > .col-sm-12 {
+  float: left;
+  display: block;
 }

@@ -63,7 +63,8 @@ switch ($_GET['act']) {
           // register this new user
           $salt = randomStr(6);
           $encryptedPassword = md5($_POST['password'].$salt);
-          DB("INSERT INTO member (username, password, salt, regdate, qq) VALUES ( :username , :password , :salt , :regdate, :qq)", [":username" => $_POST['username'], ":password" => $encryptedPassword, ":salt" => $salt, ":regdate" => time(), ":qq" => $_POST['qq']]);
+          $avatar = getAvatarUrl($_POST['qq']);
+          DB("INSERT INTO member (username, password, salt, regdate, qq, avatar) VALUES ( :username , :password , :salt , :regdate, :qq, :avatar)", [":username" => $_POST['username'], ":password" => $encryptedPassword, ":salt" => $salt, ":regdate" => time(), ":qq" => $_POST['qq'], ":avatar" => $avatar]);
           $r = DB("SELECT uid FROM member WHERE username= :username", [":username" => $_POST['username']]);
           $uid = $r[0]['uid'];
           // log this new user in
@@ -73,9 +74,11 @@ switch ($_GET['act']) {
           DB("UPDATE member SET lastlogin= :lastlogin, failcount=0 WHERE uid= :uid", [":lastlogin" => time(), ":uid" => $r[0]['uid']]);
           $_SESSION['uid'] = $uid;
           // refresh userinfo
-          include(ROOT."core/core.php");
+          $member = getUserInfo();
           $body['text'] = "<p>".$settings['registered-welcome']."</p>";
           $body['text'] .= "<p>".$settings['login-welcome']."</p>";
+          $body['alerttype'] = "alert-success";
+          $body['alert'] = $settings['registered-welcome'];
           $body['redirect'] = $lang['continue-browsing'];
           $redirect = "member.php";
           template("common_bang");
@@ -151,12 +154,12 @@ switch ($_GET['act']) {
             // log this new user in
             $_SESSION['uid'] = $r[0]['uid'];
             // refresh userinfo
-            include(ROOT."core/core.php");
+            $member = getUserInfo();
 
             // insert login history
-            DB("INSERT INTO member_loginhistory (uid, logindate, success, ip) VALUES ( :uid, :logindate, :success, :ip)", [":uid" => $r[0]['uid'], ":logindate" => time(), ":success" => 1, ":ip" => $_SERVER['REMOTE_ADDR']]);
+            DB("INSERT INTO member_loginhistory (uid, logindate, success, ip) VALUES ( :uid, :logindate, :success, :ip)", [":uid" => $_SESSION['uid'], ":logindate" => time(), ":success" => 1, ":ip" => $_SERVER['REMOTE_ADDR']]);
             // clear loginfail count
-            DB("UPDATE member SET lastlogin= :lastlogin, failcount=0 WHERE uid= :uid", [":lastlogin" => time(), ":uid" => $r[0]['uid']]);
+            DB("UPDATE member SET lastlogin= :lastlogin, failcount=0 WHERE uid= :uid", [":lastlogin" => time(), ":uid" => $_SESSION['uid']]);
             // clear ipfail count
             $t = DB("SELECT ip, lasttrial, count, attempted FROM member_failedip WHERE ip=:ip", [":ip" => $_SERVER['REMOTE_ADDR']]);
             if (empty($t)) {
@@ -168,9 +171,9 @@ switch ($_GET['act']) {
           } else {
             // Incorrect credentials
             // insert login history
-            DB("INSERT INTO member_loginhistory (uid, logindate, success, ip) VALUES ( :uid, :logindate, :success, :ip)", [":uid" => $r[0]['uid'], ":logindate" => time(), ":success" => 0, ":ip" => $_SERVER['REMOTE_ADDR']]);
+            DB("INSERT INTO member_loginhistory (uid, logindate, success, ip) VALUES ( :uid, :logindate, :success, :ip)", [":uid" => $_SESSION['uid'], ":logindate" => time(), ":success" => 0, ":ip" => $_SERVER['REMOTE_ADDR']]);
             // increase loginfail count
-            DB("UPDATE member SET failcount=failcount+1 WHERE uid= :uid", [":uid" => $r[0]['uid']]);
+            DB("UPDATE member SET failcount=failcount+1 WHERE uid= :uid", [":uid" => $_SESSION['uid']]);
             // increase ipfail count
             $t = DB("SELECT ip, lasttrial, count, attempted FROM member_failedip WHERE ip=:ip", [":ip" => $_SERVER['REMOTE_ADDR']]);
             if (empty($t)) {
@@ -251,25 +254,27 @@ switch ($_GET['act']) {
   case "modprofile":
     $title = $lang['modprofile'];
     if (array_key_exists("username", $_POST)) {
+      $_POST['avatar'] = getAvatarUrl($_POST['qq']);
       // fetch table keys
-      $r = DB("SELECT * FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
+      $tablekeys = DB("SELECT * FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
       foreach ($_POST as $k => $v) {
         // verify key existence
-        if(array_key_exists($k, $r[0])) {
+        if(array_key_exists($k, $tablekeys[0])) {
           // it is safe to execute
           DB("UPDATE member SET ".$k."=:v WHERE uid=:uid", [":v" => $v, ":uid" => $_SESSION['uid']]);
         } else {
           // $_POST contains illegal keys
           exit("??????");
         }
-        $body['alerttype'] = "alert-success";
-        $body['alert'] = $lang['modprofile'].$lang['success'];
-        break;
       }
+      $body['alerttype'] = "alert-success";
+      $body['alert'] = $lang['modprofile'].$lang['success'];
+      // refresh userinfo
+      $member = getUserInfo();
     }
-    // select columns which users are allowed to modify
-    $member = DB("SELECT username, qq, email FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
-    $member = $member[0];
+    // select columns that are allowed to modify
+    $member_fields = DB("SELECT username, qq, email FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
+    $member['fields'] = $member_fields[0];
     break;
 
 
@@ -298,10 +303,24 @@ switch ($_GET['act']) {
       $member = $member[0];
       unset($member['password']);
       unset($member['salt']);
-      $member['usergroup'] = $member['group_id'];
-      unset($member['group_id']);
       $member['lastlogin'] = toUserTime($member['lastlogin']);
       $member['regdate'] = toUserTime($member['regdate']);
+      $usergroup = DB("SELECT * FROM member_groups WHERE groupid=:groupid", [":groupid" => $member['groupid']]);
+      if (!empty($usergroup)) {
+        foreach ($usergroup[0] as $k => $v) {
+          if ($k == "groupname") {
+            $member[$k] = $v;
+          } else {
+            if (!$v) {
+              $member[$k] = "x";
+            } else {
+              $member[$k] = "√";
+            }
+          }
+        }
+      }
+      unset($member['gid']);
+      unset($member['groupid']);
       // Fetch member count info
       $member_count = DB("SELECT * FROM member_count WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
       if (empty($member_count)) {

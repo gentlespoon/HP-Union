@@ -3,7 +3,24 @@
 define("ROOT", $_SERVER['DOCUMENT_ROOT']."/");
 include(ROOT."core/core.php");
 
+
+
+
+
+
+
+
+
+
+
+
+
 switch ($_GET['act']) {
+
+
+
+
+
 
 
   case "forum":
@@ -21,10 +38,24 @@ switch ($_GET['act']) {
       $threads[$k]['sendtime'] = toUserTime($v['sendtime']);
       $threads[$k]['lasttime'] = toUserTime($v['lasttime']);
     }
-    
+
     $body['forum'] = $forum;
     $body['threads'] = $threads;
     break;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   case "thread":
     $thread = DB("SELECT * FROM forum_thread WHERE tid = :tid", [":tid" => $_GET['tid']]);
@@ -34,7 +65,7 @@ switch ($_GET['act']) {
       break;
     }
 
-    $posts = DB("SELECT forum_post.title, forum_post.content, forum_post.author_uid, member.username, forum_post.sendtime FROM forum_post LEFT JOIN member ON forum_post.author_uid = member.uid WHERE forum_post.thread_tid = :tid ORDER BY forum_post.pid", [":tid" => $_GET['tid']]);
+    $posts = DB("SELECT forum_post.title, forum_post.content, forum_post.author_uid, member.username, member.avatar, forum_post.sendtime FROM forum_post LEFT JOIN member ON forum_post.author_uid = member.uid WHERE forum_post.thread_tid = :tid ORDER BY forum_post.pid", [":tid" => $_GET['tid']]);
     foreach ($posts as $k => $v) {
       $posts[$k]['sendtime'] = toUserTime($v['sendtime']);
     }
@@ -42,6 +73,19 @@ switch ($_GET['act']) {
     $body['thread'] = $thread[0];
     $body['posts'] = $posts;
     break;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   case "newthread":
@@ -76,6 +120,22 @@ switch ($_GET['act']) {
       }
     }
     break;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   case "newpost":
     if (empty($_GET['tid'])) {
