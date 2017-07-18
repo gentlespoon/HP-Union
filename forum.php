@@ -151,11 +151,9 @@ switch ($_GET['act']) {
     }
 
     if ($_SESSION['uid'] > 0) {
-      if (array_key_exists("title", $_POST) && array_key_exists("content", $_POST) &&
-          $_POST["title"] != "" && $_POST["content"] &&
-          !ctype_space($_POST["title"]) && !ctype_space($_POST["content"])) {
+      if (array_key_exists("content", $_POST) && $_POST["content"] && !ctype_space($_POST["content"])) {
         $time = time();
-        DB("INSERT INTO forum_post (thread_tid, author_uid, sendtime, title, content) VALUES (:tid, :uid, :sendtime, :title, :content)", [":tid" => $_GET['tid'], ":uid" => $_SESSION['uid'], ":sendtime" => $time, ":title" => $_POST['title'], ":content" => $_POST['content']]);
+        DB("INSERT INTO forum_post (thread_tid, author_uid, sendtime, content) VALUES (:tid, :uid, :sendtime, :content)", [":tid" => $_GET['tid'], ":uid" => $_SESSION['uid'], ":sendtime" => $time, ":title" => $_POST['title'], ":content" => $_POST['content']]);
 
         $post = DB("SELECT * FROM forum_post WHERE thread_tid = :tid AND author_uid = :uid AND sendtime = :sendtime", [":tid" => $_GET['tid'], ":uid" => $_SESSION['uid'], ":sendtime" => $time]);
         if (empty($post)) {

@@ -106,23 +106,23 @@
   <?php endforeach ?>
 </div>
   <?php if ($_SESSION['uid'] > 0) : ?>
-    <div>
-      <form method="POST" action="forum.php?act=newpost&tid=<?=$body['thread']['tid']?>" id="newpostform" class="form-horizontal">
-        <div class="form-group">
-          <lable for="title" class="col-sm-1 control-label"><?=$lang['new-post-title']?></lable>
-          <div class="col-sm-11">
-            <input type="text" name="title" class="form-control" id="title" />
+<div class="thread">
+  <div class="t_frame">
+    <form method="POST" action="forum.php?act=newpost&tid=<?=$body['thread']['tid']?>" id="newpostform" class="form-horizontal">
+      <div class="t_bottom">
+        <div class="t_left t_postcol-sm-2">
+          <div class="t_inner">
+            <lable for="content" class="col-sm-1 control-label"><?=$lang['new-post-content']?></lable>
           </div>
         </div>
-        <div class="form-group">
-          <lable for="content" class="col-sm-1 control-label"><?=$lang['new-post-content']?></lable>
-          <div class="col-sm-11">
-            <textarea name="content" class="form-control" id="content" rows="10"></textarea>
-          </div>
+        <div class="t_right t_content col-sm-10">
+          <textarea name="content" class="form-control" id="content" rows="10"></textarea>
         </div>
-        <input type="submit" class="btn btn-primary" value="<?=$lang['new-post-send']?>" />
-      </form>
-    </div>
+      </div>
+      <input type="submit" class="btn btn-primary" value="<?=$lang['new-post-send']?>" />
+    </form>
+  </div>
+</div>
   <?php endif ?>
 <?php endif ?>
 
