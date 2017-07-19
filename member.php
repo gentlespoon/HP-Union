@@ -321,7 +321,6 @@ switch ($_GET['act']) {
       $userperm = $userperm[0];
       $body['userperm'] = $userperm;
 
-      printv($body);
     }
 }
 
