@@ -108,15 +108,43 @@
   </div>
 <?php elseif (!isset($_GET['act']) || ($_GET['act'] == "")) : ?>
   <div>
-    <?php foreach ($member as $k => $v) : ?>
-    <div>
-      <span class="member_stat member_stat_title"><?=$lang[$k]?></span>
-      <?php if ($k == "avatar") : ?>
-        <span class="member_stat"><img id="nav_avatar" class="avatar" src="<?=$v?>" qq="<?=$member['qq']?>" ></span>
-      <?php else : ?>
-        <span class="member_stat"><?=$v?></span>
-      <?php endif ?>
-    </div>
+    <div class="member_info_section_title"><?=$lang['userinfo']?></div>
+    <?php foreach ($body['userinfo'] as $k => $v) : ?>
+      <div>
+        <span class="member_info member_info_title"><?=$lang[$k]?></span>
+        <?php if ($k == "avatar") : ?>
+          <span class="member_info"><img id="nav_avatar" class="avatar" src="<?=$v?>" qq="<?=$member['qq']?>" ></span>
+        <?php else : ?>
+          <span class="member_info"><?=$v?></span>
+        <?php endif ?>
+      </div>
     <?php endforeach ?>
+
+    <div class="member_info_section_title"><?=$lang['usercount']?></div>
+    <?php foreach ($body['usercount'] as $k => $v) : ?>
+      <div>
+        <span class="member_info member_info_title"><?=$lang[$k]?></span>
+        <span class="member_info"><?=$v?></span>
+      </div>
+    <?php endforeach ?>
+
+    <div class="member_info_section_title"><?=$lang['userperm']?></div>
+    <?php foreach ($body['userperm'] as $k => $v) : ?>
+      <div>
+        <span class="member_info member_info_title"><?=$lang[$k]?></span>
+        <span class="member_info">
+        <?php if (($k != "groupid") && ($k != "groupname")) : ?>
+          <?php if ($v) : ?>
+            ✔
+          <?php else : ?>
+            ✖
+          <?php endif ?>
+        <?php else : ?>
+          <?=$v?>
+        <?php endif ?>
+        </span>
+      </div>
+    <?php endforeach ?>
+
   </div>
 <?php endif ?>

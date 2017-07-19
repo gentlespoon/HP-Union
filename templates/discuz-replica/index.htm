@@ -66,6 +66,8 @@
           <?php foreach ($v_ as $k => $v) : ?>
             <?php if ($k == "avatar") : ?>
               <td><img id="avatar_uid_<?=$v_['uid']?>" class="member_list_avatar avatar" src="<?=$v_['avatar']?>" qq="<?=$v_['qq']?>" uid="<?=$v_['uid']?>"></td>
+            <?php elseif ($k == "username") : ?>
+              <td><a href="member.php?uid=<?=$v_['uid']?>"><?=$v_['username']?></a></td>
             <?php else : ?>
               <td><?=$v?></td>
             <?php endif ?>

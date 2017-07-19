@@ -299,40 +299,29 @@ switch ($_GET['act']) {
   default:
     if ($_SESSION['uid'] > 0) {
       // Fetch user info
-      $member = DB("SELECT * FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
-      $member = $member[0];
-      unset($member['password']);
-      unset($member['salt']);
-      $member['lastlogin'] = toUserTime($member['lastlogin']);
-      $member['regdate'] = toUserTime($member['regdate']);
-      $usergroup = DB("SELECT * FROM member_groups WHERE groupid=:groupid", [":groupid" => $member['groupid']]);
-      if (!empty($usergroup)) {
-        foreach ($usergroup[0] as $k => $v) {
-          if ($k == "groupname") {
-            $member[$k] = $v;
-          } else {
-            if (!$v) {
-              $member[$k] = "x";
-            } else {
-              $member[$k] = "√";
-            }
-          }
-        }
-      }
-      unset($member['gid']);
-      unset($member['groupid']);
-      // Fetch member count info
-      $member_count = DB("SELECT * FROM member_count WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
-      if (empty($member_count)) {
-        DB("INSERT INTO member_count (uid) VALUES (:uid)", [":uid" => $_SESSION['uid']]);
-      } else {
-        $member_count = $member_count[0];
-        foreach ($member_count as $k => $v) {
-          $member["count-".$k] = $v;
-        }
-        unset($member['count-uid']);
+      if (!isset($_GET['uid'])) {
+        $_GET['uid'] = $_SESSION['uid'];
       }
 
+      $userinfo = DB("SELECT *FROM member WHERE uid=:uid", [":uid" => $_GET['uid']]);
+      $userinfo = $userinfo[0];
+      $userinfo['regdate'] = toUserTime($userinfo['regdate']);
+      $userinfo['lastlogin'] = toUserTime($userinfo['lastlogin']);
+      unset($userinfo['password'], $userinfo['salt']);
+      $body['userinfo'] = $userinfo;
+
+      $usercount = DB("SELECT * FROM member_count WHERE uid=:uid", [":uid" => $_GET['uid']]);
+      $usercount = $usercount[0];
+      $usercount['threads-count'] = $usercount['threads'];
+      $usercount['posts-count'] = $usercount['posts'];
+      unset($usercount['threads'], $usercount['posts']);
+      $body['usercount'] = $usercount;
+
+      $userperm = DB("SELECT * FROM member_groups WHERE groupid=:groupid", [":groupid" => $body['userinfo']['groupid']]);
+      $userperm = $userperm[0];
+      $body['userperm'] = $userperm;
+
+      printv($body);
     }
 }
 

@@ -16,6 +16,7 @@
 }
 .forumgroup-body {
   padding: 1em;
+  overflow: auto;
 }
 
 .forum {
@@ -57,15 +58,17 @@
 }
 
 .t_sendtime {
+  border-top: 3px solid #C2D5E3;
   text-align: center;
   font-size: 0.9em;
-  height: 45px;
+  height: 30px;
 }
 
 .t_title {
+  border-top: 3px solid #C2D5E3;
   font-weight: bold;
   font-size: 1.1em;
-  line-height: 45px;
+  line-height: 30px;
 }
 
 .t_top {
@@ -104,33 +107,3 @@
 #newthreadform_title {
   width: 100%;
 }
-
-/*
-.t_top > .col-sm-1,
-.t_top > .col-sm-2,
-.t_top > .col-sm-3,
-.t_top > .col-sm-4,
-.t_top > .col-sm-5,
-.t_top > .col-sm-6,
-.t_top > .col-sm-7,
-.t_top > .col-sm-8,
-.t_top > .col-sm-9,
-.t_top > .col-sm-10,
-.t_top > .col-sm-11,
-.t_top > .col-sm-12,
-.t_bottom > .col-sm-1,
-.t_bottom > .col-sm-2,
-.t_bottom > .col-sm-3,
-.t_bottom > .col-sm-4,
-.t_bottom > .col-sm-5,
-.t_bottom > .col-sm-6,
-.t_bottom > .col-sm-7,
-.t_bottom > .col-sm-8,
-.t_bottom > .col-sm-9,
-.t_bottom > .col-sm-10,
-.t_bottom > .col-sm-11,
-.t_bottom > .col-sm-12 {
-  float: left;
-  display: block;
-}
-*/

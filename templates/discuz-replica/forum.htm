@@ -42,13 +42,13 @@
   <a class="btn btn-primary" href="forum.php?act=newthread&fid=<?=$body['forum'][0]['fid']?>"><?=$lang['new-thread']?></a>
 </div>
 <div>
-  <table class="col-sm-12 table-hover" id="threadlist">
+  <table class="col-sm-12 table-striped" id="threadlist">
     <thead>
       <tr>
         <th class="col-sm-7"><?= $lang['thread-title'] ?></th>
-        <th><?= $lang['thread-author'] ?></th>
-        <th><?= $lang['thread-sendtime'] ?></th>
-        <th><?= $lang['thread-lasttime'] ?></th>
+        <th class="col-sm-1"><?= $lang['thread-author'] ?></th>
+        <th class="col-sm-2"><?= $lang['thread-sendtime'] ?></th>
+        <th class="col-sm-2"><?= $lang['thread-lasttime'] ?></th>
       </tr>
     </thead>
     <tbody>
@@ -75,8 +75,8 @@
 
 <?php if ($_GET['act'] == "thread") : ?>
 <div class="thread">
-  <?php foreach ($body['posts'] as $k => $v) : ?>
-    <table class="t_frame col-sm-12">
+  <table cellspacing=0 class="t_frame col-sm-12">
+    <?php foreach ($body['posts'] as $k => $v) : ?>
       <tr class="t_top">
         <td class="t_left t_sendtime col-sm-2">
           <div class="t_inner">
@@ -84,7 +84,7 @@
           </div>
         </td>
         <td class="t_right t_title col-sm-10">
-          <div class="t_inner t_title">
+          <div class="t_inner">
             <?= $v['title'] ?>
           </div>
         </td>
@@ -102,8 +102,8 @@
          </div>
        </td>
       </tr>
-    </table>
-  <?php endforeach ?>
+    <?php endforeach ?>
+  </table>
 </div>
   <?php if ($_SESSION['uid'] > 0) : ?>
 <div class="thread">
