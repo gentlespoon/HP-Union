@@ -320,7 +320,7 @@ switch ($_GET['act']) {
       $body['userperm'] = $userperm;
 
       unset($body['userinfo']['password'], $body['userinfo']['salt']);
-      unset($body['userinfo']['groupid']);
+      unset($body['userinfo']['groupid'], $body['userinfo']['failcount']);
       unset($body['usercount']['threads'], $body['usercount']['posts']);
       unset($body['usercount']['uid']);
       unset($body['userperm']['groupid']);
