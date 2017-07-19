@@ -307,19 +307,24 @@ switch ($_GET['act']) {
       $userinfo = $userinfo[0];
       $userinfo['regdate'] = toUserTime($userinfo['regdate']);
       $userinfo['lastlogin'] = toUserTime($userinfo['lastlogin']);
-      unset($userinfo['password'], $userinfo['salt']);
       $body['userinfo'] = $userinfo;
 
       $usercount = DB("SELECT * FROM member_count WHERE uid=:uid", [":uid" => $_GET['uid']]);
       $usercount = $usercount[0];
       $usercount['threads-count'] = $usercount['threads'];
       $usercount['posts-count'] = $usercount['posts'];
-      unset($usercount['threads'], $usercount['posts']);
       $body['usercount'] = $usercount;
 
       $userperm = DB("SELECT * FROM member_groups WHERE groupid=:groupid", [":groupid" => $body['userinfo']['groupid']]);
       $userperm = $userperm[0];
       $body['userperm'] = $userperm;
+
+      unset($body['userinfo']['password'], $body['userinfo']['salt']);
+      unset($body['userinfo']['groupid']);
+      unset($body['usercount']['threads'], $body['usercount']['posts']);
+      unset($body['usercount']['uid']);
+      unset($body['userperm']['groupid']);
+
 
     }
 }
