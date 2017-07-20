@@ -140,10 +140,10 @@ function getUserInfo() {
 
 function getNavitem() {
   global $body;
-  $body['nav']['main'] = DB("SELECT * FROM common_navigation WHERE display='main'");
+  $body['nav']['main'] = DB("SELECT * FROM common_navigation WHERE category='main' ORDER BY displayorder ASC");
   foreach ($body['nav']['main'] as $k => $v) {
     $body['nav']['main'][$k]['active'] = "";
   }
-  $body['nav']['topleft'] =  DB("SELECT * FROM common_navigation WHERE display='topleft'");
-  $body['nav']['topright'] =  DB("SELECT * FROM common_navigation WHERE display='topright'");
+  $body['nav']['topleft'] =  DB("SELECT * FROM common_navigation WHERE category='topleft' ORDER BY displayorder ASC");
+  $body['nav']['topright'] =  DB("SELECT * FROM common_navigation WHERE category='topright' ORDER BY displayorder ASC");
 }

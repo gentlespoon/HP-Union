@@ -92,7 +92,7 @@ $(document).ready(function() {
 
 
 
-  $(".nav_main_item").click(function() {
+  $(".nav_item").click(function() {
     if ($(this).attr('href') != "") {
       location.href = $(this).attr('href');
     }

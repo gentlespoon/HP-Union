@@ -1,8 +1,13 @@
 <div title="#common_header_visual">
   <div id="nav_top">
     <div class="wrapper">
-      <div class="left">左侧顶部导航</div>
-      <div class="right">右侧顶部导航</div>
+
+      <?php foreach ($body['nav']['topleft'] as $k => $item) : ?>
+        <div class="left nav_item" href="<?=$item['link']?>"><?=$item['name']?></div>
+      <?php endforeach ?>
+      <?php foreach ($body['nav']['topright'] as $k => $item) : ?>
+        <div class="right nav_item" href="<?=$item['link']?>"><?=$item['name']?></div>
+      <?php endforeach ?>
     </div>
   </div>
 
@@ -43,7 +48,7 @@
 
   <div id="nav_main" class="wrapper">
     <?php foreach ($body['nav']['main'] as $k => $item) : ?>
-    <div class="nav_main_item <?=$item['active']?>" href="<?=$item['link']?>"><?=$item['name']?></div>
+    <div class="nav_item nav_main_item <?=$item['active']?>" href="<?=$item['link']?>"><?=$item['name']?></div>
     <?php endforeach ?>
   </div>
 

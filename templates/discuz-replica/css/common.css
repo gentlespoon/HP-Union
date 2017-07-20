@@ -67,6 +67,11 @@ button {
   float: right;
 }
 
+.nav_item {
+  padding: 0 0.5em;
+  cursor: pointer;
+}
+
 #nav_main {
   height: 33px;
   background: -webkit-linear-gradient(#2D7ECF,#2267B5); /* Safari 5.1-6.0 */
