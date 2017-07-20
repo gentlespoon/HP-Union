@@ -42,8 +42,9 @@
 
 
   <div id="nav_main" class="wrapper">
-    <div class="nav_main_item nav_main_active">主导航条</div>
-    <div class="nav_main_item">主导航条2</div>
+    <?php foreach ($body['nav']['main'] as $k => $item) : ?>
+    <div class="nav_main_item <?=$item['active']?>" href="<?=$item['link']?>"><?=$item['name']?></div>
+    <?php endforeach ?>
   </div>
 
 </div>

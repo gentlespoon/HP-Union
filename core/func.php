@@ -56,10 +56,16 @@ function template($file, ...$extrafiles) {
   global $settings;
   global $title;
   global $member;
+  getNavitem();
   $_endtime = microtime(true);
   $_runtime = $_endtime - $_starttime;
   // echo "END".$_endtime;
   // echo "RUN".$_runtime;
+  foreach ($body['nav']['main'] as $k => $v) {
+    if ($v['filename'] == $file) {
+      $body['nav']['main'][$k]['active'] = "nav_main_active";
+    }
+  }
   include_once(ROOT."templates/".$settings['template']."/common_header_html.htm");
   include_once(ROOT."templates/".$settings['template']."/common_header_visual.htm");
   include_once(ROOT."templates/".$settings['template']."/".$file.".htm");
@@ -68,7 +74,6 @@ function template($file, ...$extrafiles) {
   }
   include_once(ROOT."templates/".$settings['template']."/common_footer_visual.htm");
   include_once(ROOT."templates/".$settings['template']."/common_footer_html.htm");
-
   exit();
 }
 
@@ -130,4 +135,15 @@ function getUserInfo() {
     $member = ["username" => $lang['not-logged-in'], "qq" => 0];
   }
   return $member;
+}
+
+
+function getNavitem() {
+  global $body;
+  $body['nav']['main'] = DB("SELECT * FROM common_navigation WHERE display='main'");
+  foreach ($body['nav']['main'] as $k => $v) {
+    $body['nav']['main'][$k]['active'] = "";
+  }
+  $body['nav']['topleft'] =  DB("SELECT * FROM common_navigation WHERE display='topleft'");
+  $body['nav']['topright'] =  DB("SELECT * FROM common_navigation WHERE display='topright'");
 }
