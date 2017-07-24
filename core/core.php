@@ -54,7 +54,7 @@ if (!isset($body)) {
 foreach ($_GET as $k => $v) {
   $v = trim($v);
 }
-foreach ($_GET as $k => $v) {
+foreach ($_POST as $k => $v) {
   $v = trim($v);
 }
 

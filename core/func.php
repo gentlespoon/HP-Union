@@ -40,7 +40,7 @@ function printv($arr, $ret=false) {
       echo $buf;
     }
   } else {
-    return false;
+    echo $arr;
   }
 }
 
