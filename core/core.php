@@ -52,10 +52,10 @@ if (!isset($body)) {
 
 // Process submitted info
 foreach ($_GET as $k => $v) {
-  $v = trim($v);
+  $_GET[$k] = trim($v);
 }
 foreach ($_POST as $k => $v) {
-  $v = trim($v);
+  $_POST[$k] = trim($v);
 }
 
 if (!array_key_exists("act", $_GET)) {
