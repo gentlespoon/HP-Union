@@ -50,14 +50,6 @@ if (!isset($body)) {
   ];
 }
 
-// Process submitted info
-foreach ($_GET as $k => $v) {
-  $_GET[$k] = trim($v);
-}
-foreach ($_POST as $k => $v) {
-  $_POST[$k] = trim($v);
-}
-
 if (!array_key_exists("act", $_GET)) {
   $_GET['act'] = "";
 }
