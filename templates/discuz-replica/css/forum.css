@@ -37,6 +37,10 @@
   border: 1px solid #CDCDCD;
 }
 
+#threadlist td {
+  text-align: left;
+  padding-left: 1em;
+}
 
 .thread {
   margin: 1em 0;

@@ -3,10 +3,10 @@
     <div class="wrapper">
 
       <?php foreach ($body['nav']['topleft'] as $k => $item) : ?>
-        <div class="left nav_item" href="<?=$item['link']?>"><?=$item['name']?></div>
+        <div class="left nav_item"><a href="<?=$item['link']?>" target="<?=$item['target']?>"><?=$item['name']?></a></div>
       <?php endforeach ?>
       <?php foreach ($body['nav']['topright'] as $k => $item) : ?>
-        <div class="right nav_item" href="<?=$item['link']?>"><?=$item['name']?></div>
+        <div class="right nav_item"><a href="<?=$item['link']?>" target="<?=$item['target']?>"><?=$item['name']?></a></div>
       <?php endforeach ?>
     </div>
   </div>
