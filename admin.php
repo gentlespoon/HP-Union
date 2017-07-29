@@ -3,6 +3,15 @@
 define("ROOT", $_SERVER['DOCUMENT_ROOT']."/");
 require(ROOT."core/core.php");
 
+
+if ($_SESSION['uid'] > 0) {
+  if ($member['adminback'] != "1") {
+    exit($lang['permission-denied']);
+  }
+} else {
+  exit($lang['not-logged-in']);
+}
+
 // handle submitted requests first
 switch ($_GET['act']) {
 

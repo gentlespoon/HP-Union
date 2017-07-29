@@ -42,6 +42,7 @@ $lang = [
   "not-logged-in" => "未登入",
   "password" => "密码",
   "password2" => "重复密码",
+  "permission-denied" => "没有权限",
   "qq" => "QQ",
   "regdate" => "注册时间",
   "register" => "注册",
