@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title><?=$lang['adminpanel']." - ".$settings['sitename']?></title>
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"> -->
+  <link rel="shortcut icon" href="static/images/union_flat.png">
+  <!--Import materialize.css-->
+  <link rel=stylesheet type=text/css href="templates/material/css/materialize.css">
+  <!--Import Google Icon Font-->
+  <link rel=stylesheet type=text/css href="templates/material/css/icons.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <div class="navbar-fixed" style="min-height: 130px;">
+    <nav class="nav-extended blue darken-4">
+      <div class="nav-wrapper container">
+        <a href="/" class="brand-logo"><?=$settings['sitename']?></a>
+      </div>
+      <div class="nav-content container">
+        <ul class="tabs tabs-transparent">
+          <li class="tab">
+            <a class="active" href="#globalsettings" target=""><?=$lang['global-settings']?></a>
+          </li>
+          <li class="tab">
+            <a class="" href="#forumhierarchy" target=""><?=$lang['forum-hierarchy']?></a>
+          </li>
+          <li class="tab">
+            <a class="" href="#usermanage" target=""><?=$lang['user-manage']?></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+
+
+
+  <div id="globalsettings" class="col s12 container">
+  </div>
+
+  <div id="forumhierarchy" class="col s12 container">
+    <form class="col s12">
+    <?php foreach ($forum_hierarchy as $k_ => $forumgroup) : ?>
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="forumname_<?=$forum['fid']?>" name="forumname_<?=$forum['fid']?>" type="text" value="<?=$forumgroup['name']?>"  class="validate">
+          <label for="forumname_<?=$forum['fid']?>" ><?=$lang['forum-name']?></label>
+        </div>
+        <div class="col s6">
+        </div>
+
+        <?php foreach ($forumgroup['subforum'] as $k => $forum) : ?>
+        <div class="col s1">
+        </div>
+        <div class="input-field col s5">
+          <input id="forumname_<?=$forum['fid']?>" name="forumname_<?=$forum['fid']?>" type="text" value="<?=$forumgroup['name']?>"  class="validate">
+          <label for="forum_<?=$forum['fid']?>" ><?=$lang['forum-name']?></label>
+        </div>
+        <div class="input-field col s6">
+          <input id="forum_<?=$forum['fid']?>" name="forum_<?=$forum['fid']?>" type="text" value="<?=$forumgroup['name']?>"  class="validate">
+          <label for="forum_<?=$forum['fid']?>" ><?=$lang['forum-name']?></label>
+        </div>
+        <?php endforeach ?>
+      </div>
+    <?php endforeach ?>
+
+    </form>
+
+
+  </div>
+
+
+
+<!-- User manage -->
+
+<style>
+.avatar {
+  height: 50px;
+  width: 50px;
+  border: 1px solid #000000;
+}
+</style>
+  <div id="usermanage" class="col s12 container">
+    <table class="highlight">
+      <thead>
+        <tr>
+          <?php foreach ($memberlist[1] as $k => $v) : ?>
+          <th><?=$lang[$k]?></th>
+          <?php endforeach ?>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($memberlist as $k_ => $v_) : ?>
+        <tr>
+          <?php foreach ($v_ as $k => $v) : ?>
+            <?php if ($k == "avatar") : ?>
+              <td title="<?=$k?>"><img id="avatar_uid_<?=$v_['uid']?>" class="avatar" src="<?=$v_['avatar']?>" qq="<?=$v_['qq']?>" uid="<?=$v_['uid']?>"></td>
+            <?php elseif ($k == "username") : ?>
+              <td title="<?=$k?>"><a href="member.php?uid=<?=$v_['uid']?>"><?=$v_['username']?></a></td>
+            <?php else : ?>
+              <td title="<?=$k?>"><?=$v?></td>
+            <?php endif ?>
+          <?php endforeach ?>
+        </tr>
+      <?php endforeach ?>
+      </tbody>
+    </table>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="static/scripts/jquery-3.2.1.min.js"></script>
+  <script src="templates/material/js/materialize.js"></script>
+  <script src="static/scripts/md5.js"></script>
+  <script src="static/scripts/script.js"></script>
+</body>
+</html>
