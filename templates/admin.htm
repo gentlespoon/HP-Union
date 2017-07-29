@@ -37,8 +37,42 @@
 
 
 
+
+
+
+
+
+
   <div id="globalsettings" class="col s12 container">
-    <?php printv($newforumlist);?>
+    <form class="col s12" action="?act=globalsettings" method="post">
+<?php foreach ($settings as $k => $v) : ?>
+<?php if (($k != "template")) : ?>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="gs_<?=$k?>" name="<?=$k?>" type="text" value="<?=$v?>" >
+            <label for="gs_<?=$k?>" ><?=$lang[$k]?></label>
+          </div>
+        </div>
+<?php else : ?>
+        <div class="row">
+          <div class="input-field col s12">
+            <select name="template">
+              <option value="" disabled selected><?=$lang['template']?></option>
+<?php foreach ($v['others'] as $tplt) : ?>
+              <option value="<?=$tplt?>" <?php if ($settings['template']['current'] == $tplt) echo "selected"; ?> ><?=$tplt?></option>
+<?php endforeach ?>
+            </select>
+            <label><?=$lang['template']?></label>
+          </div>
+        </div>
+<?php endif ?>
+<?php endforeach ?>
+      <div class="input-field row">
+        <button class="btn blue darken-4 waves-effect waves-light" type="submit"><?=$lang['save']?>
+          <i class="material-icons right">send</i>
+        </button>
+      </div>
+    </form>
   </div>
 
 

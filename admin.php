@@ -48,10 +48,11 @@ switch ($_GET['act']) {
 
     break;
 
-  case "sitesettings":
+  case "globalsettings":
   default:
-
-
+    foreach ($_POST as $k => $v) {
+      DB("UPDATE common_settings SET data=:v WHERE name=:k", [":v" => $v, ":k" => $k]);
+    }
 }
 
 
@@ -68,8 +69,23 @@ switch ($_GET['act']) {
 $globalsettings = DB("SELECT * FROM common_settings");
 $settings = [];
 foreach($globalsettings as $k => $v) {
-  $settings[$v['key']] = $v['value'];
+  $settings[$v['name']] = $v['data'];
 }
+$tplt = $settings['template'];
+$settings['template'] = ["current" => $tplt, "others" => []];
+// get templates
+$templatedirs = glob(ROOT."templates/*" , GLOB_ONLYDIR);
+foreach ($templatedirs as $v) {
+  if (isset($templateName)) {
+    unset($templateName);
+  }
+  include_once($v."/info.php");
+  if (isset($templateName)) {
+    array_push($settings['template']['others'], $templateName);
+  }
+}
+
+
 
 
 
@@ -82,6 +98,12 @@ array_push($forumlist, [
   "parent_fid" => "0",
   "description" => "",
 ]);
+
+
+
+
+
+
 
 
 // usermanage
