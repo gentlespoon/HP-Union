@@ -24,6 +24,9 @@
             <a class="active" href="#globalsettings" target=""><?=$lang['global-settings']?></a>
           </li>
           <li class="tab">
+            <a class="" href="#navigation" target=""><?=$lang['navigation']?></a>
+          </li>
+          <li class="tab">
             <a class="" href="#forumhierarchy" target=""><?=$lang['forum-hierarchy']?></a>
           </li>
           <li class="tab">
@@ -90,6 +93,73 @@
 
 
 
+  <div id="navigation" class="col s12 container">
+    <form class="col s12" action="?act=navigation" method="post">
+<?php foreach ($nav as $navcategory => $navitem) : ?>
+<?php foreach ($navitem as $n) :?>
+        <div class="row">
+          <div class="input-field col s2">
+            <input id="name-<?=$n['id']?>" name="name-<?=$n['id']?>" type="text" value="<?=$n['name']?>" >
+            <label for="name-<?=$n['id']?>" ><?=$lang['navigation']?></label>
+          </div>
+          <div class="input-field col s4">
+            <input id="link-<?=$n['id']?>" name="link-<?=$n['id']?>" type="text" value="<?=$n['link']?>" >
+            <label for="link-<?=$n['id']?>" ><?=$lang['link']?></label>
+          </div>
+          <div class="input-field col s1">
+            <input id="target-<?=$n['id']?>" name="target-<?=$n['id']?>" type="text" value="<?=$n['target']?>" >
+            <label for="target-<?=$n['id']?>" ><?=$lang['href-target']?></label>
+          </div>
+          <div class="input-field col s1">
+            <select name="category-<?=$n['id']?>">
+              <option value="main" <?php if ($navcategory == "main") echo "selected"; ?>><?=$lang['nav-main']?></option>
+              <option value="topleft" <?php if ($navcategory == "topleft") echo "selected"; ?>><?=$lang['nav-topleft']?></option>
+              <option value="topright" <?php if ($navcategory == "topright") echo "selected"; ?>><?=$lang['nav-topright']?></option>
+            </select>
+            <label><?=$lang['nav-category']?></label>
+          </div>
+          <div class="input-field col s1">
+            <input id="displayorder-<?=$n['id']?>" name="displayorder-<?=$n['id']?>" type="text" value="<?=$n['displayorder']?>" >
+            <label for="displayorder-<?=$n['id']?>" ><?=$lang['displayorder']?></label>
+          </div>
+          <div class="input-field col s2">
+            <input id="filename-<?=$n['id']?>" name="filename-<?=$n['id']?>" type="text" value="<?=$n['filename']?>" >
+            <label for="filename-<?=$n['id']?>" ><?=$lang['filename']?></label>
+          </div>
+          <div class="input-field col s1">
+            <button class="deletenav btn red darken-4 waves-effect waves-light" name="delete-nav" value="<?=$n['id']?>" navname="<?=$n['name']?>">
+              <i class="material-icons">delete</i>
+            </button>
+          </div>
+        </div>
+<?php endforeach ?>
+<?php endforeach ?>
+      <div class="input-field row">
+        <button class="btn blue darken-4 waves-effect waves-light" type="submit"><?=$lang['save']?>
+          <i class="material-icons right">send</i>
+        </button>
+      </div>
+    </form>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <div id="forumhierarchy" class="col s12 container">
     <form class="col s12" action="?act=forumhierarchy" method="post">
 <?php foreach ($forumlist as $forum) : ?>
@@ -121,7 +191,7 @@
             <label><?=$lang['choose-parent-forum']?></label>
           </div>
           <div class="input-field col s1">
-            <button class="deleteforum btn red darken-4 waves-effect waves-light" name="delete-forum" value="<?=$forum['fid']?>" forumname="<?=$forum['name']?>"><!--<?=$lang['delete-forum']?>-->
+            <button class="deleteforum btn red darken-4 waves-effect waves-light" name="delete-forum" value="<?=$forum['fid']?>" forumname="<?=$forum['name']?>">
               <i class="material-icons">delete</i>
             </button>
           </div>

@@ -56,7 +56,7 @@ function template($file, ...$extrafiles) {
   global $settings;
   global $title;
   global $member;
-  getNavitem();
+  $body['nav'] = getNavitem();
   $_endtime = microtime(true);
   $_runtime = $_endtime - $_starttime;
   // echo "END".$_endtime;
@@ -140,11 +140,12 @@ function getUserInfo() {
 
 
 function getNavitem() {
-  global $body;
-  $body['nav']['main'] = DB("SELECT * FROM common_navigation WHERE category='main' ORDER BY displayorder ASC");
-  foreach ($body['nav']['main'] as $k => $v) {
-    $body['nav']['main'][$k]['active'] = "";
+  $nav = [];
+  $nav['main'] = DB("SELECT * FROM common_navigation WHERE category='main' ORDER BY displayorder ASC");
+  foreach ($nav['main'] as $k => $v) {
+    $nav['main'][$k]['active'] = "";
   }
-  $body['nav']['topleft'] =  DB("SELECT * FROM common_navigation WHERE category='topleft' ORDER BY displayorder ASC");
-  $body['nav']['topright'] =  DB("SELECT * FROM common_navigation WHERE category='topright' ORDER BY displayorder ASC");
+  $nav['topleft'] =  DB("SELECT * FROM common_navigation WHERE category='topleft' ORDER BY displayorder ASC");
+  $nav['topright'] =  DB("SELECT * FROM common_navigation WHERE category='topright' ORDER BY displayorder ASC");
+  return $nav;
 }

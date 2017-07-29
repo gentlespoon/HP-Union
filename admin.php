@@ -15,6 +15,46 @@ if ($_SESSION['uid'] > 0) {
 // handle submitted requests first
 switch ($_GET['act']) {
 
+
+  case "navigation":
+    if (isset($_POST['delete-nav'])) {
+      DB("DELETE FROM common_navigation WHERE id=:id", [":id" => $_POST['delete-nav']]);
+      break;
+    }
+    $newnavlist = [];
+    foreach ($_POST as $key => $value) {
+      $nav = explode("-", $key);
+      $newnavlist[$nav[1]][$nav[0]] = $value;
+    }
+    if ($newnavlist['new']['name'] != "") {
+      DB("INSERT INTO common_navigation (name, link, target, displayorder, category, filename) VALUES (:name, :link, :target, :displayorder, :category, :filename)", [
+          ":name" => $newnavlist['new']['name'],
+          ":link" => $newnavlist['new']['link'],
+          ":target" => $newnavlist['new']['target'],
+          ":displayorder" => $newnavlist['new']['displayorder'],
+          ":category" => $newnavlist['new']['category'],
+          ":filename" => $newnavlist['new']['filename'],
+      ]);
+    }
+    unset($newnavlist['new']);
+    foreach ($newnavlist as $id => $nav) {
+      DB("UPDATE common_navigation SET name=:name, link=:link, target=:target, displayorder=:displayorder, category=:category, filename=:filename WHERE id=:id", [
+        ":id" => $id,
+        ":name" => $nav['name'],
+        ":link" => $nav['link'],
+        ":target" => $nav['target'],
+        ":displayorder" => $nav['displayorder'],
+        ":category" => $nav['category'],
+        ":filename" => $nav['filename'],
+      ]);
+    }
+    break;
+
+
+
+
+
+
   case "forumhierarchy":
     if (isset($_POST['delete-forum'])) {
       DB("DELETE FROM forum_forum WHERE fid=:fid", [":fid" => $_POST['delete-forum']]);
@@ -103,6 +143,21 @@ array_push($forumlist, [
 
 
 
+
+
+
+// get navigation item
+$nav = getNavItem();
+$nav['new'] = [];
+array_push($nav['new'], [
+  "id" => "new",
+  "name" => "",
+  "link" => "",
+  "target" => "_self",
+  "displayorder" => "0",
+  "category" => "main",
+  "filename" => "",
+]);
 
 
 

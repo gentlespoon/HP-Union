@@ -109,7 +109,9 @@ $(document).ready(function() {
     return confirm("你确定要删除版块 "+$(this).attr('forumname'));
   });
 
-
+  $(".deletenav").click(function() {
+    return confirm("你确定要删除导航项目 "+$(this).attr('navname'));
+  });
 
 
 });
