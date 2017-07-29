@@ -4,6 +4,8 @@ include(ROOT."core/core.php");
 
 
 
+
+/*
 $memberlist = DB("SELECT uid, avatar, username, qq, email, regdate, lastlogin FROM member ORDER BY uid ASC");
 foreach ($memberlist as $k => $v) {
   $memberlist[$k]['regdate'] = toUserTime($v['regdate']);
@@ -12,6 +14,8 @@ foreach ($memberlist as $k => $v) {
     unset($memberlist[$k]);
   }
 }
+$body['registered'] = $memberlist;
+*/
 
 $forum_hierarchy = [];
 $forumlist = DB("SELECT * FROM forum_forum WHERE visible>0");
@@ -32,7 +36,6 @@ foreach ($forumlist as $k => $forum) {
 }
 
 
-$body['registered'] = $memberlist;
 
 $body['forumlist'] = $forum_hierarchy;
 

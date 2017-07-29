@@ -14,11 +14,11 @@ if (!isset($_starttime)) {
 }
 
 
-include_once(ROOT."language.php");
-include_once(ROOT."config/config.php");
-include_once(ROOT."core/time.php");
-include_once(ROOT."core/func.php");
-include_once(ROOT."develop.php");
+require_once(ROOT."language.php");
+require_once(ROOT."config/config.php");
+require_once(ROOT."core/time.php");
+require_once(ROOT."core/func.php");
+require_once(ROOT."develop.php");
 
 //  $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 
@@ -39,7 +39,7 @@ if (!isset($db)) {
 $r = DB("SELECT * FROM common_settings");
 $settings = [];
 foreach($r as $k => $v) {
-  $settings[$v['key']] = $v['value'];
+  $settings[$v['name']] = $v['data'];
 }
 
 

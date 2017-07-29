@@ -1,4 +1,7 @@
 $(document).ready(function() {
+
+  $('select').material_select();
+
   $("#loginform").submit(function() {
     if ($("#loginform_username").val() == "") {
       alert("用户名不能为空");
@@ -97,6 +100,16 @@ $(document).ready(function() {
       location.href = $(this).attr('href');
     }
   });
+
+
+
+
+
+  $(".deleteforum").click(function() {
+    return confirm("你确定要删除版块 "+$(this).attr('forumname'));
+  });
+
+
 
 
 });
