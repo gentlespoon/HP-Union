@@ -57,7 +57,10 @@ switch ($_GET['act']) {
 
   case "forumhierarchy":
     if (isset($_POST['delete-forum'])) {
-      DB("DELETE FROM forum_forum WHERE fid=:fid", [":fid" => $_POST['delete-forum']]);
+      $threads = DB("SELECT tid FROM forum_thread WHERE forum_id=:fid", [":fid" => $_POST['delete-forum']]);
+      if (empty($threads)) {
+        DB("DELETE FROM forum_forum WHERE fid=:fid", [":fid" => $_POST['delete-forum']]);
+      }
       break;
     }
     $newforumlist = [];
