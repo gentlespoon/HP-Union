@@ -67,6 +67,7 @@ switch ($_GET['act']) {
           DB("INSERT INTO member (username, password, salt, regdate, qq, avatar) VALUES ( :username , :password , :salt , :regdate, :qq, :avatar)", [":username" => $_POST['username'], ":password" => $encryptedPassword, ":salt" => $salt, ":regdate" => time(), ":qq" => $_POST['qq'], ":avatar" => $avatar]);
           $r = DB("SELECT uid FROM member WHERE username= :username", [":username" => $_POST['username']]);
           $uid = $r[0]['uid'];
+          DB("INSERT INTO member_count (uid) VALUES (:uid)", [":uid" => $uid]);
           // log this new user in
           // insert login history
           DB("INSERT INTO member_loginhistory (uid, logindate, success, ip) VALUES ( :uid, :logindate, :success, :ip)", [":uid" => $r[0]['uid'], ":logindate" => time(), ":success" => 1, ":ip" => $_SERVER['REMOTE_ADDR']]);
