@@ -18,7 +18,6 @@ require_once(ROOT."language.php");
 require_once(ROOT."config/config.php");
 require_once(ROOT."core/time.php");
 require_once(ROOT."core/func.php");
-require_once(ROOT."develop.php");
 
 //  $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 

@@ -48,7 +48,7 @@
 
   <div id="nav_main" class="wrapper">
     <?php foreach ($body['nav']['main'] as $k => $item) : ?>
-    <div class="nav_item nav_main_item <?=$item['active']?>" href="<?=$item['link']?>"><?=$item['name']?></div>
+    <div class="nav_item nav_main_item <?=$item['active']?>"><a href="<?=$item['link']?>" target="<?=$item['target']?>"><?=$item['name']?></a></div>
     <?php endforeach ?>
   </div>
 

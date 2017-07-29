@@ -95,11 +95,11 @@ $(document).ready(function() {
 
 
 
-  $(".nav_item").click(function() {
-    if ($(this).attr('href') != "") {
-      location.href = $(this).attr('href');
-    }
-  });
+  // $(".nav_item").click(function() {
+  //   if ($(this).attr('href') != "") {
+  //     location.href = $(this).attr('href');
+  //   }
+  // });
 
 
 

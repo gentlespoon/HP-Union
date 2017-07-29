@@ -80,6 +80,10 @@ button {
   background: linear-gradient(#2D7ECF,#2267B5); /* Standard syntax */
 }
 
+#nav_main a {
+  color: white;
+}
+
 .nav_main_item {
   cursor: pointer;
   font-weight: bold;

@@ -62,7 +62,8 @@ function template($file, ...$extrafiles) {
   // echo "END".$_endtime;
   // echo "RUN".$_runtime;
   foreach ($body['nav']['main'] as $k => $v) {
-    if ($v['filename'] == $file) {
+    $filenames = explode(" ", $v['filename']);
+    if (in_array($file, $filenames)) {
       $body['nav']['main'][$k]['active'] = "nav_main_active";
     }
   }
