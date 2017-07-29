@@ -38,38 +38,82 @@
 
 
   <div id="globalsettings" class="col s12 container">
+    <?php printv($newforumlist);?>
   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   <div id="forumhierarchy" class="col s12 container">
-    <form class="col s12">
-    <?php foreach ($forum_hierarchy as $k_ => $forumgroup) : ?>
-      <div class="row">
-        <div class="input-field col s6">
-          <input id="forumname_<?=$forum['fid']?>" name="forumname_<?=$forum['fid']?>" type="text" value="<?=$forumgroup['name']?>"  class="validate">
-          <label for="forumname_<?=$forum['fid']?>" ><?=$lang['forum-name']?></label>
+    <form class="col s12" action="?act=forumhierarchy" method="post">
+<?php foreach ($forumlist as $forum) : ?>
+        <div class="row">
+<?php if ($forum['parent_fid'] > 0) : ?>
+          <div class="col s1">
+          </div>
+          <div class="input-field col s2">
+<?php else : ?>
+          <div class="input-field col s3">
+<?php endif ?>
+            <input id="name-<?=$forum['fid']?>" name="name-<?=$forum['fid']?>" type="text" value="<?=$forum['name']?>" >
+            <label for="name-<?=$forum['fid']?>" ><?=$lang['forum-name']?></label>
+          </div>
+          <div class="input-field col s4">
+            <input id="description-<?=$forum['fid']?>" name="description-<?=$forum['fid']?>" type="text" value="<?=$forum['description']?>" >
+            <label for="description-<?=$forum['fid']?>" ><?=$lang['forum-description']?></label>
+          </div>
+          <div class="input-field col s2">
+            <select name="parent_fid-<?=$forum['fid']?>">
+              <option value="" disabled selected><?=$lang['choose-parent-forum']?></option>
+              <option value="0" <?php if ($forum['parent_fid'] == "0") echo "selected"; ?>><?=$lang['root-forum']?></option>
+<?php foreach ($forumlist as $fv) : ?>
+<?php if (($fv['parent_fid'] == 0) && ($fv['fid'] != "new")) : ?>
+              <option value="<?=$fv['fid']?>" <?php if ($forum['parent_fid'] == $fv['fid']) echo "selected"; ?>><?=$fv['name']?></option>
+<?php endif ?>
+<?php endforeach ?>
+            </select>
+            <label><?=$lang['choose-parent-forum']?></label>
+          </div>
+          <div class="input-field col s1">
+            <button class="deleteforum btn red darken-4 waves-effect waves-light" name="delete-forum" value="<?=$forum['fid']?>" forumname="<?=$forum['name']?>"><!--<?=$lang['delete-forum']?>-->
+              <i class="material-icons">delete</i>
+            </button>
+          </div>
         </div>
-        <div class="col s6">
-        </div>
-
-        <?php foreach ($forumgroup['subforum'] as $k => $forum) : ?>
-        <div class="col s1">
-        </div>
-        <div class="input-field col s5">
-          <input id="forumname_<?=$forum['fid']?>" name="forumname_<?=$forum['fid']?>" type="text" value="<?=$forumgroup['name']?>"  class="validate">
-          <label for="forum_<?=$forum['fid']?>" ><?=$lang['forum-name']?></label>
-        </div>
-        <div class="input-field col s6">
-          <input id="forum_<?=$forum['fid']?>" name="forum_<?=$forum['fid']?>" type="text" value="<?=$forumgroup['name']?>"  class="validate">
-          <label for="forum_<?=$forum['fid']?>" ><?=$lang['forum-name']?></label>
-        </div>
-        <?php endforeach ?>
+<?php endforeach ?>
+      <div class="input-field row">
+        <button class="btn blue darken-4 waves-effect waves-light" type="submit"><?=$lang['save']?>
+          <i class="material-icons right">send</i>
+        </button>
       </div>
-    <?php endforeach ?>
-
     </form>
-
-
   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

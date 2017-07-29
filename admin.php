@@ -6,9 +6,39 @@ require(ROOT."core/core.php");
 // handle submitted requests first
 switch ($_GET['act']) {
 
+  case "forumhierarchy":
+    if (isset($_POST['delete-forum'])) {
+      DB("DELETE FROM forum_forum WHERE fid=:fid", [":fid" => $_POST['delete-forum']]);
+      break;
+    }
+    $newforumlist = [];
+    foreach ($_POST as $key => $value) {
+      $forum = explode("-", $key);
+      $newforumlist[$forum[1]][$forum[0]] = $value;
+    }
+    if ($newforumlist['new']['name'] != "") {
+      DB("INSERT INTO forum_forum (name, description, parent_fid) VALUES (:name, :description, :parent_fid)", [
+        ":name" => $newforumlist['new']['name'],
+        ":description" => $newforumlist['new']['description'],
+        ":parent_fid" => $newforumlist['new']['parent_fid'],
+      ]);
+    }
+    unset($newforumlist['new']);
+    foreach ($newforumlist as $fid => $forum) {
+      DB("UPDATE forum_forum SET name=:name, description=:description, parent_fid=:parent_fid WHERE fid=:fid", [
+        ":name" => $forum['name'],
+        ":description" => $forum['description'],
+        ":parent_fid" => $forum['parent_fid'],
+        ":fid" => $fid,
+      ]);
+    }
+    break;
+
+
   case "usermanage":
 
     break;
+
   case "sitesettings":
   default:
 
@@ -37,19 +67,12 @@ foreach($globalsettings as $k => $v) {
 // forumhierarchy
 $forum_hierarchy = [];
 $forumlist = DB("SELECT * FROM forum_forum WHERE visible>0");
-// construct top level forum hierarchy
-foreach ($forumlist as $k => $forum) {
-  if ($forum['parent_fid'] == 0) {
-    $forum_hierarchy[$forum['fid']] = $forum;
-    $forum_hierarchy[$forum['fid']]['subforum'] = [];
-  }
-}
-// construct second level forum hierarchy
-foreach ($forumlist as $k => $forum) {
-  if ($forum['parent_fid'] > 0) {
-    $forum_hierarchy[$forum['parent_fid']]['subforum'][$forum['fid']] = $forum;
-  }
-}
+array_push($forumlist, [
+  "fid" => "new",
+  "name" => "",
+  "parent_fid" => "0",
+  "description" => "",
+]);
 
 
 // usermanage
