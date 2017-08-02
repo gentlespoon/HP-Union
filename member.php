@@ -220,6 +220,10 @@ switch ($_GET['act']) {
         if ($_SESSION['uid'] > 0) {
           // check old password
           $r = DB("SELECT password, salt FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
+          if (! $r) {
+            // User does not exist
+            break;
+          }
           $encryptedPassword = md5($_POST['currpwd'].$r[0]['salt']);
           if ($encryptedPassword == $r[0]['password']) {
             // Authenticated

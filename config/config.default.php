@@ -16,5 +16,7 @@ $config = [
     "date"   => "Y-m-d",                       // Date format
     "iso"    => "Y-m-d H:i:s",                 // ISO format
   ],
-
+  "sms" => [
+    "sms_token" => '',     // Api sms_token
+  ],
 ];
