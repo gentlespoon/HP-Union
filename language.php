@@ -112,4 +112,5 @@ $lang = [
   "userinfo" => "用户资料",
   "usercount" => "用户统计",
   "userperm" => "用户权限",
+  "permission-denied" => "权限不足",
 ];

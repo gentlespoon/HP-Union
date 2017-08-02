@@ -24,6 +24,12 @@ switch ($_GET['act']) {
 
 
   case "forum":
+    if (empty($member) || (!empty($member) && $member['viewforum'] == 0)) {
+      $_GET['act'] = "";
+      $body['alerttype'] = "alert-danger";
+      $body['alert'] = $lang['permission-denied'];
+      break;
+    }
     $forum = DB("SELECT * FROM forum_forum WHERE fid = :fid AND visible > 0", [":fid" => $_GET["fid"]]);
     if (empty($forum)) {
       $body['alerttype'] = "alert-danger";
@@ -58,6 +64,12 @@ switch ($_GET['act']) {
 
 
   case "thread":
+    if (empty($member) || (!empty($member) && $member['viewthread'] == 0)) {
+      $_GET['act'] = "";
+      $body['alerttype'] = "alert-danger";
+      $body['alert'] = $lang['permission-denied'];
+      break;
+    }
     $thread = DB("SELECT * FROM forum_thread WHERE tid = :tid", [":tid" => $_GET['tid']]);
     if (empty($thread)) {
       $body['alerttype'] = "alert-danger";
@@ -89,6 +101,12 @@ switch ($_GET['act']) {
 
 
   case "newthread":
+    if (empty($member) || (!empty($member) && $member['newthread'] == 0)) {
+      $_GET['act'] = "";
+      $body['alerttype'] = "alert-danger";
+      $body['alert'] = $lang['permission-denied'];
+      break;
+    }
     if (empty($_GET['fid'])) {
       $body['alerttype'] = "alert-danger";
       $body['alert'] = $lang['invalid-forum-id'];
@@ -138,6 +156,12 @@ switch ($_GET['act']) {
 
 
   case "newpost":
+    if (empty($member) || (!empty($member) && $member['newpost'] == 0)) {
+      $_GET['act'] = "";
+      $body['alerttype'] = "alert-danger";
+      $body['alert'] = $lang['permission-denied'];
+      break;
+    }
     if (empty($_GET['tid'])) {
       $body['alerttype'] = "alert-danger";
       $body['alert'] = $lang['invalid-thread-id'];
