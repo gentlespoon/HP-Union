@@ -24,7 +24,8 @@ switch ($_GET['act']) {
 
 
   case "forum":
-    if (empty($member) || (!empty($member) && $member['viewforum'] == 0)) {
+    if (!array_key_exists("viewforum", $member) || 
+        (array_key_exists("viewforum", $member) && $member['viewforum'] == 0)) {
       $_GET['act'] = "";
       $body['alerttype'] = "alert-danger";
       $body['alert'] = $lang['permission-denied'];
@@ -64,7 +65,8 @@ switch ($_GET['act']) {
 
 
   case "thread":
-    if (empty($member) || (!empty($member) && $member['viewthread'] == 0)) {
+    if (!array_key_exists("viewthread", $member) || 
+        (array_key_exists("viewthread", $member) && $member['viewthread'] == 0)) {
       $_GET['act'] = "";
       $body['alerttype'] = "alert-danger";
       $body['alert'] = $lang['permission-denied'];
@@ -101,7 +103,8 @@ switch ($_GET['act']) {
 
 
   case "newthread":
-    if (empty($member) || (!empty($member) && $member['newthread'] == 0)) {
+    if (!array_key_exists("newthread", $member) || 
+        (array_key_exists("newthread", $member) && $member['newthread'] == 0)) {
       $_GET['act'] = "";
       $body['alerttype'] = "alert-danger";
       $body['alert'] = $lang['permission-denied'];
@@ -156,7 +159,8 @@ switch ($_GET['act']) {
 
 
   case "newpost":
-    if (empty($member) || (!empty($member) && $member['newpost'] == 0)) {
+    if (!array_key_exists("newpost", $member) || 
+        (array_key_exists("newpost", $member) && $member['newpost'] == 0)) {
       $_GET['act'] = "";
       $body['alerttype'] = "alert-danger";
       $body['alert'] = $lang['permission-denied'];

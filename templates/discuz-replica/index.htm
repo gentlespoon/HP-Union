@@ -30,37 +30,3 @@
   <?php endforeach ?>
 </div>
 
-<!--
-<div class="forumgroup">
-  <div class="forumgroup-heading">
-    <?=$lang['registered'].$lang['user']?>
-  </div>
-  <div class="forumgroup-body">
-    <table class="col-sm-12 table-striped">
-      <thead>
-        <tr>
-          <?php foreach ($body['registered'][1] as $k => $v) : ?>
-          <th><?=$lang[$k]?></th>
-          <?php endforeach ?>
-        </tr>
-      </thead>
-      <tbody>
-        <?php foreach ($body['registered'] as $k_ => $v_) : ?>
-        <tr>
-          <?php foreach ($v_ as $k => $v) : ?>
-            <?php if ($k == "avatar") : ?>
-              <td><img id="avatar_uid_<?=$v_['uid']?>" class="member_list_avatar avatar" src="<?=$v_['avatar']?>" qq="<?=$v_['qq']?>" uid="<?=$v_['uid']?>"></td>
-            <?php elseif ($k == "username") : ?>
-              <td><a href="member.php?uid=<?=$v_['uid']?>"><?=$v_['username']?></a></td>
-            <?php else : ?>
-              <td><?=$v?></td>
-            <?php endif ?>
-          <?php endforeach ?>
-        </tr>
-      <?php endforeach ?>
-      </tbody>
-    </table>
-  </div>
-</div>
-
--->
