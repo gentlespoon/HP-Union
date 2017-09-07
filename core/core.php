@@ -1,5 +1,7 @@
 <?php
 
+$querycount = 0;
+
 error_reporting(E_ALL);
 if(!isset($_SESSION)) {
   session_start();
@@ -15,12 +17,13 @@ if (!isset($_starttime)) {
 
 
 require_once(ROOT."language.php");
-require_once(ROOT."config/config.php");
-require_once(ROOT."core/time.php");
-require_once(ROOT."core/func.php");
-
-//  $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-
+if (file_exists(ROOT."config/config.php")) {
+  require_once(ROOT."config/config.php");
+}
+else {
+    echo "No configuration file exists... check /config/config.php";
+    die();
+}
 
 // Connect to database
 if (!isset($db)) {
@@ -33,6 +36,17 @@ if (!isset($db)) {
     die("Cannot connect to database.");
   }
 }
+
+
+
+require_once(ROOT."core/time.inc.php");
+require_once(ROOT."core/function.inc.php");
+require_once(ROOT."core/cron.inc.php");
+
+//  $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+
+
+
 
 // Get site settings
 $r = DB("SELECT * FROM common_settings");

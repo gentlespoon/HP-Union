@@ -149,20 +149,20 @@ function getNavitem() {
 
 function sendEmail($email,$title,$content) {
   include 'core/email.class.php';
-  //$smtpserver = "SMTP.163.com";　//您的smtp服务器的地址 
-  $smtpserver="smtp.exmail.qq.com"; 
-  $port =25; //smtp服务器的端口，一般是 25 
-  $smtpuser = "test@lyx.name"; //您登录smtp服务器的用户名 
-  $smtppwd = "Test122456"; //您登录smtp服务器的密码 
-  $mailtype = "HTML"; //邮件的类型，可选值是 TXT 或 HTML ,TXT 表示是纯文本的邮件,HTML 表示是 html格式的邮件 
-  $sender = "test@lyx.name"; 
-  //发件人,一般要与您登录smtp服务器的用户名($smtpuser)相同,否则可能会因为smtp服务器的设置导致发送失败 
-  $smtp = new unionemail($smtpserver,$port,true,$smtpuser,$smtppwd,$sender); 
-  //$smtp->debug = true; //是否开启调试,只在测试程序时使用，正式使用时请将此行注释 
-  $to = $email; //收件人 
-  $subject = iconv("UTF-8","GB2312//IGNORE",$title); 
-  $body = $content; 
-  $send=$smtp->sendmail($to,$sender,$subject,$body,$mailtype); 
+  //$smtpserver = "SMTP.163.com";　//您的smtp服务器的地址
+  $smtpserver="smtp.exmail.qq.com";
+  $port =25; //smtp服务器的端口，一般是 25
+  $smtpuser = "test@lyx.name"; //您登录smtp服务器的用户名
+  $smtppwd = "Test122456"; //您登录smtp服务器的密码
+  $mailtype = "HTML"; //邮件的类型，可选值是 TXT 或 HTML ,TXT 表示是纯文本的邮件,HTML 表示是 html格式的邮件
+  $sender = "test@lyx.name";
+  //发件人,一般要与您登录smtp服务器的用户名($smtpuser)相同,否则可能会因为smtp服务器的设置导致发送失败
+  $smtp = new unionemail($smtpserver,$port,true,$smtpuser,$smtppwd,$sender);
+  //$smtp->debug = true; //是否开启调试,只在测试程序时使用，正式使用时请将此行注释
+  $to = $email; //收件人
+  $subject = iconv("UTF-8","GB2312//IGNORE",$title);
+  $body = $content;
+  $send=$smtp->sendmail($to,$sender,$subject,$body,$mailtype);
   return $send;
 }
 
@@ -174,13 +174,13 @@ function sendSMSCode($phone) {
     'sms_token' => $config['sms']['sms_token'],
     'content' => '猫头鹰信箱：您本次威森加摩巫师法庭的验证码为'.$code.'。30分钟内有效。',
     'phone' => $phone,
-  ]; 
+  ];
   $ch = curl_init();
   $url = 'http://api.lyx.name/api/send_sms';
   curl_setopt($ch , CURLOPT_URL , $url);
   curl_setopt($ch, CURLOPT_POST, 1);
   curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
-  curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1); 
+  curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
   curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 5);
   curl_setopt($ch, CURLOPT_HEADER, false);
   $res = curl_exec($ch);
