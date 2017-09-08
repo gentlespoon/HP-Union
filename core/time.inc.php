@@ -2,6 +2,8 @@
 
 date_default_timezone_set("UTC");
 
+$now = time();
+
 function toUserTime($time, $format=false) {
   global $config;
   if (!$format) {

@@ -21,7 +21,7 @@ if (file_exists(ROOT."config/config.php")) {
   require_once(ROOT."config/config.php");
 }
 else {
-    echo "No configuration file exists... check /config/config.php";
+    echo $lang['config-error'];
     die();
 }
 
