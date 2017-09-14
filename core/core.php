@@ -25,19 +25,13 @@ else {
     die();
 }
 
-// Connect to database
-if (!isset($db)) {
-  $dsn = "mysql:host=".$config['db']['host'].";dbname=".$config['db']['dtbs'].";charset=".$config['db']['char'];
-  $username = $config['db']['user'];
-  $password = $config['db']['pass'];
-  try {
-    $db = new PDO($dsn, $username, $password);
-  } catch (Exception $error) {
-    die("Cannot connect to database.");
-  }
-}
-
-
+require_once(ROOT."core/lib/meekrodb.2.3.class.php");
+DB::$host = $config['db']['host'];
+DB::$user = $config['db']['user'];
+DB::$password = $config['db']['pass'];
+DB::$dbName = $config['db']['dtbs'];
+DB::$encoding = $config['db']['char'];
+DB::$port = $config['db']['port'];
 
 require_once(ROOT."core/time.inc.php");
 require_once(ROOT."core/function.inc.php");
@@ -49,7 +43,7 @@ require_once(ROOT."core/cron.inc.php");
 
 
 // Get site settings
-$r = DB("SELECT * FROM common_settings");
+$r = DB::query("SELECT * FROM common_settings");
 $settings = [];
 foreach($r as $k => $v) {
   $settings[$v['name']] = $v['data'];

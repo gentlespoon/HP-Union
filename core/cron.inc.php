@@ -1,11 +1,11 @@
 <?php
 
-$crontab = DB("SELECT * FROM common_crontab");
+$crontab = DB::query("SELECT * FROM common_crontab");
 
 $cronjobs = [];
 foreach ($crontab as $crontask) {
   if ($crontask['enabled']) {
-    $lastExec = DB("SELECT * FROM common_cronhistory WHERE cronid=".$crontask['id']." ORDER BY `datetime` DESC LIMIT 1");
+    $lastExec = DB::query("SELECT * FROM common_cronhistory WHERE cronid=%i ORDER BY `datetime` DESC LIMIT 1", $crontask['id']);
     // if never executed
     if (empty($lastExec)) {
       array_push($cronjobs, $crontask);

@@ -24,22 +24,22 @@ switch ($_GET['act']) {
 
 
   case "forum":
-    if (!array_key_exists("viewforum", $member) || 
+    if (!array_key_exists("viewforum", $member) ||
         (array_key_exists("viewforum", $member) && $member['viewforum'] == 0)) {
       $_GET['act'] = "";
       $body['alerttype'] = "alert-danger";
       $body['alert'] = $lang['permission-denied'];
       break;
     }
-    $forum = DB("SELECT * FROM forum_forum WHERE fid = :fid AND visible > 0", [":fid" => $_GET["fid"]]);
+    $forum = DB::query("SELECT * FROM forum_forum WHERE fid = %i AND visible > 0", $_GET["fid"]);
     if (empty($forum)) {
       $body['alerttype'] = "alert-danger";
       $body['alert'] = $lang['invalid-forum-id'];
       break;
     }
-    $forum[0]['subforum'] = DB("SELECT * FROM forum_forum WHERE parent_fid = :fid", [":fid" => $_GET["fid"]]);
+    $forum[0]['subforum'] = DB::query("SELECT * FROM forum_forum WHERE parent_fid = %i", $_GET["fid"]);
 
-    $threads = DB("SELECT forum_thread.tid, forum_thread.title, member.uid, member.username, forum_thread.sendtime, forum_thread.lasttime FROM forum_thread LEFT JOIN member ON forum_thread.author_uid = member.uid WHERE forum_thread.forum_id = :fid ORDER BY forum_thread.lasttime DESC", [":fid" => $_GET["fid"]]);
+    $threads = DB::query("SELECT forum_thread.tid, forum_thread.title, member.uid, member.username, forum_thread.sendtime, forum_thread.lasttime FROM forum_thread LEFT JOIN member ON forum_thread.author_uid = member.uid WHERE forum_thread.forum_id = %i ORDER BY forum_thread.lasttime DESC", $_GET["fid"]);
 
     foreach ($threads as $k => $v) {
       $threads[$k]['sendtime'] = toUserTime($v['sendtime']);
@@ -65,21 +65,21 @@ switch ($_GET['act']) {
 
 
   case "thread":
-    if (!array_key_exists("viewthread", $member) || 
+    if (!array_key_exists("viewthread", $member) ||
         (array_key_exists("viewthread", $member) && $member['viewthread'] == 0)) {
       $_GET['act'] = "";
       $body['alerttype'] = "alert-danger";
       $body['alert'] = $lang['permission-denied'];
       break;
     }
-    $thread = DB("SELECT * FROM forum_thread WHERE tid = :tid", [":tid" => $_GET['tid']]);
+    $thread = DB::query("SELECT * FROM forum_thread WHERE tid = %i", $_GET['tid']);
     if (empty($thread)) {
       $body['alerttype'] = "alert-danger";
       $body['alert'] = $lang['invalid-thread-id'];
       break;
     }
 
-    $posts = DB("SELECT forum_post.title, forum_post.content, forum_post.author_uid, member.username, member.avatar, forum_post.sendtime FROM forum_post LEFT JOIN member ON forum_post.author_uid = member.uid WHERE forum_post.thread_tid = :tid ORDER BY forum_post.pid", [":tid" => $_GET['tid']]);
+    $posts = DB::query("SELECT forum_post.title, forum_post.content, forum_post.author_uid, member.username, member.avatar, forum_post.sendtime FROM forum_post LEFT JOIN member ON forum_post.author_uid = member.uid WHERE forum_post.thread_tid = %i ORDER BY forum_post.pid", $_GET['tid']);
     foreach ($posts as $k => $v) {
       $posts[$k]['sendtime'] = toUserTime($v['sendtime']);
     }
@@ -103,7 +103,7 @@ switch ($_GET['act']) {
 
 
   case "newthread":
-    if (!array_key_exists("newthread", $member) || 
+    if (!array_key_exists("newthread", $member) ||
         (array_key_exists("newthread", $member) && $member['newthread'] == 0)) {
       $_GET['act'] = "";
       $body['alerttype'] = "alert-danger";
@@ -159,7 +159,7 @@ switch ($_GET['act']) {
 
 
   case "newpost":
-    if (!array_key_exists("newpost", $member) || 
+    if (!array_key_exists("newpost", $member) ||
         (array_key_exists("newpost", $member) && $member['newpost'] == 0)) {
       $_GET['act'] = "";
       $body['alerttype'] = "alert-danger";

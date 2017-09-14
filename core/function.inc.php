@@ -1,28 +1,5 @@
 <?php
 
-// Database wrappers
-
-function DB($sql, $param=[]) {
-  global $querycount;
-  $querycount++;
-  global $db;
-  if ($sth = $db->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY])) {
-    $sth->execute($param);
-    $rs = $sth->fetchAll();
-    // remove numeric indices
-    foreach ($rs as $k_ => $v_) {
-      foreach ($v_ as $k => $v) {
-        if (is_int($k)) {
-          unset($rs[$k_][$k]);
-        }
-      }
-    }
-    return $rs;
-  } else {
-    exit("Database Error: ".$db->error);
-  }
-}
-
 
 // Output wrapper
 
@@ -122,10 +99,10 @@ function getAvatarUrl($qq) {
 function getUserInfo() {
   global $lang;
   if ($_SESSION['uid'] > 0) {
-    $member = DB("SELECT username, qq, groupid, avatar FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
+    $member = DB::query("SELECT username, qq, groupid, avatar FROM member WHERE uid=%i", $_SESSION['uid']);
     if (isset($member[0])) {
       $member = $member[0];
-      $usergroup = DB("SELECT * FROM member_groups WHERE groupid=:groupid", [":groupid" => $member['groupid']]);
+      $usergroup = DB::query("SELECT * FROM member_groups WHERE groupid=%i", $member['groupid']);
       if (!empty($usergroup)) {
         foreach ($usergroup[0] as $k => $v) {
           $member[$k] = $v;
@@ -144,18 +121,18 @@ function getUserInfo() {
 
 function getNavitem() {
   $nav = [];
-  $nav['main'] = DB("SELECT * FROM common_navigation WHERE category='main' ORDER BY displayorder ASC");
+  $nav['main'] = DB::query("SELECT * FROM common_navigation WHERE category='main' ORDER BY displayorder ASC");
   foreach ($nav['main'] as $k => $v) {
     $nav['main'][$k]['active'] = "";
   }
-  $nav['topleft'] =  DB("SELECT * FROM common_navigation WHERE category='topleft' ORDER BY displayorder ASC");
-  $nav['topright'] =  DB("SELECT * FROM common_navigation WHERE category='topright' ORDER BY displayorder ASC");
+  $nav['topleft'] =  DB::query("SELECT * FROM common_navigation WHERE category='topleft' ORDER BY displayorder ASC");
+  $nav['topright'] =  DB::query("SELECT * FROM common_navigation WHERE category='topright' ORDER BY displayorder ASC");
   return $nav;
 }
 
 
 function sendEmail($email,$title,$content) {
-  include 'core/email.class.php';
+  include ROOT.'core/lib/email.class.php';
   //$smtpserver = "SMTP.163.com";　//您的smtp服务器的地址
   $smtpserver="smtp.exmail.qq.com";
   $port =25; //smtp服务器的端口，一般是 25

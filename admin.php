@@ -18,7 +18,7 @@ switch ($_GET['act']) {
 
   case "navigation":
     if (isset($_POST['delete-nav'])) {
-      DB("DELETE FROM common_navigation WHERE id=:id", [":id" => $_POST['delete-nav']]);
+      DB::query("DELETE FROM common_navigation WHERE id=%i", $_POST['delete-nav']);
       break;
     }
     $newnavlist = [];
@@ -27,26 +27,26 @@ switch ($_GET['act']) {
       $newnavlist[$nav[1]][$nav[0]] = $value;
     }
     if ($newnavlist['new']['name'] != "") {
-      DB("INSERT INTO common_navigation (name, link, target, displayorder, category, filename) VALUES (:name, :link, :target, :displayorder, :category, :filename)", [
-          ":name" => $newnavlist['new']['name'],
-          ":link" => $newnavlist['new']['link'],
-          ":target" => $newnavlist['new']['target'],
-          ":displayorder" => $newnavlist['new']['displayorder'],
-          ":category" => $newnavlist['new']['category'],
-          ":filename" => $newnavlist['new']['filename'],
-      ]);
+      DB::query("INSERT INTO common_navigation (name, link, target, displayorder, category, filename) VALUES (%s, %s, %s, %i, %s, %s)",
+          $newnavlist['new']['name'],
+          $newnavlist['new']['link'],
+          $newnavlist['new']['target'],
+          $newnavlist['new']['displayorder'],
+          $newnavlist['new']['category'],
+          $newnavlist['new']['filename']
+        );
     }
     unset($newnavlist['new']);
     foreach ($newnavlist as $id => $nav) {
-      DB("UPDATE common_navigation SET name=:name, link=:link, target=:target, displayorder=:displayorder, category=:category, filename=:filename WHERE id=:id", [
-        ":id" => $id,
-        ":name" => $nav['name'],
-        ":link" => $nav['link'],
-        ":target" => $nav['target'],
-        ":displayorder" => $nav['displayorder'],
-        ":category" => $nav['category'],
-        ":filename" => $nav['filename'],
-      ]);
+      DB::query("UPDATE common_navigation SET name=%s, link=%s, target=%s, displayorder=%i, category=%s, filename=:%s WHERE id=%i",
+        $id,
+        $nav['name'],
+        $nav['link'],
+        $nav['target'],
+        $nav['displayorder'],
+        $nav['category'],
+        $nav['filename']
+      );
     }
     break;
 
@@ -57,9 +57,9 @@ switch ($_GET['act']) {
 
   case "forumhierarchy":
     if (isset($_POST['delete-forum'])) {
-      $threads = DB("SELECT tid FROM forum_thread WHERE forum_id=:fid", [":fid" => $_POST['delete-forum']]);
+      $threads = DB::query("SELECT tid FROM forum_thread WHERE forum_id=%i", $_POST['delete-forum']);
       if (empty($threads)) {
-        DB("DELETE FROM forum_forum WHERE fid=:fid", [":fid" => $_POST['delete-forum']]);
+        DB::query("DELETE FROM forum_forum WHERE fid=%i", $_POST['delete-forum']);
       }
       break;
     }
@@ -69,20 +69,20 @@ switch ($_GET['act']) {
       $newforumlist[$forum[1]][$forum[0]] = $value;
     }
     if ($newforumlist['new']['name'] != "") {
-      DB("INSERT INTO forum_forum (name, description, parent_fid) VALUES (:name, :description, :parent_fid)", [
-        ":name" => $newforumlist['new']['name'],
-        ":description" => $newforumlist['new']['description'],
-        ":parent_fid" => $newforumlist['new']['parent_fid'],
-      ]);
+      DB::query("INSERT INTO forum_forum (name, description, parent_fid) VALUES (%s, %s, %i)",
+        $newforumlist['new']['name'],
+        $newforumlist['new']['description'],
+        $newforumlist['new']['parent_fid']
+      );
     }
     unset($newforumlist['new']);
     foreach ($newforumlist as $fid => $forum) {
-      DB("UPDATE forum_forum SET name=:name, description=:description, parent_fid=:parent_fid WHERE fid=:fid", [
-        ":name" => $forum['name'],
-        ":description" => $forum['description'],
-        ":parent_fid" => $forum['parent_fid'],
-        ":fid" => $fid,
-      ]);
+      DB::query("UPDATE forum_forum SET name=%s, description=%s, parent_fid=%i WHERE fid=%i",
+        $forum['name'],
+        $forum['description'],
+        $forum['parent_fid'],
+        $fid
+      );
     }
     break;
 
@@ -94,7 +94,7 @@ switch ($_GET['act']) {
   case "globalsettings":
   default:
     foreach ($_POST as $k => $v) {
-      DB("UPDATE common_settings SET data=:v WHERE name=:k", [":v" => $v, ":k" => $k]);
+      DB::query("UPDATE common_settings SET data=%s WHERE name=%s", $v, $k);
     }
 }
 
@@ -109,7 +109,7 @@ switch ($_GET['act']) {
 
 
 // globalsettings
-$globalsettings = DB("SELECT * FROM common_settings");
+$globalsettings = DB::query("SELECT * FROM common_settings");
 $settings = [];
 foreach($globalsettings as $k => $v) {
   $settings[$v['name']] = $v['data'];
@@ -134,7 +134,7 @@ foreach ($templatedirs as $v) {
 
 // forumhierarchy
 $forum_hierarchy = [];
-$forumlist = DB("SELECT * FROM forum_forum WHERE visible>0");
+$forumlist = DB::query("SELECT * FROM forum_forum WHERE visible>0");
 array_push($forumlist, [
   "fid" => "new",
   "name" => "",
@@ -165,7 +165,7 @@ array_push($nav['new'], [
 
 
 // usermanage
-$memberlist = DB("SELECT uid, avatar, username, qq, email, regdate, lastlogin FROM member ORDER BY uid ASC");
+$memberlist = DB::query("SELECT uid, avatar, username, qq, email, regdate, lastlogin FROM member ORDER BY uid ASC");
 foreach ($memberlist as $k => $v) {
   $memberlist[$k]['regdate'] = toUserTime($v['regdate']);
   $memberlist[$k]['lastlogin'] = toUserTime($v['lastlogin']);

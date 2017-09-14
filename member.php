@@ -38,7 +38,7 @@ switch ($_GET['act']) {
           }
 
           // check for restricted usernames
-          $r = DB("SELECT word FROM member_restrictname");
+          $r = DB::query("SELECT word FROM member_restrictname");
           $list = [];
           foreach ($r as $k => $v) {
             array_push($list, $v['word']);
@@ -52,7 +52,7 @@ switch ($_GET['act']) {
           }
 
           // check for duplicate usernames
-          $r = DB("SELECT uid FROM member WHERE username= :username", [":username" => $_POST['username']]);
+          $r = DB::query("SELECT uid FROM member WHERE username=%s", $_POST['username']);
           if (!empty($r)) {
             // Username already registered
             $body['alerttype'] = "alert-danger";
@@ -64,15 +64,14 @@ switch ($_GET['act']) {
           $salt = randomStr(6);
           $encryptedPassword = md5($_POST['password'].$salt);
           $avatar = getAvatarUrl($_POST['qq']);
-          DB("INSERT INTO member (username, password, salt, regdate, qq, avatar) VALUES ( :username , :password , :salt , :regdate, :qq, :avatar)", [":username" => $_POST['username'], ":password" => $encryptedPassword, ":salt" => $salt, ":regdate" => time(), ":qq" => $_POST['qq'], ":avatar" => $avatar]);
-          $r = DB("SELECT uid FROM member WHERE username= :username", [":username" => $_POST['username']]);
-          $uid = $r[0]['uid'];
-          DB("INSERT INTO member_count (uid) VALUES (:uid)", [":uid" => $uid]);
+          DB::query("INSERT INTO member (username, password, salt, regdate, qq, avatar) VALUES ( %s , %s , %s , %s, %s, %s)", $_POST['username'], $encryptedPassword, $salt, time(), $_POST['qq'], $avatar);
+          $uid = DB::query("SELECT uid FROM member WHERE username=%s", $_POST['username'])[0]['uid'];
+          DB::query("INSERT INTO member_count (uid) VALUES (%i)", $uid);
           // log this new user in
           // insert login history
-          DB("INSERT INTO member_loginhistory (uid, logindate, success, ip) VALUES ( :uid, :logindate, :success, :ip)", [":uid" => $r[0]['uid'], ":logindate" => time(), ":success" => 1, ":ip" => $_SERVER['REMOTE_ADDR']]);
+          DB::query("INSERT INTO member_loginhistory (uid, logindate, success, ip) VALUES ( %i, %s, %s, %s)", $uid, time(), 1, $_SERVER['REMOTE_ADDR']);
           // clear loginfail count
-          DB("UPDATE member SET lastlogin= :lastlogin, failcount=0 WHERE uid= :uid", [":lastlogin" => time(), ":uid" => $r[0]['uid']]);
+          DB::query("UPDATE member SET lastlogin= %s, failcount=0 WHERE uid= %i", time(), $uid);
           $_SESSION['uid'] = $uid;
           // refresh userinfo
           $member = getUserInfo();
@@ -114,7 +113,7 @@ switch ($_GET['act']) {
       if (array_key_exists("password", $_POST)) {
         if ($_SESSION['uid'] < 1) {
           // check ipfail count
-          $r = DB("SELECT lasttrial, count FROM member_failedip WHERE ip=:ip", [":ip" => $_SERVER['REMOTE_ADDR']]);
+          $r = DB::query("SELECT lasttrial, count FROM member_failedip WHERE ip=%s", $_SERVER['REMOTE_ADDR']);
           if (!empty($r)) {
             if ($r[0]['count']>10) {
               if (($r[0]['lasttrial']+3600*24) > time()) {
@@ -126,7 +125,7 @@ switch ($_GET['act']) {
             }
           }
           // fetch userinfo
-          $r = DB("SELECT uid, password, salt, failcount FROM member WHERE username= :username", [":username" => $_POST['username']]);
+          $r = DB::query("SELECT uid, password, salt, failcount FROM member WHERE username= %s", $_POST['username']);
           if (empty($r)) {
             // User does not exist
             $body['alerttype'] = "alert-danger";
@@ -138,7 +137,7 @@ switch ($_GET['act']) {
           $bantime = 10*pow(2, $r[0]['failcount']);
 
           // fetch last trial time
-          $s = DB("SELECT logindate FROM member_loginhistory WHERE uid= :uid ORDER BY logindate DESC", [":uid" => $r[0]['uid']]);
+          $s = DB::query("SELECT logindate FROM member_loginhistory WHERE uid=%i ORDER BY logindate DESC", $r[0]['uid']);
           if (!empty($s)) {
             if (($s[0]['logindate']+$bantime)>time()) {
               // login failed penalty
@@ -158,13 +157,13 @@ switch ($_GET['act']) {
             $member = getUserInfo();
 
             // insert login history
-            DB("INSERT INTO member_loginhistory (uid, logindate, success, ip) VALUES ( :uid, :logindate, :success, :ip)", [":uid" => $_SESSION['uid'], ":logindate" => time(), ":success" => 1, ":ip" => $_SERVER['REMOTE_ADDR']]);
+            DB::query("INSERT INTO member_loginhistory (uid, logindate, success, ip) VALUES (%i, %s, %i, %s)", $_SESSION['uid'], time(), 1, $_SERVER['REMOTE_ADDR']);
             // clear loginfail count
-            DB("UPDATE member SET lastlogin= :lastlogin, failcount=0 WHERE uid= :uid", [":lastlogin" => time(), ":uid" => $_SESSION['uid']]);
+            DB::query("UPDATE member SET lastlogin=%s, failcount=0 WHERE uid=%i", time(), $_SESSION['uid']);
             // clear ipfail count
-            $t = DB("SELECT ip, lasttrial, count, attempted FROM member_failedip WHERE ip=:ip", [":ip" => $_SERVER['REMOTE_ADDR']]);
+            $t = DB::query("SELECT ip, lasttrial, count, attempted FROM member_failedip WHERE ip=%s", $_SERVER['REMOTE_ADDR']);
             if (empty($t)) {
-              DB("INSERT INTO member_failedip (ip, lasttrial, count) VALUES ( :ip, :lasttrial, 0) ON DUPLICATE KEY UPDATE count=0, lasttrial= :lasttrial", [":ip" => $_SERVER['REMOTE_ADDR'], ":lasttrial" => time()]);
+              DB::query("INSERT INTO member_failedip (ip, lasttrial, count) VALUES (%s, %s, 0) ON DUPLICATE KEY UPDATE count=0, lasttrial=%s", $_SERVER['REMOTE_ADDR'], time(), time());
             }
             $body['alerttype'] = "alert-success";
             $body['alert'] = $lang['logged-in'];
@@ -172,20 +171,20 @@ switch ($_GET['act']) {
           } else {
             // Incorrect credentials
             // insert login history
-            DB("INSERT INTO member_loginhistory (uid, logindate, success, ip) VALUES ( :uid, :logindate, :success, :ip)", [":uid" => $_SESSION['uid'], ":logindate" => time(), ":success" => 0, ":ip" => $_SERVER['REMOTE_ADDR']]);
+            DB::query("INSERT INTO member_loginhistory (uid, logindate, success, ip) VALUES (%i, %s, %i, %s)", $_SESSION['uid'], time(), 0, $_SERVER['REMOTE_ADDR']);
             // increase loginfail count
-            DB("UPDATE member SET failcount=failcount+1 WHERE uid= :uid", [":uid" => $_SESSION['uid']]);
+            DB::query("UPDATE member SET failcount=failcount+1 WHERE uid=%i", $_SESSION['uid']);
             // increase ipfail count
-            $t = DB("SELECT ip, lasttrial, count, attempted FROM member_failedip WHERE ip=:ip", [":ip" => $_SERVER['REMOTE_ADDR']]);
+            $t = DB::query("SELECT ip, lasttrial, count, attempted FROM member_failedip WHERE ip=%s", $_SERVER['REMOTE_ADDR']);
             if (empty($t)) {
-              DB("INSERT INTO member_failedip (ip, lasttrial, count) VALUES ( :ip, :lasttrial, 0) ON DUPLICATE KEY UPDATE count=0, lasttrial= :lasttrial", [":ip" => $_SERVER['REMOTE_ADDR'], ":lasttrial" => time()]);
+              DB::query("INSERT INTO member_failedip (ip, lasttrial, count) VALUES (%s, %s, 0) ON DUPLICATE KEY UPDATE count=0, lasttrial=%s", $_SERVER['REMOTE_ADDR'], time(), time());
             } else {
               $attempted = $t[0]['attempted'];
               if (strlen($attempted)!=0) {
                 $attempted .= ", ";
               }
               $attempted .= $_POST['username'];
-              DB("UPDATE member_failedip SET lasttrial=:lasttrial, count=count+1, attempted=:attempted WHERE ip=:ip", [":ip" => $_SERVER['REMOTE_ADDR'], ":lasttrial" => time(), ":attempted" => $attempted]);
+              DB::query("UPDATE member_failedip SET lasttrial=".time().", count=count+1, attempted=%s WHERE ip=%s", $attempted, $_SERVER['REMOTE_ADDR']);
             }
             $body['alerttype'] = "alert-danger";
             $body['alert'] = $lang['invalid-cred'];
@@ -219,7 +218,7 @@ switch ($_GET['act']) {
       if (array_key_exists("password", $_POST)) {
         if ($_SESSION['uid'] > 0) {
           // check old password
-          $r = DB("SELECT password, salt FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
+          $r = DB::query("SELECT password, salt FROM member WHERE uid=%i", $_SESSION['uid']);
           if (! $r) {
             // User does not exist
             break;
@@ -228,7 +227,7 @@ switch ($_GET['act']) {
           if ($encryptedPassword == $r[0]['password']) {
             // Authenticated
             $encryptedPassword = md5($_POST['password'].$r[0]['salt']);
-            DB("UPDATE member SET password=:password WHERE uid=:uid", [":password" => $encryptedPassword, ":uid" => $_SESSION['uid']]);
+            DB::query("UPDATE member SET password=%s WHERE uid=%i", $encryptedPassword, $_SESSION['uid']);
             // Modified password
             $body['alerttype'] = "alert-success";
             $body['alert'] = $lang['modpwd'].$lang['success'];
@@ -261,12 +260,12 @@ switch ($_GET['act']) {
     if (array_key_exists("username", $_POST)) {
       $_POST['avatar'] = getAvatarUrl($_POST['qq']);
       // fetch table keys
-      $tablekeys = DB("SELECT * FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
+      $tablekeys = DB::query("SELECT * FROM member WHERE uid=%i", $_SESSION['uid']);
       foreach ($_POST as $k => $v) {
         // verify key existence
         if(array_key_exists($k, $tablekeys[0])) {
           // it is safe to execute
-          DB("UPDATE member SET ".$k."=:v WHERE uid=:uid", [":v" => $v, ":uid" => $_SESSION['uid']]);
+          DB::query("UPDATE member SET ".$k."=%s WHERE uid=%i", $v, $_SESSION['uid']);
         } else {
           // $_POST contains illegal keys
           exit("??????");
@@ -278,7 +277,7 @@ switch ($_GET['act']) {
       $member = getUserInfo();
     }
     // select columns that are allowed to modify
-    $member_fields = DB("SELECT username, qq, email FROM member WHERE uid=:uid", [":uid" => $_SESSION['uid']]);
+    $member_fields = DB::query("SELECT username, qq, email FROM member WHERE uid=%i",$_SESSION['uid']);
     $member['fields'] = $member_fields[0];
     break;
 
@@ -308,20 +307,18 @@ switch ($_GET['act']) {
         $_GET['uid'] = $_SESSION['uid'];
       }
 
-      $userinfo = DB("SELECT *FROM member WHERE uid=:uid", [":uid" => $_GET['uid']]);
-      $userinfo = $userinfo[0];
+      $userinfo = DB::query("SELECT *FROM member WHERE uid=%i", $_GET['uid'])[0];
       $userinfo['regdate'] = toUserTime($userinfo['regdate']);
       $userinfo['lastlogin'] = toUserTime($userinfo['lastlogin']);
       $body['userinfo'] = $userinfo;
 
-      $usercount = DB("SELECT * FROM member_count WHERE uid=:uid", [":uid" => $_GET['uid']]);
+      $usercount = DB::query("SELECT * FROM member_count WHERE uid=%i", $_GET['uid']);
       $usercount = $usercount[0];
       $usercount['threads-count'] = $usercount['threads'];
       $usercount['posts-count'] = $usercount['posts'];
       $body['usercount'] = $usercount;
 
-      $userperm = DB("SELECT * FROM member_groups WHERE groupid=:groupid", [":groupid" => $body['userinfo']['groupid']]);
-      $userperm = $userperm[0];
+      $userperm = DB::query("SELECT * FROM member_groups WHERE groupid=%i",  $body['userinfo']['groupid'])[0];
       $body['userperm'] = $userperm;
 
       unset($body['userinfo']['password'], $body['userinfo']['salt']);
