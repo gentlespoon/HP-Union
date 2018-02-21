@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><?=$headVars['title']?><?=$GLOBALS['settings']['site_name']?></title>
+  <meta name="description"  content="<?=$headVars['description']?>"/>
+  <meta name="keywords" content="<?=$headVars['keywords']?>"/>
+  <link rel="stylesheet" href="/static/mdb/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/mdb/css/mdb.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/mdb/css/style.css?<?=time()?>">
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+</head>
+
+<body>
+
+
+
+
+
+
+  <nav class="navbar navbar-expand-lg navbar-dark indigo" id="topNavBar">
+    <!-- center -->
+    <div class="container">
+
+      <!-- Navbar brand -->
+      <a class="navbar-brand" href="/"><?=$GLOBALS['settings']['site_name']?></a>
+
+      <!-- Collapse button -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+              aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+
+        <ul class="navbar-nav ml-md-auto">
+
+<?php if (!$_SESSION['user_id']) : ?>
+          <li class="nav-item">
+            <a class="nav-link clearfix waves-effect waves-light" href="" data-toggle="modal" data-target="#modalLoginForm"><i class="fas fa-lock"></i> 登入<div class="nav-sub"></div></a>
+          </li>
+<?php else : ?>
+          <li class="nav-item">
+            <a class="nav-link clearfix waves-effect waves-light" href="" data-toggle="modal" data-target="#modalEditProfileForm"><?=$GLOBALS['currentUser']['display_name']?></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link clearfix waves-effect waves-light" href="" id='btn_logout'><i class="fas fa-unlock"></i> 登出<div class="nav-sub"></div></a>
+          </li>
+<?php endif; ?>
+
+
+        </ul>
+      </div>
+
+
+
+    </div>
+  </nav>
+
+
+
+
+  <div class="container" id="canvas">
+
+
+<?php
+  foreach ($htmlTemplates as $htmlTemplate) {
+    include_once($htmlTemplate);
+  }
+?>
+
+  </div>
+
+
+  <!--Footer-->
+  <footer class="page-footer center-on-small-only indigo">
+
+    <!--Footer Links-->
+    <div class="container">
+      <div class="row">
+
+        <!--First column-->
+        <div class="col-md-3">
+          <p class="footer-title title">Footer Content</p>
+        </div>
+        <!--/.First column-->
+
+        <!--Second column-->
+        <div class="col-md-6">
+          <p class="footer-title title">Links</p>
+          <ul>
+            <li><a href="#">Link 1</a></li>
+            <li><a href="#">Link 2</a></li>
+          </ul>
+        </div>
+        <!--/.Second column-->
+
+        <!--Third column-->
+        <div class="col-md-3">
+          <p class="footer-title title">Links</p>
+          <ul>
+            <li><a href="#">Link 1</a></li>
+            <li><a href="#">Link 2</a></li>
+          </ul>
+        </div>
+        <!--/.Third column-->
+
+      </div>
+    </div>
+    <!--/.Footer Links-->
+
+    <!--Copyright-->
+    <div class="footer-copyright">
+      <div class="container">
+        &copy; <a href="http://hp-union.com">HP-Union</a> <span id="footer-copyright-year"></span>
+      </div>
+    </div>
+    <!--/.Copyright-->
+
+  </footer>
+  <!--/.Footer-->
+
+
+
+
+
+<?php if (!$_SESSION['user_id']): ?>
+  <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-bold">登入</h4>
+        </div>
+        <div class="modal-body mx-3" id="div_loginAlert">
+          <i class="fas fa-exclamation-triangle"></i>
+          <span id="lb_loginAlert"></span>
+        </div>
+        <form id="form_login">
+          <div class="modal-body mx-3">
+            <div class="md-form">
+              <i class="fa fa-user prefix black-text"></i>
+              <input type="text" id="tb_loginUsername" class="form-control validate" required>
+              <label for="tb_loginUsername">登入名</label>
+            </div>
+            <div class="md-form">
+              <i class="fa fa-lock prefix black-text"></i>
+              <input type="password" id="tb_loginPassword" class="form-control validate" required>
+              <label for="tb_loginPassword">密码</label>
+            </div>
+            <div class="center">
+              <input type="submit" class="btn btn-primary" id="btn_login" value="登入">
+              <input type="button" class="btn btn-info" id="btn_register" value="注册">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+<?php else: ?>
+  <div class="modal fade" id="modalEditProfileForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-bold">修改资料 (未启用)</h4>
+        </div>
+        <div class="modal-body mx-3" id="div_editProfileAlert">
+          <i class="fas fa-exclamation-triangle"></i>
+          <span id="lb_editProfileAlert"></span>
+        </div>
+        <!--<form id="form_editProfile">-->
+          <div class="modal-body mx-3">
+            <div class="md-form">
+              <i class="fa fa-user prefix black-text"></i>
+              <input type="text" id="tb_displayName" class="form-control validate" required>
+              <label for="tb_displayName">显示名</label>
+            </div>
+            <div class="md-form">
+              <i class="fa fa-lock prefix black-text"></i>
+              <input type="password" id="tb_loginPassword" class="form-control validate" required>
+              <label for="tb_loginPassword">密码</label>
+            </div>
+            <div class="center">
+              <input type="submit" class="btn btn-primary" id="btn_loginSubmit" value="提交 (未启用)" disabled>
+            </div>
+          </div>
+        <!--</form>-->
+      </div>
+    </div>
+  </div>
+<?php endif; ?>
+
+
+
+
+
+
+
+
+
+  {{ CONSOLELOGS }}
+  <script>console.log('运行时间: {{ RUNTIME }} 秒')</script>
+
+  <script src="/static/mdb/js/jquery-3.2.1.min.js"></script>
+  <script src="/static/mdb/js/popper.min.js"></script>
+  <script src="/static/mdb/js/bootstrap.min.js"></script>
+  <script src="/static/mdb/js/mdb.min.js"></script>
+  <script src="/static/js/jquery.md5.js"></script>
+  <script src="/static/js/gsblog.js?<?=time()?>"></script>
+  <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+
+</body>
+</html>

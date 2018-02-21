@@ -1,0 +1,93 @@
+/**
+ * Author : GentleSpoon <me.github@gentlespoon.com>
+ *
+ * File   : style.css [localhost]
+ * Date   : 2018-02-11
+ * Time   : 19:20
+ */
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #eeeeee;
+}
+
+
+#topNavBar {
+  background-color: #e3f2fd;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  /*-webkit-box-shadow : 0 1px 1px #aac8dc;*/
+  /*-moz-box-shadow    : 0 1px 1px #aac8dc;*/
+  /*box-shadow         : 0 1px 1px #aac8dc;*/
+}
+
+.dropdownItem-title {
+  float: left;
+  color: black;
+}
+
+.nav-sub {
+  float: right;
+  text-align: right;
+  font-size: 0.8rem;
+  color: darkgray;
+}
+
+/* fix floating div container */
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+  clear: both;
+}
+
+
+
+#canvas {
+  margin-top: 5em;
+}
+
+
+.page-footer {
+  font-size: 0.8rem;
+}
+
+.footer-title {
+  font-size: 1rem;
+}
+
+.footer-copyright {
+  /*height: 3rem !important;*/
+  /*line-height: 3rem !important;*/
+}
+
+
+#div_loginAlert {
+  color: red;
+  text-align: center;
+  display: none;
+}
+
+
+#div_editProfileAlert {
+  color: red;
+  text-align: center;
+  display: none;
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
