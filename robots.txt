@@ -1,6 +1,1 @@
 User-agent: *
-
-Disallow: /config/
-Disallow: /data/
-Disallow: /static/
-Disallow: /templates/

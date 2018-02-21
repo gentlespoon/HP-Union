@@ -1,2 +1,3 @@
-/config/config.php
-/phpmyadmin/
+.idea
+*.old
+*config.php
