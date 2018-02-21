@@ -13,6 +13,11 @@
 
 基于 [GsMVC](https://github.com/gentlespoon/GsMVC) 制作的app
 
+0. 启用Apache的`rewrite`模块 并允许`.htaccess` override
+~~~~
+$ a2enmod rewrite
+$ service apache2 restart
+~~~~
 1. clone GsMVC并把目录设为DOCUMENT_ROOT
 ~~~~
 $ git clone https://github.com/gentlespoon/GsMVC.git
