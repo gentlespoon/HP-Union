@@ -10,25 +10,25 @@
 
 
 #### 安装方法
-	
+
+基于 [GsMVC](https://github.com/gentlespoon/GsMVC) 制作的app
+
+1. clone GsMVC并把目录设为DOCUMENT_ROOT
 ~~~~
 $ git clone https://github.com/gentlespoon/GsMVC.git
 $ mv GsMVC public_html
+~~~~
+2. clone [HP-Union](https://github.com/gentlespoon/HP-Union) 并替换GsMVC目录中的app
+~~~~
 $ cd public_html
 $ git clone https://github.com/gentlespoon/HP-Union.git
 $ rm app -rf
 $ mv HP-Union app
 ~~~~
-
-设置public_html目录为DOCUMENT_ROOT
-
-复制`app/modules/00_config.default.php`并更名为`00_config.php`
-
-在`00_config.php`文件中填写数据库信息
+3. 复制`app/modules/00_config.default.php`并更名为`00_config.php`
+4. 在`00_config.php`文件中填写数据库信息
 
 
-#### 更新服务器
+#### 更新服务器上的程序
 
-直接push到repository即可
-
-会自动触发webhook在服务器端进行git pull
+直接push到这个repository即可 会自动触发webhook在服务器端进行git pull
