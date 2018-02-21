@@ -15,7 +15,7 @@ if (!defined('ROOT')) {
 }
 
 
-if ($_SESSION['uid']) {
+if ($_SESSION['user_id']) {
   apiPrint(1, 'Already logged in');
   return;
 }

@@ -14,7 +14,7 @@ if (!defined('ROOT')) {
   HTTP::error(403);
 }
 
-if ($_SESSION['uid']) {
+if ($_SESSION['user_id']) {
   apiPrint(1, '已登录');
   return;
 }
