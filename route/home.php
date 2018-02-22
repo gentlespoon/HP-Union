@@ -14,6 +14,7 @@ if (!defined('ROOT')) {
 }
 
 $headVars = initHtmlHeadVars();
+$topMenu = loadNav();
 
 $htmlTemplates = [];
 array_push($htmlTemplates, ROOT.'app/view/home.html');

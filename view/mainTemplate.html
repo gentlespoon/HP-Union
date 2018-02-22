@@ -37,16 +37,90 @@
 
         <ul class="navbar-nav ml-md-auto">
 
+
+
+
+<?php
+    foreach($topMenu as $topMenuEntry):
+      switch($topMenuEntry['type']):
+        case 'dropdown':
+?>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?=$topMenuEntry['icon']?> <?=$topMenuEntry['title']?></a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+<?php
+          foreach($topMenuEntry['content'] as $dropdownEntry):
+            switch($dropdownEntry['type']):
+              case 'divider':
+?>
+              <div class="dropdown-divider"></div>
+<?php
+                break;
+              case 'link':
+              default:
+?>
+              <a class="dropdown-item clearfix" href="<?=$dropdownEntry['content']?>"><div class="dropdownItem-title"><?=$dropdownEntry['icon']?> <?=$dropdownEntry['title']?></div><div class="nav-sub"><?=$dropdownEntry['subtitle']?></div></a>
+<?php
+            endswitch;
+          endforeach;
+?>
+            </div>
+          </li>
+<?php
+          break;
+        case 'link':
+        default:
+?>
+
+          <li class="nav-item">
+            <a class="nav-link clearfix" href="<?=$topMenuEntry['content']?>"><?=$topMenuEntry['icon']?> <?=$topMenuEntry['title']?><div class="nav-sub"><?=$topMenuEntry['subtitle']?></div></a>
+          </li>
+          <?php
+      endswitch;
+    endforeach;
+?>
+
+
+
 <?php if (!$_SESSION['user_id']) : ?>
           <li class="nav-item">
             <a class="nav-link clearfix waves-effect waves-light" href="" data-toggle="modal" data-target="#modalLoginForm"><i class="fas fa-lock"></i> 登入<div class="nav-sub"></div></a>
           </li>
 <?php else : ?>
-          <li class="nav-item">
-            <a class="nav-link clearfix waves-effect waves-light" href="" data-toggle="modal" data-target="#modalEditProfileForm"><?=$GLOBALS['currentUser']['display_name']?></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link clearfix waves-effect waves-light" href="" id='btn_logout'><i class="fas fa-unlock"></i> 登出<div class="nav-sub"></div></a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i> <?=$GLOBALS['currentUser']['display_name']?></a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item clearfix" href=""  data-toggle="modal" data-target="#modalEditProfileForm">
+                <div class="dropdownItem-title">
+                  <i class="fas fa-users"></i> 用户组
+                  <div id="userGroupDropdownTable">
+                    <table>
+<?php   foreach($GLOBALS['user_groups'] as $groupId => $groupInfo) :
+          if (in_array($groupId, $GLOBALS['currentUser']['user_groups'])) :
+?>
+                      <tr>
+                        <td><?=$groupInfo['groupIcon']?></td><td><?=$groupInfo['groupName']?></td>
+                      </tr>
+<?php     endif;
+        endforeach;
+?>
+                    </table>
+                  </div>
+                </div>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item clearfix" href=""  data-toggle="modal" data-target="#modalEditProfileForm">
+                <div class="dropdownItem-title">
+                  <?=$dropdownEntry['icon']?> 修改信息
+                </div>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item clearfix" href=""  id='btn_logout'>
+                <div class="dropdownItem-title">
+                  <i class="fas fa-unlock"></i> 登出
+                </div>
+              </a>
+            </div>
           </li>
 <?php endif; ?>
 
@@ -163,7 +237,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header text-center">
-          <h4 class="modal-title w-100 font-bold">修改资料 (未启用)</h4>
+          <h4 class="modal-title w-100 font-bold">修改信息 (未启用)</h4>
         </div>
         <div class="modal-body mx-3" id="div_editProfileAlert">
           <i class="fas fa-exclamation-triangle"></i>

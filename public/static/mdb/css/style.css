@@ -91,3 +91,9 @@ body {
 .right {
   text-align: right;
 }
+
+
+#userGroupDropdownTable {
+  margin-left: 1rem;
+  font-size: 0.8rem;
+}

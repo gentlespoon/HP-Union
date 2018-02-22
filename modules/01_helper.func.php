@@ -65,3 +65,13 @@ function initHtmlHeadVars() {
   ];
 }
 
+
+function loadNav() {
+  $topmenu = DB::query('SELECT * FROM '.DBtable('menu').' WHERE display>=0 AND position=%s ORDER BY display ASC', 'topmenu');
+  foreach($topmenu as $k => $v) {
+    if ($v['type'] == 'dropdown') {
+      $topmenu[$k]['content'] = DB::query('SELECT * FROM '.DBtable('menu').' WHERE display>=0 AND position=%s ORDER BY display ASC', $v['content']);
+    }
+  }
+  return $topmenu;
+}
