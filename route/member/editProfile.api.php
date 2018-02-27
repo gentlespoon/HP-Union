@@ -2,7 +2,7 @@
 /**
  * Author : GentleSpoon <me.github@gentlespoon.com>
  *
- * File   : editProfile.php [localhost]
+ * File   : editProfile.api.php [localhost]
  * Date   : 2018-02-09
  * Time   : 05:17
  */

@@ -2,7 +2,7 @@
 /**
  * Author : GentleSpoon <me.github@gentlespoon.com>
  *
- * File   : logout.php [localhost]
+ * File   : logout.api.php [localhost]
  * Date   : 2018-02-09
  * Time   : 03:56
  */

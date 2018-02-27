@@ -11,9 +11,9 @@ $(document).ready(function (){
   $("#footer-copyright-year").text((new Date()).getFullYear());
 
 
-  // handle logout
+  // 登出
   $("#btn_logout").click(function () {
-    $.post('/api/member/logout', function() {
+    $.post('/member/logout.api', function() {
       location.reload();
     });
   });
@@ -32,11 +32,11 @@ $(document).ready(function (){
     $("#lb_loginAlert").text("网络异常");
   }
 
-  // handle login
+  // 登入
   $("#form_login").submit(function () {
     $("#lb_loginAlert").text("正在登录");
     $("#div_loginAlert").css("display", "block");
-    $.post('/api/member/login',
+    $.post('/member/login.api',
       {
         username: $("#tb_loginUsername").val(),
         password: $.md5($("#tb_loginPassword").val())
@@ -47,11 +47,11 @@ $(document).ready(function (){
   });
 
 
-  // handle login
+  // 注册
   $("#btn_register").click(function () {
     $("#lb_loginAlert").text("正在注册");
     $("#div_loginAlert").css("display", "block");
-    $.post('/api/member/register',
+    $.post('/member/register.api',
       {
         username: $("#tb_loginUsername").val(),
         password: $.md5($("#tb_loginPassword").val())

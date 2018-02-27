@@ -2,7 +2,7 @@
 /**
  * Author : GentleSpoon <me.github@gentlespoon.com>
  *
- * File   : login.php [fGame]
+ * File   : login.api.php [fGame]
  * Date   : 2018-01-31
  * Time   : 18:22
  */

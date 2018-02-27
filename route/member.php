@@ -16,6 +16,6 @@ if (!defined('ROOT')) {
 
 
 // you can also make another router...
-$memberRouter = new router(ROOT.'app/route/api/member/');
+$memberRouter = new router(ROOT.'app/route/member/');
 $memberRouter->setInvalidHttpCode(400);
 echo $memberRouter->run();
