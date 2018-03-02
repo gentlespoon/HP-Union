@@ -15,4 +15,4 @@ if (!defined('ROOT')) {
 }
 
 
-echo "Quidditch";
+include_once(ROOT.'app/view/quidditch.html');
