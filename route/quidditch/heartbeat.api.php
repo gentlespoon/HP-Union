@@ -20,7 +20,7 @@ switch(rand(1,6)) {
     apiPrint(1, "如果消息变了的话说明你眼花了…");
     break;
   case 2:
-    apiPrint(1, "如果消息变了的话说明你眼花了…");
+    apiPrint(1, "魁地奇什么的，不存在的！我们才刚做完心跳包呢！");
     break;
   case 3:
     apiPrint(1, "也可能是你手机抽了…");
