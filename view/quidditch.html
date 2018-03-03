@@ -3,11 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+  <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/static/css/quidditch.css?<?=time()?>">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 </head>
 <body>
-  <div id="status"></div>
+
+  <div class="row" id="statusbar">
+    <div class="col-md-4 statusbar_item">网络延迟 <span id="lb_delay"></span></div>
+    <div class="col-md-4 statusbar_item"><span id="lb_status"></span></div>
+    <div class="col-md-4 statusbar_item">这是一条状态栏 学院分可能会显示在这里</div>
+  </div>
+
+  <div class="row" id="canvas">
+    <div class="container">
+      <div class="row">
+        <div class="col" id="question">这里是题目</div>
+      </div>
+      <div class="row">
+        <div class="col-4 ans" id="ans1">
+          <div id="ans1gap"></div>
+          答案1
+        </div>
+        <div class="col-4 ans" id="ans2">
+          <div id="ans2gap"></div>
+          答案2
+        </div>
+        <div class="col-4 ans" id="ans3">
+          <div id="ans3gap"></div>
+          答案3
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="/static/js/jquery-3.2.1.min.js"></script>
   <script src="/static/js/quidditch.js?<?=time()?>"></script>
 </body>

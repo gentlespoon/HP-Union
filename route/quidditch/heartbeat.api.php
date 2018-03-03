@@ -32,7 +32,7 @@ switch(rand(1,6)) {
     apiPrint(1, "消息会变哦╮(╯▽╰)╭");
     break;
   default:
-    apiPrint(1, "可能服务器出问题了…");
+    apiPrint(1, "不要一直开着这个页面啊！服务器很累的！");
     break;
 }
 

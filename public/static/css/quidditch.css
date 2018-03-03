@@ -5,10 +5,96 @@
  * Date   : 2018-03-03
  * Time   : 00:09
  */
- 
- 
+
+
 body {
-  padding: 0;
-  background-color: black;
-  color: white
+  padding          : 0;
+  margin           : 0;
+  background-image : url("/static/image/QuidditchWorldCup.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  color            : white;
+  text-align       : center;
+  height           : 100vh;
+  overflow         : hidden;
+}
+
+
+#statusbar {
+  padding: 1em 0;
+}
+
+.statusbar_item {
+}
+
+.conn-A {
+  color: #0ff;
+}
+
+.conn-B {
+  color: #0f0;
+}
+
+.conn-C {
+  color: #fd0;
+}
+
+.conn-D {
+  color: #fa0;
+}
+
+.conn-E {
+  color: #f00;
+}
+
+#canvas {
+}
+
+#question {
+  height      : 20vh;
+  line-height : 20vh;
+  font-size   : 2rem;
+}
+
+.ans {
+  font-size        : 2rem;
+  vertical-align   : center;
+  cursor           : pointer;
+  border-radius    : 1rem;
+  height           : 75vh;
+  transition       : background-color 0.3s ease;
+  background-color : transparent;
+  background-image : url("/static/image/gate.png");
+  background-repeat: no-repeat;
+}
+.ans:hover {
+  transition       : background-color 0.3s ease;
+  background-color : rgba(255,255,255,0.5);
+}
+
+
+#ans1 {
+  background-position: 0 7rem;
+  padding-top: 7rem;
+}
+#ans1gap {
+  padding-top: 11rem;
+}
+#ans2 {
+  padding-top: 0;
+}
+#ans2gap {
+  padding-top: 11rem;
+}
+#ans3 {
+  background-position: 0 14rem;
+  padding-top: 14rem;
+}
+#ans3gap {
+
+  padding-top: 11rem;
 }
