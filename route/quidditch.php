@@ -15,4 +15,10 @@ if (!defined('ROOT')) {
 }
 
 
-include_once(ROOT.'app/view/quidditch.html');
+if ($path != '') {
+  $quidditchRouter = new router(ROOT.'app/route/quidditch/');
+  $quidditchRouter->setInvalidHttpCode(400);
+  echo $quidditchRouter->run();
+} else {
+  include_once(ROOT.'app/view/quidditch.html');
+}
