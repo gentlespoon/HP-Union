@@ -38,3 +38,4 @@ switch(rand(1,6)) {
 
 // to avoid super long log
 exit();
+
