@@ -25,6 +25,7 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+
   color            : white;
   text-align       : center;
   height           : 100vh;
@@ -84,13 +85,24 @@ body {
 }
 
 .gate {
-  background-color: rgba(0,0,0,0.4);
-  background-position-y: 7rem;
-  width: 90%;
-  height: auto;
-  border: 1rem solid #cccc32;
-  border-radius: 50%;
+
   overflow: hidden;
+  display: block;
+  line-height: 5rem;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+
+  background-color: black;
+  color: white;
+  text-align: center;
+
+  /*background-color: rgba(0,0,0,0.4);*/
+  /*background-position-y: 7rem;*/
+  /*width: 90%;*/
+  /*height: auto;*/
+  /*border: 1rem solid #cccc32;*/
+  /*border-radius: 50%;*/
+  /*overflow: hidden;*/
 }
 
 .gatepole {
