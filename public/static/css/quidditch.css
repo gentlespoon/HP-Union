@@ -92,17 +92,10 @@ body {
   -moz-border-radius: 50%;
   border-radius: 50%;
 
-  background-color: black;
+  background-color: #cccc32;
   color: white;
   text-align: center;
 
-  /*background-color: rgba(0,0,0,0.4);*/
-  /*background-position-y: 7rem;*/
-  /*width: 90%;*/
-  /*height: auto;*/
-  /*border: 1rem solid #cccc32;*/
-  /*border-radius: 50%;*/
-  /*overflow: hidden;*/
 }
 
 .gatepole {
