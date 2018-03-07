@@ -92,32 +92,26 @@ body {
   -moz-border-radius: 50%;
   border-radius: 50%;
 
-  background-color: #cccc32;
+  background-color: #4f382f;
   color: white;
   text-align: center;
 
 }
 
 .gatepole {
-  width: 1rem;
+  width: 2rem;
   height: 100%;
-  background-color: #cccc32;
+  background-color: #4f382f;
   margin: auto;
   margin-top: -0.5em;
 }
 
 #gate1 {
   margin-top: 5rem;
-  margin-left: 10%;
-  margin-right: 0;
 }
 #gate2 {
   margin-top: 0;
-  margin-left: 5%;
-  margin-right: 5%;
 }
 #gate3 {
   margin-top: 10rem;
-  margin-left: 0;
-  margin-right: 10%;
 }
