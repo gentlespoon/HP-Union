@@ -10,7 +10,7 @@
 $(document).ready(function (){
 
   $(".gate").css('height', $(".gate").css('width'));
-  $(".gate").css('line-height', 'calc(' + $(".gate").css('width') + ' - 1rem)');
+  $(".gate").css('line-height', 'calc(' + $(".gate").css('width') + ' - 2rem)');
   // 心跳频率
   var Hz = 2;
 

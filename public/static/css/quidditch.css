@@ -86,20 +86,21 @@ body {
 
 .gate {
 
+  border: 1rem solid #4f382f;
+  text-align: center;
+
   overflow: hidden;
   display: block;
-  line-height: 5rem;
   -moz-border-radius: 50%;
   border-radius: 50%;
 
-  background-color: #4f382f;
+  background-color: rgba(0,0,0,0.5);
   color: white;
-  text-align: center;
 
 }
 
 .gatepole {
-  width: 2rem;
+  width: 1.5rem;
   height: 100%;
   background-color: #4f382f;
   margin: auto;
