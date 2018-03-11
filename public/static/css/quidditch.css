@@ -8,30 +8,28 @@
 
 
 body {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
+  -webkit-touch-callout   : none; /* iOS Safari */
+  -webkit-user-select     : none; /* Safari */
+  -khtml-user-select      : none; /* Konqueror HTML */
+  -moz-user-select        : none; /* Firefox */
+  -ms-user-select         : none; /* Internet Explorer/Edge */
+  user-select             : none;
+  /* Non-prefixed version, currently
+                                   supported by Chrome and Opera */
 
-  padding          : 0;
-  margin           : 0;
-  background-image : url("/static/image/QuidditchWorldCup.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  padding                 : 0;
+  margin                  : 0;
+  background              : url("/static/image/QuidditchWorldCup.jpg") no-repeat center center fixed;
+  -webkit-background-size : cover;
+  -moz-background-size    : cover;
+  -o-background-size      : cover;
+  background-size         : cover;
 
-  color            : white;
-  text-align       : center;
-  height           : 100vh;
-  overflow         : hidden;
+  color                   : white;
+  text-align              : center;
+  height                  : 100vh;
+  overflow                : hidden;
 }
-
 
 #statusbar {
   padding: 1em 0;
@@ -85,32 +83,32 @@ body {
 }
 
 .gate {
-  padding: 1rem;
-  border: 1rem solid #CD7F32;
-  text-align: center;
-  vertical-align: middle;
-  overflow: hidden;
-  display: block;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
-  background-color: rgba(0,0,0,0.5);
-  color: white;
+  padding            : 1rem;
+  border             : 1rem solid #cd7f32;
+  text-align         : center;
+  vertical-align     : middle;
+  overflow           : hidden;
+  display            : block;
+  -moz-border-radius : 50%;
+  border-radius      : 50%;
+  background-color   : rgba(0, 0, 0, 0.5);
+  color              : white;
 }
 
 .gatepole {
-  width: 1.5rem;
-  height: 100%;
-  background-color: #CD7F32;
-  margin: auto;
-  margin-top: -0.5em;
+  width            : 1.5rem;
+  height           : 100%;
+  background-color : #cd7f32;
+  margin           : auto;
+  margin-top       : -0.5em;
 }
 
 #gate1 {
-  margin-top: 5rem;
+  margin-top : 5rem;
 }
 #gate2 {
-  margin-top: 0;
+  margin-top : 0;
 }
 #gate3 {
-  margin-top: 10rem;
+  margin-top : 10rem;
 }
