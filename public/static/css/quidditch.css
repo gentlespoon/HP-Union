@@ -10,14 +10,11 @@
 body {
   -webkit-touch-callout   : none; /* iOS Safari */
   -webkit-user-select     : none; /* Safari */
-  -khtml-user-select      : none; /* Konqueror HTML */
   -moz-user-select        : none; /* Firefox */
   -ms-user-select         : none; /* Internet Explorer/Edge */
-  user-select             : none;
-  /* Non-prefixed version, currently
-                                   supported by Chrome and Opera */
+  user-select             : none; /* Non-prefixed version, currently supported by Chrome and Opera */
 
-  padding                 : 0;
+  padding                 : 0 1rem;
   margin                  : 0;
   background              : url("/static/image/QuidditchWorldCup.jpg") no-repeat center center fixed;
   -webkit-background-size : cover;
