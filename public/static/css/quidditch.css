@@ -71,12 +71,12 @@ body {
   cursor           : pointer;
   border-radius    : 1rem;
   height           : 75vh;
-  transition       : background-color 0.3s ease;
+  transition       : background-color 0.1s;
   background-color : transparent;
 }
 .ans:hover {
-  transition       : background-color 0.3s ease;
-  background-color : rgba(255,255,255,0.5);
+  transition       : background-color 0.1s;
+  background-color : rgba(255,255,255,0.2);
 }
 
 .gate {
