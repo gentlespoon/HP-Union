@@ -12,7 +12,7 @@ $(document).ready(function (){
   $(".gate").css('height', $(".gate").css('width'));
   $(".gate").css('line-height', 'calc(' + $(".gate").css('width') + ' - 4rem)');
   // 心跳频率
-  var Hz = 2;
+  var Hz = 1;
 
   // 计算ping。为防止乱序，以tickCouonter为数组下标保留20个sendTime
   var tickCounter = -1;
